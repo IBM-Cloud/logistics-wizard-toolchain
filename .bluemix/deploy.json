@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "Logistics Wizard Deploy Stage",
+  "title": "Logistics Wizard Delivery Pipeline Setup",
   "description": "Deployment of the Logistics Wizard demo",
   "longDescription": "The Delivery Pipeline for Devops Services allows you to automate your continuous deployment setup.",
   "type": "object",
@@ -18,11 +18,11 @@
       "type": "string"
     },
     "erp-app-name": {
-      "description": "ERP app name",
+      "description": "Name of the ERP API",
       "type": "string"
     },
    "controller-app-name": {
-      "description": "controller app name",
+      "description": "Name of the controller app",
       "type": "string"
     }
   },
@@ -46,13 +46,9 @@
     },
     {
       "type": "table",
-      "columnCount": 4,
-      "widths": ["15%", "28%", "28%", "28%"],
+      "columnCount": 3,
+      "widths": ["33%", "33%", "33%"],
       "items": [
-        {
-          "type": "label",
-          "title": ""
-        },
         {
           "type": "label",
           "title": "Region"
@@ -64,18 +60,6 @@
         {
           "type": "label",
           "title": "Space"
-        },
-        {
-          "type": "label",
-          "title": "Dev Stage"
-        },
-        {
-          "type": "label",
-          "title": "Test Stage"
-        },
-        {
-          "type": "label",
-          "title": "Prod Stage"
         },
         {
           "type": "select",

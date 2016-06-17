@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "Logistics Wizard Build Stage",
+  "title": "Logistics Wizard GitHub Setup",
   "description": "Logistics Wizard GitHub Schema",
   "longDescription": "The GitHub Service allows you to create or use an existing GitHub repository to store your source code.",
   "type": "object",

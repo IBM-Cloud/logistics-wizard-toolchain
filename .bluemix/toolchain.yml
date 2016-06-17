@@ -75,7 +75,7 @@ github:
   schema: github.json
   service-category: githubpublic
   parameters:
-    erp-api-repo_name: "logistics-wizard-erp-{{name}}"
+    erp-api-repo_name: "logistics-wizard-erp"
     erp-api-repo_url: https://github.com/IBM-Bluemix/logistics-wizard-erp
-    controller-repo_name: "logistics-wizard-{{name}}"
+    controller-repo_name: "logistics-wizard"
     controller-repo_url: https://github.com/IBM-Bluemix/logistics-wizard
