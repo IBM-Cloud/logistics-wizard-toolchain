@@ -1,7 +1,7 @@
 ---
-name: "Logistics Wizard Toolchain"
-description: "With this cloud-native toolchain, you can continuosly test and deploy the microservices in the Logistics Wizard demo"
-version: 0.2
+name: "Cloud-native Toolchain for the Logistics Wizard"
+description: "With this cloud-native toolchain, you use the logistics wizard template to create a supply chain management web app and back end that consists of multiple microservices: a Controller API, an ERP API, and a UI. The toolchain is preconfigured for continuous delivery, source control, blue-green deployment, unit testing, and issue tracking.\n\nTo get started, click **Create**."
+version: 0.1
 image: data:image/png;base64,$file(dra-toolchain2.png,base64)
 required:
  - deploy
@@ -14,7 +14,7 @@ erp-api-repo:
     repo_name: "{{github.parameters.erp-api-repo_name}}"
     repo_url: "{{github.parameters.erp-api-repo_url}}"
     type: clone
-    has_issues: false
+    has_issues: true
   hidden: [form, description]
 
 controller-repo:
@@ -23,7 +23,7 @@ controller-repo:
     repo_name: "{{github.parameters.controller-repo_name}}"
     repo_url: "{{github.parameters.controller-repo_url}}"
     type: clone
-    has_issues: false
+    has_issues: true
   hidden: [form, description]
 
 # Pipelines
@@ -66,7 +66,7 @@ deploy:
   parameters:
     prod-region: "{{region}}"
     prod-organization: "{{organization}}"
-    prod-space: lw-demo-test
+    prod-space: logistics-wizard
     erp-app-name: "{{erp-api-repo.parameters.repo_name}}"
     controller-app-name: "{{controller-repo.parameters.repo_name}}"
 

@@ -13,7 +13,7 @@ The toolchain is preconfigured for:
 - unit testing
 - blue-green deployment
 
-**To get started, click this button:**
+**To get started, click this button:**  
 [![Deploy To Bluemix](./.bluemix/create_toolchain_button.png)](https://new-console.ng.bluemix.net/devops/setup/deploy/?repository=https%3A//github.com//IBM-Bluemix/logistics-wizard-toolchain.git)
 
 ---
