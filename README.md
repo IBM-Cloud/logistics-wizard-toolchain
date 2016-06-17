@@ -16,6 +16,8 @@ The toolchain is preconfigured for:
 **To get started, click this button:**  
 [![Deploy To Bluemix](./.bluemix/create_toolchain_button.png)](https://new-console.ng.bluemix.net/devops/setup/deploy/?repository=https%3A//github.com//IBM-Bluemix/logistics-wizard-toolchain.git)
 
+![Toolchain template steps](./.bluemix/toolchain.png)
+
 ---
 ### Learn more
 
