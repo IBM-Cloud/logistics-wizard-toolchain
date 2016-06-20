@@ -10,10 +10,10 @@ stages:
   jobs:
   - name: Build
     type: builder
-- name: Tests
+- name: TEST
   inputs:
   - type: job
-    stage: Build
+    stage: BUILD
     job: Build
   triggers:
   - type: stage
@@ -22,13 +22,15 @@ stages:
     type: tester
     script: |
       #!/bin/bash
-      # invoke tests here
+      sudo pip install virtualenv
+      virtualenv venv
+      source venv/bin/activate
+      export PYTHONPATH=$PWD
+      pip install -r requirements.txt
       pip install coveralls
-      source .env
-      coverage run server/tests/test_demos_service.py
-      coverage run server/tests/test_users_service.py
-      coveralls
-- name: PROD
+      python server/tests/test_demos_service.py
+      python server/tests/test_users_service.py
+- name: DEPLOY
   inputs:
   - type: job
     stage: BUILD

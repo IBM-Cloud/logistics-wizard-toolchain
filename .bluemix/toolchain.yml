@@ -30,7 +30,7 @@ controller-repo:
 erp-api-build:
   service_id: pipeline
   parameters:
-    name: "logistics-wizard-erp-{{name}}"
+    name: "logistics-wizard-erp-"
     configuration:
       content: $file(erp-api.pipeline.yml)
       env:
@@ -46,7 +46,7 @@ erp-api-build:
 controller-build:
   service_id: pipeline
   parameters:
-    name: "logistics-wizard-{{name}}"
+    name: "logistics-wizard"
     configuration:
       content: $file(controller.pipeline.yml)
       env:

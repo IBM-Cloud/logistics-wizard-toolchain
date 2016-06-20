@@ -10,10 +10,10 @@ stages:
   jobs:
   - name: Build
     type: builder
-- name: Tests
+- name: TEST
   inputs:
   - type: job
-    stage: Build
+    stage: BUILD
     job: Build
   triggers:
   - type: stage
@@ -22,9 +22,9 @@ stages:
     type: tester
     script: |
       #!/bin/bash
-      # invoke tests here
-      npm run coverage
-- name: PROD
+      npm install
+      npm run localcoverage
+- name: DEPLOY
   inputs:
   - type: job
     stage: BUILD
