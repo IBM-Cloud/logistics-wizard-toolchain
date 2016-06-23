@@ -1,29 +1,35 @@
 ---
 stages:
-- name: BUILD
+- name: TEST
   inputs:
   - type: git
     branch: master
     service: ${ERP_API_REPO}
   triggers:
   - type: commit
-  jobs:
-  - name: Build
-    type: builder
-- name: TEST
-  inputs:
-  - type: job
-    stage: BUILD
-    job: Build
-  triggers:
-  - type: stage
+  properties:
+  - name: COVERALLS_SERVICE_NAME
+    value: bluemix-devops-services
+    type: text
+  - name: COVERALLS_REPO_TOKEN
+    type: secure
   jobs:
   - name: Unit Test
     type: tester
     script: |
       #!/bin/bash
       npm install
-      npm run localcoverage
+      npm run coverage
+- name: BUILD
+  inputs:
+  - type: git
+    branch: master
+    service: ${ERP_API_REPO}
+  triggers:
+  - type: stage
+  jobs:
+  - name: Build
+    type: builder
 - name: DEPLOY
   inputs:
   - type: job

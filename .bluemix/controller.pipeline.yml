@@ -1,22 +1,15 @@
 ---
 stages:
-- name: BUILD
+- name: TEST
   inputs:
   - type: git
     branch: master
     service: ${CONTROLLER_REPO}
   triggers:
   - type: commit
-  jobs:
-  - name: Build
-    type: builder
-- name: TEST
-  inputs:
-  - type: job
-    stage: BUILD
-    job: Build
-  triggers:
-  - type: stage
+  properties:
+  - name: COVERALLS_REPO_TOKEN
+    type: secure
   jobs:
   - name: Unit Test
     type: tester
@@ -26,10 +19,20 @@ stages:
       virtualenv venv
       source venv/bin/activate
       export PYTHONPATH=$PWD
-      pip install -r requirements.txt
-      pip install coveralls
-      python server/tests/test_demos_service.py
-      python server/tests/test_users_service.py
+      pip install -r requirements.dev.txt
+      coverage run server/tests/test_demos_service.py
+      coverage run server/tests/test_users_service.py
+      COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN coveralls
+- name: BUILD
+  inputs:
+  - type: git
+    branch: master
+    service: ${CONTROLLER_REPO}
+  triggers:
+  - type: stage
+  jobs:
+  - name: Build
+    type: builder
 - name: DEPLOY
   inputs:
   - type: job
