@@ -22,6 +22,10 @@ stages:
       pip install -r requirements.dev.txt
       coverage run server/tests/test_demos_service.py
       coverage run server/tests/test_users_service.py
+      coverage run server/tests/test_shipments_service.py
+      coverage run server/tests/test_distribution_centers_service.py
+      coverage run server/tests/test_retailers_service.py
+      coverage run server/tests/test_products_service.py
       COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN coveralls
 - name: BUILD
   inputs:
