@@ -10,6 +10,16 @@ stages:
   properties:
   - name: COVERALLS_REPO_TOKEN
     type: secure
+  - name: SMTP_SERVER
+    value: smtp.gmail.com
+    type: text
+  - name: SMTP_SERVER_PORT
+    value: 587
+    type: text
+  - name: SMTP_USER_NAME
+    type: secure
+  - name: SMTP_PASSWORD
+    type: secure
   jobs:
   - name: Unit Test
     type: tester
@@ -26,6 +36,7 @@ stages:
       coverage run server/tests/test_distribution_centers_service.py
       coverage run server/tests/test_retailers_service.py
       coverage run server/tests/test_products_service.py
+      coverage run server/tests/test_messaging_service.py
       COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN coveralls
 - name: BUILD
   inputs:
