@@ -41,17 +41,7 @@ stages:
       export PYTHONPATH=$PWD
       pip install -r requirements.dev.txt
       # Run unit and coverage tests
-      coverage run server/tests/test_demos_service.py
-      coverage run server/tests/test_users_service.py
-      coverage run server/tests/test_shipments_service.py
-      coverage run server/tests/test_distribution_centers_service.py
-      coverage run server/tests/test_retailers_service.py
-      coverage run server/tests/test_products_service.py
-      if [ -z ${TEST_SMTP_USER_NAME} ]; then
-        echo No email specified, skipping messaging.py tests
-      else
-        coverage run server/tests/test_messaging_service.py
-      fi
+      coverage run server/tests/run_tests.py
       if [ -z ${COVERALLS_REPO_TOKEN} ]; then
         echo No Coveralls token specified, skipping coveralls.io upload
       else
