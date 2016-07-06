@@ -36,6 +36,7 @@ erp-api-build:
       env:
         ERP_API_REPO: "erp-api-repo"
         CF_APP_NAME: "{{deploy.parameters.erp-app-name}}"
+        COVERALLS_REPO_TOKEN: "{{github.parameters.erp-api-coveralls_token}}"
         PROD_SPACE_NAME: "{{deploy.parameters.prod-space}}"
         PROD_ORG_NAME: "{{deploy.parameters.prod-organization}}"
         PROD_REGION_ID: "{{deploy.parameters.prod-region}}"
@@ -52,12 +53,30 @@ controller-build:
       env:
         CONTROLLER_REPO: "controller-repo"
         CF_APP_NAME: "{{deploy.parameters.controller-app-name}}"
+        COVERALLS_REPO_TOKEN: "{{github.parameters.controller-coveralls_token}}"
+        TEST_SMTP_USER_NAME: "{{email.parameters.test-email}}"
+        TEST_SMTP_PASSWORD: "{{email.parameters.test-password}}"
+        PROD_ERP_SERVICE: "https://{{deploy.parameters.erp-app-name}}.mybluemix.net/api/v1/"
+        PROD_SMTP_USER_NAME: "{{email.parameters.prod-email}}"
+        PROD_SMTP_PASSWORD: "{{email.parameters.prod-password}}"
         PROD_SPACE_NAME: "{{deploy.parameters.prod-space}}"
         PROD_ORG_NAME: "{{deploy.parameters.prod-organization}}"
         PROD_REGION_ID: "{{deploy.parameters.prod-region}}"
       execute: true
     services: ["controller-repo"]
   hidden: [form, description]
+
+#Github
+github:
+  schema: github.json
+  service-category: githubpublic
+  parameters:
+    erp-api-repo_name: "logistics-wizard-erp"
+    erp-api-repo_url: https://github.com/IBM-Bluemix/logistics-wizard-erp
+    erp-api-coveralls_token:
+    controller-repo_name: "logistics-wizard"
+    controller-repo_url: https://github.com/IBM-Bluemix/logistics-wizard
+    controller-coveralls_token:
 
 #Deployment
 deploy:
@@ -70,12 +89,12 @@ deploy:
     erp-app-name: "{{erp-api-repo.parameters.repo_name}}"
     controller-app-name: "{{controller-repo.parameters.repo_name}}"
 
-#Github
-github:
-  schema: github.json
-  service-category: githubpublic
+#Email
+email:
+  schema: email.json
+  service-category: pipeline
   parameters:
-    erp-api-repo_name: "logistics-wizard-erp"
-    erp-api-repo_url: https://github.com/IBM-Bluemix/logistics-wizard-erp
-    controller-repo_name: "logistics-wizard"
-    controller-repo_url: https://github.com/IBM-Bluemix/logistics-wizard
+    test-email:
+    test-password:
+    prod-email:
+    prod-password:

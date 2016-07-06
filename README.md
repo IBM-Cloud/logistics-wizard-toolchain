@@ -21,11 +21,11 @@ The toolchain is preconfigured for:
 
 ### Setting up code coverage tests
 
-In order to utilize the code coverage tests in the pipelines, you need add your repos to [coveralls][coveralls_url] and get the generated repo token. Once you get these tokens, go into each pipeline in the toolchain and populate the `COVERALLS_REPO_TOKEN` environment variables within the TEST stages.
+In order to utilize the code coverage tests in the pipelines, you need add your repos to [coveralls][coveralls_url] and get the generated repo token. Once you get these tokens, use these values in the GitHub section during the toolchain configuration. Coverage tests will not be reported if you leave these values blank.
 
 ### Setting up email environment variables
 
-The TEST stage will make sure your app is capable of sending welcome emails. You need to set the corresponding environment variables by following the [Setting up email][email_instructions_url] section in the Logistics Wizard Controller README. Once you have your Gmail username and password, go into the `logistics-wizard` pipeline in the toolchain and populate the `SMTP_USER_NAME` and `SMTP_PASSWORD` environment variables within the TEST stage. After your app has been deployed, you must also go into your app's dashboard and set them in the *Runtime* --> *Environment Variables* section.
+The TEST stage will make sure your app is capable of sending welcome emails. You need to set the corresponding environment variables by following the [Setting up email][email_instructions_url] section in the Logistics Wizard Controller README. Once you have your Gmail username and password, use these values in the Delivery Pipeline section during the toolchain configuration. Your controller app will be unable to send emails and corresponding tests will not be run if you leave these values blank.
 
 ---
 ### Learn more

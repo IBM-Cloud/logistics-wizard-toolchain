@@ -11,10 +11,16 @@
     "erp-api-repo_url": {
       "type": "string"
     },
+    "erp-api-coveralls_token": {
+      "type": "string"
+    },
     "controller-repo_name": {
       "type": "string"
     },
     "controller-repo_url": {
+      "type": "string"
+    },
+    "controller-coveralls_token": {
       "type": "string"
     }
   },
@@ -66,6 +72,18 @@
           "key": "controller-repo_name"
         }
       ]
+    },
+    {
+      "type": "text",
+      "readonly": false,
+      "title": "ERP Coveralls Token",
+      "key": "erp-api-coveralls_token"
+    },
+    {
+      "type": "text",
+      "readonly": false,
+      "title": "Controller Coveralls Token",
+      "key": "controller-coveralls_token"
     }
   ]
 }

@@ -8,7 +8,11 @@ stages:
   triggers:
   - type: commit
   properties:
+  - name: LOGISTICS_WIZARD_ENV
+    value: TEST
+    type: text
   - name: COVERALLS_REPO_TOKEN
+    value: ${COVERALLS_REPO_TOKEN}
     type: secure
   - name: SMTP_SERVER
     value: smtp.gmail.com
@@ -16,28 +20,43 @@ stages:
   - name: SMTP_SERVER_PORT
     value: 587
     type: text
-  - name: SMTP_USER_NAME
+  - name: TEST_SMTP_USER_NAME
+    value: ${TEST_SMTP_USER_NAME}
     type: secure
-  - name: SMTP_PASSWORD
+  - name: TEST_SMTP_PASSWORD
+    value: ${TEST_SMTP_PASSWORD}
     type: secure
   jobs:
   - name: Unit Test
     type: tester
     script: |
       #!/bin/bash
+      # Export email env vars
+      export SMTP_USER_NAME=${TEST_SMTP_USER_NAME}
+      export SMTP_PASSWORD=${TEST_SMTP_PASSWORD}
+      # Download Python dependencies
       sudo pip install virtualenv
       virtualenv venv
       source venv/bin/activate
       export PYTHONPATH=$PWD
       pip install -r requirements.dev.txt
+      # Run unit and coverage tests
       coverage run server/tests/test_demos_service.py
       coverage run server/tests/test_users_service.py
       coverage run server/tests/test_shipments_service.py
       coverage run server/tests/test_distribution_centers_service.py
       coverage run server/tests/test_retailers_service.py
       coverage run server/tests/test_products_service.py
-      coverage run server/tests/test_messaging_service.py
-      COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN coveralls
+      if [ -z ${TEST_SMTP_USER_NAME} ]; then
+        echo No email specified, skipping messaging.py tests
+      else
+        coverage run server/tests/test_messaging_service.py
+      fi
+      if [ -z ${COVERALLS_REPO_TOKEN} ]; then
+        echo No Coveralls token specified, skipping coveralls.io upload
+      else
+        COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN coveralls
+      fi
 - name: BUILD
   inputs:
   - type: git
@@ -57,8 +76,26 @@ stages:
   - type: stage
   properties:
   - name: CF_APP_NAME
-    value: undefined
+    value: ${CF_APP_NAME}
     type: text
+  - name: LOGISTICS_WIZARD_ENV
+    value: PROD
+    type: text
+  - name: PROD_ERP_SERVICE
+    value: ${PROD_ERP_SERVICE}
+    type: text
+  - name: SMTP_SERVER
+    value: smtp.gmail.com
+    type: text
+  - name: SMTP_SERVER_PORT
+    value: 587
+    type: text
+  - name: PROD_SMTP_USER_NAME
+    value: ${PROD_SMTP_USER_NAME}
+    type: secure
+  - name: PROD_SMTP_PASSWORD
+    value: ${PROD_SMTP_PASSWORD}
+    type: secure
   jobs:
   - name: Blue/Green Deploy
     type: deployer
@@ -69,6 +106,7 @@ stages:
       application: ${CF_APP_NAME}
     script: |-
       #!/bin/bash
+      # Deploy app
       if ! cf app $CF_APP; then
         cf push $CF_APP
       else
@@ -88,3 +126,11 @@ stages:
         cf push $CF_APP
         cf delete $OLD_CF_APP -f
       fi
+      # Set app's env vars
+      cf set-env ${CF_APP_NAME} LOGISTICS_WIZARD_ENV ${LOGISTICS_WIZARD_ENV}
+      cf set-env ${CF_APP_NAME} ERP_SERVICE ${PROD_ERP_SERVICE}
+      cf set-env ${CF_APP_NAME} SMTP_SERVER ${SMTP_SERVER}
+      cf set-env ${CF_APP_NAME} SMTP_SERVER_PORT ${SMTP_SERVER_PORT}
+      cf set-env ${CF_APP_NAME} SMTP_USER_NAME ${PROD_SMTP_USER_NAME}
+      cf set-env ${CF_APP_NAME} SMTP_PASSWORD ${PROD_SMTP_PASSWORD}
+      cf restage ${CF_APP_NAME}
