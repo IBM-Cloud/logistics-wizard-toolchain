@@ -31,7 +31,20 @@ stages:
     type: tester
     script: |
       #!/bin/bash
+      # Get ERP module
+      git submodule init
+      git submodule update
+      cd modules/erp
+      # Download Node v4.4
+      npm config delete prefix
+      curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.2/install.sh | bash
+      . ~/.nvm/nvm.sh
+      nvm install 4.4
+      # Install ERP dependencies and run app in background
+      npm install
+      nohup bash -c "npm start" &
       # Export email env vars
+      cd ../..
       export SMTP_USER_NAME=${TEST_SMTP_USER_NAME}
       export SMTP_PASSWORD=${TEST_SMTP_PASSWORD}
       # Download Python dependencies
