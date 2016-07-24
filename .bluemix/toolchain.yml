@@ -56,6 +56,7 @@ controller-build:
         COVERALLS_REPO_TOKEN: "{{github.parameters.controller-coveralls_token}}"
         TEST_SMTP_USER_NAME: "{{email.parameters.test-email}}"
         TEST_SMTP_PASSWORD: "{{email.parameters.test-password}}"
+        PROD_ERP_SERVICE: "https://{{deploy.parameters.erp-app-name}}.mybluemix.net"
         PROD_SMTP_USER_NAME: "{{email.parameters.prod-email}}"
         PROD_SMTP_PASSWORD: "{{email.parameters.prod-password}}"
         PROD_SPACE_NAME: "{{deploy.parameters.prod-space}}"

@@ -87,6 +87,9 @@ stages:
   - name: LOGISTICS_WIZARD_ENV
     value: PROD
     type: text
+  - name: PROD_ERP_SERVICE   
+    value: ${PROD_ERP_SERVICE}    
+    type: text
   - name: SMTP_SERVER
     value: smtp.gmail.com
     type: text
@@ -109,6 +112,8 @@ stages:
       application: ${CF_APP_NAME}
     script: |-
       #!/bin/bash
+      # Create CF services
+      cf create-service service_discovery free lw-service-discovery
       # Deploy app
       if ! cf app $CF_APP; then
         cf push $CF_APP
@@ -131,8 +136,15 @@ stages:
       fi
       # Set app's env vars
       cf set-env ${CF_APP_NAME} LOGISTICS_WIZARD_ENV ${LOGISTICS_WIZARD_ENV}
+      cf set-env ${CF_APP_NAME} ERP_SERVICE ${PROD_ERP_SERVICE}
       cf set-env ${CF_APP_NAME} SMTP_SERVER ${SMTP_SERVER}
       cf set-env ${CF_APP_NAME} SMTP_SERVER_PORT ${SMTP_SERVER_PORT}
       cf set-env ${CF_APP_NAME} SMTP_USER_NAME ${PROD_SMTP_USER_NAME}
       cf set-env ${CF_APP_NAME} SMTP_PASSWORD ${PROD_SMTP_PASSWORD}
+      if cf service lw-service-discovery; then
+        SD_STATUS=ON
+      else
+        SD_STATUS=OFF
+      fi
+      cf set-env ${CF_APP_NAME} SD_STATUS ${SD_STATUS}
       cf restage ${CF_APP_NAME}
