@@ -24,7 +24,7 @@ stages:
   - name: LOGISTICS_WIZARD_ENV
     value: DEV
     type: text
-  - name: PROD_ERP_SERVICE   
+  - name: DEV_ERP_SERVICE   
     value: ${DEV_ERP_SERVICE}
     type: text
   - name: SMTP_SERVER

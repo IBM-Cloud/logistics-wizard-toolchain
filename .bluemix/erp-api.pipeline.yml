@@ -19,7 +19,7 @@ stages:
   - type: stage
   properties:
   - name: CF_APP_NAME
-    application: ${DEV_CF_APP_NAME}
+    value: ${DEV_CF_APP_NAME}
     type: text
   jobs:
   - name: Deploy to dev
