@@ -31,7 +31,11 @@ stages:
       application: ${DEV_CF_APP_NAME}
     script: |-
       #!/bin/bash
-      cf push "${CF_APP_NAME}"
+      # Create CF services
+      cf create-service service_discovery free lw-service-discovery
+      cf create-service elephantsql turtle logistics-wizard-erp-db
+      # Deploy app
+      cf push "${CF_APP_NAME}" -n ${CF_APP_NAME}
 - name: TEST
   inputs:
   - type: git
@@ -87,12 +91,14 @@ stages:
   - name: Blue/Green Deploy
     type: deployer
     target:
-      region_id: ${PROD_REGION_ID}
-      organization: ${PROD_ORG_NAME}
-      space: ${PROD_SPACE_NAME}
+      region_id: ${REGION_ID}
+      organization: ${ORG_NAME}
+      space: ${SPACE_NAME}
       application: ${PROD_CF_APP_NAME}
     script: |-
       #!/bin/bash
+      # Create CF services
+      cf create-service service_discovery free lw-service-discovery
       cf create-service elephantsql turtle logistics-wizard-erp-db
       if ! cf app $CF_APP; then
         cf push $CF_APP
