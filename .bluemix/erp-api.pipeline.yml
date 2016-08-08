@@ -21,6 +21,9 @@ stages:
   - name: CF_APP_NAME
     value: ${DEV_CF_APP_NAME}
     type: text
+  - name: LOGISTICS_WIZARD_ENV
+    value: DEV
+    type: text
   jobs:
   - name: Deploy to dev
     type: deployer
@@ -50,6 +53,9 @@ stages:
   - name: COVERALLS_REPO_TOKEN
     value: ${COVERALLS_REPO_TOKEN}
     type: secure
+  - name: LOGISTICS_WIZARD_ENV
+    value: TEST
+    type: text
   jobs:
   - name: Unit Test
     type: tester
@@ -86,6 +92,9 @@ stages:
   properties:
   - name: CF_APP_NAME
     application: ${PROD_CF_APP_NAME}
+    type: text
+  - name: LOGISTICS_WIZARD_ENV
+    value: PROD
     type: text
   jobs:
   - name: Blue/Green Deploy

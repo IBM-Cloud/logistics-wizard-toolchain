@@ -34,10 +34,10 @@ stages:
     value: 587
     type: text
   - name: DEV_SMTP_USER_NAME
-    value: ${TEST_SMTP_USER_NAME}
+    value: ${DEV_SMTP_USER_NAME}
     type: secure
   - name: DEV_SMTP_PASSWORD
-    value: ${TEST_SMTP_PASSWORD}
+    value: ${DEV_SMTP_PASSWORD}
     type: secure
   jobs:
   - name: Deploy to dev
