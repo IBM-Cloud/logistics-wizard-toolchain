@@ -1,5 +1,37 @@
 ---
 stages:
+- name: DEV-BUILD
+  inputs:
+  - type: git
+    branch: dev
+    service: ${ERP_API_REPO}
+  triggers:
+  - type: stage
+  jobs:
+  - name: Build
+    type: builder
+- name: DEV-DEPLOY
+  inputs:
+  - type: job
+    stage: DEV-BUILD
+    job: Build
+  triggers:
+  - type: stage
+  properties:
+  - name: CF_APP_NAME
+    application: ${DEV_CF_APP_NAME}
+    type: text
+  jobs:
+  - name: Deploy to dev
+    type: deployer
+    target:
+      region_id: ${REGION_ID}
+      organization: ${ORG_NAME}
+      space: ${SPACE_NAME}
+      application: ${DEV_CF_APP_NAME}
+    script: |-
+      #!/bin/bash
+      cf push "${CF_APP_NAME}"
 - name: TEST
   inputs:
   - type: git
@@ -49,7 +81,7 @@ stages:
   - type: stage
   properties:
   - name: CF_APP_NAME
-    application: ${CF_APP_NAME}
+    application: ${PROD_CF_APP_NAME}
     type: text
   jobs:
   - name: Blue/Green Deploy
@@ -58,7 +90,7 @@ stages:
       region_id: ${PROD_REGION_ID}
       organization: ${PROD_ORG_NAME}
       space: ${PROD_SPACE_NAME}
-      application: ${CF_APP_NAME}
+      application: ${PROD_CF_APP_NAME}
     script: |-
       #!/bin/bash
       cf create-service elephantsql turtle logistics-wizard-erp-db

@@ -1,5 +1,64 @@
 ---
 stages:
+- name: DEV-BUILD
+  inputs:
+  - type: git
+    branch: dev
+    service: ${CONTROLLER_REPO}
+  triggers:
+  - type: stage
+  jobs:
+  - name: Build
+    type: builder
+- name: DEV-DEPLOY
+  inputs:
+  - type: job
+    stage: DEV-BUILD
+    job: Build
+  triggers:
+  - type: stage
+  properties:
+  - name: CF_APP_NAME
+    value: ${DEV_CF_APP_NAME}
+    type: text
+  - name: LOGISTICS_WIZARD_ENV
+    value: DEV
+    type: text
+  - name: PROD_ERP_SERVICE   
+    value: ${DEV_ERP_SERVICE}
+    type: text
+  - name: SMTP_SERVER
+    value: smtp.gmail.com
+    type: text
+  - name: SMTP_SERVER_PORT
+    value: 587
+    type: text
+  - name: DEV_SMTP_USER_NAME
+    value: ${TEST_SMTP_USER_NAME}
+    type: secure
+  - name: DEV_SMTP_PASSWORD
+    value: ${TEST_SMTP_PASSWORD}
+    type: secure
+  jobs:
+  - name: Deploy to dev
+    type: deployer
+    target:
+      region_id: ${REGION_ID}
+      organization: ${ORG_NAME}
+      space: ${SPACE_NAME}
+      application: ${DEV_CF_APP_NAME}
+    script: |-
+      #!/bin/bash
+      cf push "${CF_APP_NAME}" --no-start
+      # Set app's env vars
+      cf set-env ${CF_APP_NAME} LOGISTICS_WIZARD_ENV ${LOGISTICS_WIZARD_ENV}
+      cf set-env ${CF_APP_NAME} ERP_SERVICE ${DEV_ERP_SERVICE}
+      cf set-env ${CF_APP_NAME} SMTP_SERVER ${SMTP_SERVER}
+      cf set-env ${CF_APP_NAME} SMTP_SERVER_PORT ${SMTP_SERVER_PORT}
+      cf set-env ${CF_APP_NAME} SMTP_USER_NAME ${DEV_SMTP_USER_NAME}
+      cf set-env ${CF_APP_NAME} SMTP_PASSWORD ${DEV_SMTP_PASSWORD}
+      cf set-env ${CF_APP_NAME} SD_STATUS OFF
+      cf start ${CF_APP}
 - name: TEST
   inputs:
   - type: git
@@ -82,7 +141,7 @@ stages:
   - type: stage
   properties:
   - name: CF_APP_NAME
-    value: ${CF_APP_NAME}
+    value: ${PROD_CF_APP_NAME}
     type: text
   - name: LOGISTICS_WIZARD_ENV
     value: PROD
@@ -106,10 +165,10 @@ stages:
   - name: Blue/Green Deploy
     type: deployer
     target:
-      region_id: ${PROD_REGION_ID}
-      organization: ${PROD_ORG_NAME}
-      space: ${PROD_SPACE_NAME}
-      application: ${CF_APP_NAME}
+      region_id: ${REGION_ID}
+      organization: ${ORG_NAME}
+      space: ${SPACE_NAME}
+      application: ${PROD_CF_APP_NAME}
     script: |-
       #!/bin/bash
       # Create CF services

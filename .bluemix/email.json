@@ -5,6 +5,14 @@
   "longDescription": "Gmail account settings allowing your app to send emails to demo users.",
   "type": "object",
   "properties": {
+    "dev-email": {
+      "description": "Dev app email address",
+      "type": "string"
+    },
+    "dev-password": {
+      "description": "Dev app email account password",
+      "type": "string"
+    },
     "test-email": {
       "description": "Testing email address",
       "type": "string"
@@ -23,6 +31,27 @@
     }
   },
   "form": [
+    {
+      "type": "table",
+      "columnCount": 3,
+      "widths": ["20%", "40%", "40%"],
+      "items": [
+        {
+          "type": "label",
+          "title": "Dev Account"
+        },
+        {
+          "type": "text",
+          "readonly": false,
+          "key": "dev-email"
+        },
+        {
+          "type": "text",
+          "readonly": false,
+          "key": "dev-password"
+        }
+      ]
+    },
     {
       "type": "table",
       "columnCount": 3,
