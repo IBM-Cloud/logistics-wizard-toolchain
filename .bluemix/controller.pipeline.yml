@@ -51,7 +51,7 @@ stages:
       #!/bin/bash
       # Create CF services
       cf create-service service_discovery free lw-service-discovery
-      cf push "${CF_APP_NAME}"  -n ${CF_APP_NAME} --no-start
+      cf push "${CF_APP_NAME}"  -n $CF_APP --no-start
       # Set app's env vars
       cf set-env ${CF_APP_NAME} LOGISTICS_WIZARD_ENV ${LOGISTICS_WIZARD_ENV}
       cf set-env ${CF_APP_NAME} ERP_SERVICE ${DEV_ERP_SERVICE}
@@ -179,7 +179,7 @@ stages:
       cf create-service service_discovery free lw-service-discovery
       # Deploy app
       if ! cf app $CF_APP; then
-        cf push $CF_APP -n ${CF_APP_NAME}
+        cf push $CF_APP -n $CF_APP
       else
         OLD_CF_APP=${CF_APP}-OLD-$(date +"%s")
         rollback() {
@@ -194,7 +194,7 @@ stages:
         set -e
         trap rollback ERR
         cf rename $CF_APP $OLD_CF_APP
-        cf push $CF_APP -n ${CF_APP_NAME}
+        cf push $CF_APP -n $CF_APP
         cf delete $OLD_CF_APP -f
       fi
       # Set app's env vars
