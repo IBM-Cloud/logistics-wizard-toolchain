@@ -6,7 +6,7 @@ stages:
     branch: dev
     service: ${CONTROLLER_REPO}
   triggers:
-  - type: stage
+  - type: commit
   jobs:
   - name: Build
     type: builder

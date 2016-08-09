@@ -6,7 +6,7 @@ stages:
     branch: dev
     service: ${ERP_API_REPO}
   triggers:
-  - type: stage
+  - type: commit
   jobs:
   - name: Build
     type: builder
@@ -36,9 +36,12 @@ stages:
       #!/bin/bash
       # Create CF services
       cf create-service service_discovery free lw-service-discovery
-      cf create-service elephantsql turtle logistics-wizard-erp-db
+      cf create-service elephantsql turtle dev-logistics-wizard-erp-db
       # Deploy app
-      cf push "${CF_APP_NAME}" -n $CF_APP
+      cf push "${CF_APP_NAME}" -n $CF_APP -f dev-manifest.yml --no-start
+      # Set app's env vars
+      cf set-env ${CF_APP_NAME} LOGISTICS_WIZARD_ENV ${LOGISTICS_WIZARD_ENV}
+      cf start ${CF_APP}
 - name: TEST
   inputs:
   - type: git
@@ -128,3 +131,6 @@ stages:
         cf push $CF_APP -n $CF_APP
         cf delete $OLD_CF_APP -f
       fi
+      # Set app's env vars
+      cf set-env $CF_APP LOGISTICS_WIZARD_ENV ${LOGISTICS_WIZARD_ENV}
+      cf restage $CF_APP
