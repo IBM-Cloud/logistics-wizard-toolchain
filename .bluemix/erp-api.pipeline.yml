@@ -110,7 +110,7 @@ stages:
       cf create-service service_discovery free lw-service-discovery
       cf create-service elephantsql turtle logistics-wizard-erp-db
       if ! cf app $CF_APP; then
-        cf push $CF_APP
+        cf push $CF_APP -n ${CF_APP_NAME}
       else
         OLD_CF_APP=${CF_APP}-OLD-$(date +"%s")
         rollback() {
@@ -125,6 +125,6 @@ stages:
         set -e
         trap rollback ERR
         cf rename $CF_APP $OLD_CF_APP
-        cf push $CF_APP
+        cf push $CF_APP -n ${CF_APP_NAME}
         cf delete $OLD_CF_APP -f
       fi

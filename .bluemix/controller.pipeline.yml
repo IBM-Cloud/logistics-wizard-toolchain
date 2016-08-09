@@ -57,8 +57,10 @@ stages:
       cf set-env ${CF_APP_NAME} ERP_SERVICE ${DEV_ERP_SERVICE}
       cf set-env ${CF_APP_NAME} SMTP_SERVER ${SMTP_SERVER}
       cf set-env ${CF_APP_NAME} SMTP_SERVER_PORT ${SMTP_SERVER_PORT}
-      cf set-env ${CF_APP_NAME} SMTP_USER_NAME ${DEV_SMTP_USER_NAME}
-      cf set-env ${CF_APP_NAME} SMTP_PASSWORD ${DEV_SMTP_PASSWORD}
+      if [ ! -z ${DEV_SMTP_USER_NAME} ]; then
+        cf set-env ${CF_APP_NAME} SMTP_USER_NAME ${DEV_SMTP_USER_NAME}
+        cf set-env ${CF_APP_NAME} SMTP_PASSWORD ${DEV_SMTP_PASSWORD}
+      fi
       cf set-env ${CF_APP_NAME} SD_STATUS OFF
       cf start ${CF_APP}
 - name: TEST
@@ -177,7 +179,7 @@ stages:
       cf create-service service_discovery free lw-service-discovery
       # Deploy app
       if ! cf app $CF_APP; then
-        cf push $CF_APP
+        cf push $CF_APP -n ${CF_APP_NAME}
       else
         OLD_CF_APP=${CF_APP}-OLD-$(date +"%s")
         rollback() {
@@ -192,7 +194,7 @@ stages:
         set -e
         trap rollback ERR
         cf rename $CF_APP $OLD_CF_APP
-        cf push $CF_APP
+        cf push $CF_APP -n ${CF_APP_NAME}
         cf delete $OLD_CF_APP -f
       fi
       # Set app's env vars
@@ -200,8 +202,10 @@ stages:
       cf set-env ${CF_APP_NAME} ERP_SERVICE ${PROD_ERP_SERVICE}
       cf set-env ${CF_APP_NAME} SMTP_SERVER ${SMTP_SERVER}
       cf set-env ${CF_APP_NAME} SMTP_SERVER_PORT ${SMTP_SERVER_PORT}
-      cf set-env ${CF_APP_NAME} SMTP_USER_NAME ${PROD_SMTP_USER_NAME}
-      cf set-env ${CF_APP_NAME} SMTP_PASSWORD ${PROD_SMTP_PASSWORD}
+      if [ ! -z ${PROD_SMTP_USER_NAME} ]; then
+        cf set-env ${CF_APP_NAME} SMTP_USER_NAME ${PROD_SMTP_USER_NAME}
+        cf set-env ${CF_APP_NAME} SMTP_PASSWORD ${PROD_SMTP_PASSWORD}
+      fi
       if cf service lw-service-discovery; then
         SD_STATUS=ON
       else
