@@ -1,6 +1,6 @@
 ---
 name: "Cloud-native Toolchain for the Logistics Wizard"
-description: "With this cloud-native toolchain, you use the logistics wizard template to create a supply chain management web app and back end that consists of multiple microservices: a Controller API, an ERP API, and a UI. The toolchain is preconfigured for continuous delivery, source control, blue-green deployment, unit testing, and issue tracking.\n\nTo get started, click **Create**."
+description: "With this cloud-native toolchain, you use the logistics wizard template to create a supply chain management web app and back end that consists of multiple microservices: a Controller API, an ERP API, and a WEB-UI. The toolchain is preconfigured for continuous delivery, source control, blue-green deployment, unit testing, and issue tracking.\n\nTo get started, click **Create**."
 version: 0.2
 image: data:image/png;base64,$file(toolchain.png,base64)
 required:
@@ -25,6 +25,15 @@ controller-repo:
     type: clone
     has_issues: true
   hidden: [form, description]
+
+  webui-repo:
+    service_id: githubpublic
+    parameters:
+      repo_name: "{{github.parameters.webui-repo_name}}"
+      repo_url: "{{github.parameters.webui-repo_url}}"
+      type: clone
+      has_issues: true
+    hidden: [form, description]
 
 # Pipelines
 erp-api-build:
@@ -71,6 +80,24 @@ controller-build:
     services: ["controller-repo"]
   hidden: [form, description]
 
+webui-build:
+  service_id: pipeline
+  parameters:
+    name: "logistics-wizard-webui"
+    configuration:
+      content: $file(webui.pipeline.yml)
+      env:
+        ERP_API_REPO: "webui-repo"
+        DEV_CF_APP_NAME: "dev-{{deploy.parameters.webui-name}}"
+        PROD_CF_APP_NAME: "{{deploy.parameters.webui-name}}"
+        COVERALLS_REPO_TOKEN: "{{github.parameters.webui-coveralls_token}}"
+        SPACE_NAME: "{{deploy.parameters.space}}"
+        ORG_NAME: "{{deploy.parameters.organization}}"
+        REGION_ID: "{{deploy.parameters.region}}"
+      execute: true
+    services: ["webui-repo"]
+  hidden: [form, description]
+
 #Github
 github:
   schema: github.json
@@ -82,6 +109,9 @@ github:
     controller-repo_name: "logistics-wizard"
     controller-repo_url: https://github.com/IBM-Bluemix/logistics-wizard
     controller-coveralls_token:
+    webui-repo_name: "logistics-wizard-webui"
+    webui-repo_url: https://github.com/IBM-Bluemix/logistics-wizard-webui
+    webui-coveralls_token:
 
 #Deployment
 deploy:
@@ -93,6 +123,7 @@ deploy:
     space: "{{space}}"
     erp-app-name: "{{erp-api-repo.parameters.repo_name}}"
     controller-app-name: "{{controller-repo.parameters.repo_name}}"
+    webui-app-name: "{{webui-repo.parameters.repo_name}}"
 
 #Email
 email:

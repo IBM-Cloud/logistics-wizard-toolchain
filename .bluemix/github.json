@@ -22,9 +22,18 @@
     },
     "controller-coveralls_token": {
       "type": "string"
+    },
+    "webui-repo_name": {
+      "type": "string"
+    },
+    "webui-repo_url": {
+      "type": "string"
+    },
+    "webui-coveralls_token": {
+      "type": "string"
     }
   },
-  "required": ["erp-api-repo_name", "erp-api-repo_url", "controller-repo_name", "controller-repo_url"],
+  "required": ["erp-api-repo_name", "erp-api-repo_url", "controller-repo_name", "controller-repo_url", "webui-repo_name", "webui-repo_url"],
   "form": [
     {
       "type": "validator",
@@ -70,6 +79,18 @@
         {
           "type": "text",
           "key": "controller-repo_name"
+        },
+        {
+          "type": "text",
+          "key": "webui-repo_url"
+        },
+        {
+          "type": "icon",
+          "iconType": "right_arrow"
+        },
+        {
+          "type": "text",
+          "key": "webui-repo_name"
         }
       ]
     },
@@ -84,6 +105,12 @@
       "readonly": false,
       "title": "Controller Coveralls Token",
       "key": "controller-coveralls_token"
+    },
+    {
+      "type": "text",
+      "readonly": false,
+      "title": "Webui Coveralls Token",
+      "key": "webui-coveralls_token"
     }
   ]
 }
