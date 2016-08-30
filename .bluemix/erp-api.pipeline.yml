@@ -76,13 +76,23 @@ stages:
       # Set app's env vars
       cf set-env ${CF_APP_NAME} LOGISTICS_WIZARD_ENV ${LOGISTICS_WIZARD_ENV}
       cf start ${CF_APP}
-- name: TEST
+- name: BUILD
   inputs:
   - type: git
     branch: master
     service: ${ERP_API_REPO}
   triggers:
   - type: commit
+  jobs:
+  - name: Build
+    type: builder
+- name: TEST
+  inputs:
+  - type: job
+    stage: BUILD
+    job: Build
+  triggers:
+  - type: stage
   properties:
   - name: COVERALLS_SERVICE_NAME
     value: bluemix-devops-services
@@ -109,16 +119,6 @@ stages:
       else
         npm run coverage
       fi
-- name: BUILD
-  inputs:
-  - type: git
-    branch: master
-    service: ${ERP_API_REPO}
-  triggers:
-  - type: stage
-  jobs:
-  - name: Build
-    type: builder
 - name: DEPLOY
   inputs:
   - type: job
