@@ -107,7 +107,6 @@ stages:
       application: ${PROD_CF_APP_NAME}
     script: |-
       #!/bin/bash
-      # Create CF services
       # Push
       if ! cf app $CF_APP; then
         cf push $CF_APP -n $CF_APP

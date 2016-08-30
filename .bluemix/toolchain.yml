@@ -88,8 +88,8 @@ webui-build:
       content: $file(webui.pipeline.yml)
       env:
         WEBUI_REPO: "webui-repo"
-        DEV_CF_APP_NAME: "dev-{{deploy.parameters.webui-name}}"
-        PROD_CF_APP_NAME: "{{deploy.parameters.webui-name}}"
+        DEV_CF_APP_NAME: "dev-{{deploy.parameters.webui-app-name}}"
+        PROD_CF_APP_NAME: "{{deploy.parameters.webui-app-name}}"
         COVERALLS_REPO_TOKEN: "{{github.parameters.webui-coveralls_token}}"
         SPACE_NAME: "{{deploy.parameters.space}}"
         ORG_NAME: "{{deploy.parameters.organization}}"
