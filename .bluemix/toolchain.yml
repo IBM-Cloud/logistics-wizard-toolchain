@@ -87,7 +87,7 @@ webui-build:
     configuration:
       content: $file(webui.pipeline.yml)
       env:
-        ERP_API_REPO: "webui-repo"
+        WEBUI_REPO: "webui-repo"
         DEV_CF_APP_NAME: "dev-{{deploy.parameters.webui-name}}"
         PROD_CF_APP_NAME: "{{deploy.parameters.webui-name}}"
         COVERALLS_REPO_TOKEN: "{{github.parameters.webui-coveralls_token}}"
