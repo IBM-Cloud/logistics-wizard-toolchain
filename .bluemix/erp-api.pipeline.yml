@@ -7,18 +7,28 @@ stages:
     service: ${ERP_API_REPO}
   triggers:
   - type: commit
+  jobs:
+  - name: Build
+    type: builder
+- name: DEV-TEST
+  inputs:
+  - type: job
+    stage: DEV-BUILD
+    job: Build
+  triggers:
+  - type: stage
   properties:
   - name: COVERALLS_SERVICE_NAME
     value: bluemix-devops-services
     type: text
   - name: COVERALLS_REPO_TOKEN
-    value: ${COVERALLS_REPO_TOKEN}
     type: secure
+    value: ${COVERALLS_REPO_TOKEN}
   - name: LOGISTICS_WIZARD_ENV
     value: DEV
     type: text
   jobs:
-  - name: Build
+  - name: Unit Test
     type: builder
     build_type: shell
     script: |-
