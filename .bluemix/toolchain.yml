@@ -26,14 +26,14 @@ controller-repo:
     has_issues: true
   hidden: [form, description]
 
-  webui-repo:
-    service_id: githubpublic
-    parameters:
-      repo_name: "{{github.parameters.webui-repo_name}}"
-      repo_url: "{{github.parameters.webui-repo_url}}"
-      type: clone
-      has_issues: true
-    hidden: [form, description]
+webui-repo:
+  service_id: githubpublic
+  parameters:
+    repo_name: "{{github.parameters.webui-repo_name}}"
+    repo_url: "{{github.parameters.webui-repo_url}}"
+    type: clone
+    has_issues: true
+  hidden: [form, description]
 
 # Pipelines
 erp-api-build:
