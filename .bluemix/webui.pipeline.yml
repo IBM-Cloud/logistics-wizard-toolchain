@@ -18,7 +18,7 @@ stages:
       . ~/.nvm/nvm.sh
       nvm install 4.4
       npm install
-      #npm run test
+      npm run test
       npm run deploy:prod
 - name: DEV-DEPLOY
   inputs:
@@ -66,7 +66,7 @@ stages:
       . ~/.nvm/nvm.sh
       nvm install 4.4
       npm install
-      #npm run test #not enabled yet, need to solve a "Cannot find jsdom module" error first
+      npm run test
       npm run deploy:prod
 - name: DEPLOY
   inputs:
