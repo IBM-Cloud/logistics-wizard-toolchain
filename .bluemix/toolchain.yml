@@ -90,7 +90,6 @@ webui-build:
         WEBUI_REPO: "webui-repo"
         DEV_CF_APP_NAME: "dev-{{deploy.parameters.webui-app-name}}"
         PROD_CF_APP_NAME: "{{deploy.parameters.webui-app-name}}"
-        COVERALLS_REPO_TOKEN: "{{github.parameters.webui-coveralls_token}}"
         SPACE_NAME: "{{deploy.parameters.space}}"
         ORG_NAME: "{{deploy.parameters.organization}}"
         REGION_ID: "{{deploy.parameters.region}}"
@@ -111,7 +110,6 @@ github:
     controller-coveralls_token:
     webui-repo_name: "logistics-wizard-webui"
     webui-repo_url: https://github.com/IBM-Bluemix/logistics-wizard-webui
-    webui-coveralls_token:
 
 #Deployment
 deploy:
