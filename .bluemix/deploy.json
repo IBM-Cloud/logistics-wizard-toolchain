@@ -24,9 +24,13 @@
    "controller-app-name": {
       "description": "Name of the controller app",
       "type": "string"
+    },
+    "webui-app-name": {
+      "description": "Name of the WEBUI App",
+      "type": "string"
     }
   },
-  "required": ["region", "organization", "space", "erp-app-name", "controller-app-name"],
+  "required": ["region", "organization", "space", "erp-app-name", "controller-app-name", "webui-app-name"],
   "form": [
    {
       "type": "validator",
@@ -44,6 +48,13 @@
       "title": "Controller App Name",
       "key": "controller-app-name"
     },
+    {
+      "type": "text",
+      "readonly": false,
+      "title": "Webui App Name",
+      "key": "webui-app-name"
+    },
+
     {
       "type": "table",
       "columnCount": 3,
