@@ -3,7 +3,7 @@ stages:
 - name: DEV-BUILD
   inputs:
   - type: git
-    branch: renaming-to-controller
+    branch: dev
     service: ${WEBUI_REPO}
   triggers:
   - type: commit
