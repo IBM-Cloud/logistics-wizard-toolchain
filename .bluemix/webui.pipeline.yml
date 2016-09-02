@@ -54,7 +54,7 @@ stages:
 
       # Set app's env vars
       cf set-env ${CF_APP_NAME} LOGISTICS_WIZARD_ENV ${LOGISTICS_WIZARD_ENV}
-      cf start ${CF_APP}    
+      cf start ${CF_APP}
 - name: BUILD
   inputs:
   - type: git
@@ -62,9 +62,14 @@ stages:
     service: ${WEBUI_REPO}
   triggers:
   - type: commit
+  properties:
+  - name: PROD_CONTROLLER_SERVICE
+    value: ${PROD_CONTROLLER_SERVICE}
+    type: text
   jobs:
   - name: Build
     type: builder
+    artifact_dir: dist
     build_type: shell
     script: |-
       #!/bin/bash
@@ -74,6 +79,8 @@ stages:
       nvm install 4.4
       npm install
       npm run test
+      # inject the location of the controller service
+      export CONTROLLER_SERVICE=${PROD_CONTROLLER_SERVICE}
       npm run deploy:prod
 - name: DEPLOY
   inputs:
