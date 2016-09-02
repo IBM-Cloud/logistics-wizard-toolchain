@@ -30,7 +30,7 @@
       "type": "string"
     }
   },
-  "required": ["region", "organization", "space", "erp-app-name", "controller-app-name", "webui-app-name"],
+  "required": ["selected-region", "selected-organization", "selected-space", "erp-app-name", "controller-app-name", "webui-app-name"],
   "form": [
    {
       "type": "validator",
