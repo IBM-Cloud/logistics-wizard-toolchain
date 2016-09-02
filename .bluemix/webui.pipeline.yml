@@ -3,10 +3,14 @@ stages:
 - name: DEV-BUILD
   inputs:
   - type: git
-    branch: dev
+    branch: renaming-to-controller
     service: ${WEBUI_REPO}
   triggers:
   - type: commit
+  properties:
+  - name: DEV_CONTROLLER_SERVICE
+    value: ${DEV_CONTROLLER_SERVICE}
+    type: text
   jobs:
   - name: Build
     type: builder
@@ -19,6 +23,8 @@ stages:
       nvm install 4.4
       npm install
       npm run test
+      # inject the location of the controller service
+      export CONTROLLER_SERVICE=${DEV_CONTROLLER_SERVICE}
       npm run deploy:prod
 - name: DEV-DEPLOY
   inputs:

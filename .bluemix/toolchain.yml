@@ -88,7 +88,9 @@ webui-build:
       content: $file(webui.pipeline.yml)
       env:
         WEBUI_REPO: "webui-repo"
+        DEV_CONTROLLER_SERVICE: "https://dev-{{deploy.parameters.controller-app-name}}.mybluemix.net"
         DEV_CF_APP_NAME: "dev-{{deploy.parameters.webui-app-name}}"
+        PROD_CONTROLLER_SERVICE: "https://{{deploy.parameters.controller-app-name}}.mybluemix.net"
         PROD_CF_APP_NAME: "{{deploy.parameters.webui-app-name}}"
         SPACE_NAME: "{{deploy.parameters.space}}"
         ORG_NAME: "{{deploy.parameters.organization}}"
