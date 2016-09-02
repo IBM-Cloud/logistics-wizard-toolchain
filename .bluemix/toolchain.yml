@@ -47,9 +47,9 @@ erp-api-build:
         DEV_CF_APP_NAME: "dev-{{deploy.parameters.erp-app-name}}"
         PROD_CF_APP_NAME: "{{deploy.parameters.erp-app-name}}"
         COVERALLS_REPO_TOKEN: "{{github.parameters.erp-api-coveralls_token}}"
-        SPACE_NAME: "{{deploy.parameters.space}}"
-        ORG_NAME: "{{deploy.parameters.organization}}"
-        REGION_ID: "{{deploy.parameters.region}}"
+        SPACE_NAME: "{{deploy.parameters.selected-space}}"
+        ORG_NAME: "{{deploy.parameters.selected-organization}}"
+        REGION_ID: "{{deploy.parameters.selected-region}}"
       execute: true
     services: ["erp-api-repo"]
   hidden: [form, description]
@@ -73,9 +73,9 @@ controller-build:
         PROD_CF_APP_NAME: "{{deploy.parameters.controller-app-name}}"
         PROD_SMTP_USER_NAME: "{{email.parameters.prod-email}}"
         PROD_SMTP_PASSWORD: "{{email.parameters.prod-password}}"
-        SPACE_NAME: "{{deploy.parameters.space}}"
-        ORG_NAME: "{{deploy.parameters.organization}}"
-        REGION_ID: "{{deploy.parameters.region}}"
+        SPACE_NAME: "{{deploy.parameters.selected-space}}"
+        ORG_NAME: "{{deploy.parameters.selected-organization}}"
+        REGION_ID: "{{deploy.parameters.selected-region}}"
       execute: true
     services: ["controller-repo"]
   hidden: [form, description]
@@ -92,9 +92,9 @@ webui-build:
         DEV_CF_APP_NAME: "dev-{{deploy.parameters.webui-app-name}}"
         PROD_CONTROLLER_SERVICE: "https://{{deploy.parameters.controller-app-name}}.mybluemix.net"
         PROD_CF_APP_NAME: "{{deploy.parameters.webui-app-name}}"
-        SPACE_NAME: "{{deploy.parameters.space}}"
-        ORG_NAME: "{{deploy.parameters.organization}}"
-        REGION_ID: "{{deploy.parameters.region}}"
+        SPACE_NAME: "{{deploy.parameters.selected-space}}"
+        ORG_NAME: "{{deploy.parameters.selected-organization}}"
+        REGION_ID: "{{deploy.parameters.selected-region}}"
       execute: true
     services: ["webui-repo"]
   hidden: [form, description]
@@ -120,9 +120,9 @@ deploy:
     $ref: deploy.json
   service-category: pipeline
   parameters:
-    region: "{{region}}"
-    organization: "{{organization}}"
-    space: "{{space}}"
+    selected-region: "{{region}}"
+    selected-organization: "{{organization}}"
+    selected-space: "{{space}}"
     erp-app-name: "{{erp-api-repo.parameters.repo_name}}"
     controller-app-name: "{{controller-repo.parameters.repo_name}}"
     webui-app-name: "{{webui-repo.parameters.repo_name}}"
