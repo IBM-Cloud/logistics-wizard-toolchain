@@ -1,7 +1,7 @@
 ---
 name: "Cloud-native Toolchain for the Logistics Wizard"
 description: "With this cloud-native toolchain, you use the logistics wizard template to create a supply chain management web app and back end that consists of multiple microservices: a Controller API, an ERP API, and a WEB-UI. The toolchain is preconfigured for continuous delivery, source control, blue-green deployment, unit testing, and issue tracking.\n\nTo get started, click **Create**."
-version: 0.2
+version: 0.3
 image: data:image/png;base64,$file(toolchain.png,base64)
 required:
  - deploy
@@ -47,9 +47,9 @@ erp-api-build:
         DEV_CF_APP_NAME: "dev-{{deploy.parameters.erp-app-name}}"
         PROD_CF_APP_NAME: "{{deploy.parameters.erp-app-name}}"
         COVERALLS_REPO_TOKEN: "{{github.parameters.erp-api-coveralls_token}}"
-        SPACE_NAME: "{{deploy.parameters.space}}"
-        ORG_NAME: "{{deploy.parameters.organization}}"
-        REGION_ID: "{{deploy.parameters.region}}"
+        SPACE_NAME: "{{deploy.parameters.selected-space}}"
+        ORG_NAME: "{{deploy.parameters.selected-organization}}"
+        REGION_ID: "{{deploy.parameters.selected-region}}"
       execute: true
     services: ["erp-api-repo"]
   hidden: [form, description]
@@ -57,7 +57,7 @@ erp-api-build:
 controller-build:
   service_id: pipeline
   parameters:
-    name: "logistics-wizard"
+    name: "logistics-wizard-controller"
     configuration:
       content: $file(controller.pipeline.yml)
       env:
@@ -73,9 +73,9 @@ controller-build:
         PROD_CF_APP_NAME: "{{deploy.parameters.controller-app-name}}"
         PROD_SMTP_USER_NAME: "{{email.parameters.prod-email}}"
         PROD_SMTP_PASSWORD: "{{email.parameters.prod-password}}"
-        SPACE_NAME: "{{deploy.parameters.space}}"
-        ORG_NAME: "{{deploy.parameters.organization}}"
-        REGION_ID: "{{deploy.parameters.region}}"
+        SPACE_NAME: "{{deploy.parameters.selected-space}}"
+        ORG_NAME: "{{deploy.parameters.selected-organization}}"
+        REGION_ID: "{{deploy.parameters.selected-region}}"
       execute: true
     services: ["controller-repo"]
   hidden: [form, description]
@@ -88,24 +88,27 @@ webui-build:
       content: $file(webui.pipeline.yml)
       env:
         WEBUI_REPO: "webui-repo"
+        DEV_CONTROLLER_SERVICE: "https://dev-{{deploy.parameters.controller-app-name}}.mybluemix.net"
         DEV_CF_APP_NAME: "dev-{{deploy.parameters.webui-app-name}}"
+        PROD_CONTROLLER_SERVICE: "https://{{deploy.parameters.controller-app-name}}.mybluemix.net"
         PROD_CF_APP_NAME: "{{deploy.parameters.webui-app-name}}"
-        SPACE_NAME: "{{deploy.parameters.space}}"
-        ORG_NAME: "{{deploy.parameters.organization}}"
-        REGION_ID: "{{deploy.parameters.region}}"
+        SPACE_NAME: "{{deploy.parameters.selected-space}}"
+        ORG_NAME: "{{deploy.parameters.selected-organization}}"
+        REGION_ID: "{{deploy.parameters.selected-region}}"
       execute: true
     services: ["webui-repo"]
   hidden: [form, description]
 
 #Github
 github:
-  schema: github.json
+  schema:
+    $ref: github.json
   service-category: githubpublic
   parameters:
     erp-api-repo_name: "logistics-wizard-erp"
     erp-api-repo_url: https://github.com/IBM-Bluemix/logistics-wizard-erp
     erp-api-coveralls_token:
-    controller-repo_name: "logistics-wizard"
+    controller-repo_name: "logistics-wizard-controller"
     controller-repo_url: https://github.com/IBM-Bluemix/logistics-wizard
     controller-coveralls_token:
     webui-repo_name: "logistics-wizard-webui"
@@ -113,12 +116,13 @@ github:
 
 #Deployment
 deploy:
-  schema: deploy.json
+  schema:
+    $ref: deploy.json
   service-category: pipeline
   parameters:
-    region: "{{region}}"
-    organization: "{{organization}}"
-    space: "{{space}}"
+    selected-region: "{{region}}"
+    selected-organization: "{{organization}}"
+    selected-space: "{{space}}"
     erp-app-name: "{{erp-api-repo.parameters.repo_name}}"
     controller-app-name: "{{controller-repo.parameters.repo_name}}"
     webui-app-name: "{{webui-repo.parameters.repo_name}}"
