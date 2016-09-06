@@ -44,6 +44,30 @@ stages:
       else
         npm run coverage
       fi
+- name: DEV-TEST (PostgreSQL)
+  inputs:
+  - type: job
+    stage: DEV-BUILD
+    job: Build
+  triggers:
+  - type: stage
+  jobs:
+  - name: Unit Test
+    type: deployer
+    target:
+      region_id: ${REGION_ID}
+      organization: ${ORG_NAME}
+      space: ${SPACE_NAME}
+      application: ${DEV_CF_APP_NAME}
+    script: |
+      #!/bin/bash
+      npm config delete prefix
+      curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.2/install.sh | bash
+      . ~/.nvm/nvm.sh
+      nvm install 4.4
+      npm install
+      export PATH=$PATH:./node_modules/.bin
+      ./test/test-with-postgresql.sh
 - name: DEV-DEPLOY
   inputs:
   - type: job
@@ -119,6 +143,30 @@ stages:
       else
         npm run coverage
       fi
+- name: TEST (PostgreSQL)
+  inputs:
+  - type: job
+    stage: BUILD
+    job: Build
+  triggers:
+  - type: stage
+  jobs:
+  - name: Unit Test
+    type: deployer
+    target:
+      region_id: ${REGION_ID}
+      organization: ${ORG_NAME}
+      space: ${SPACE_NAME}
+      application: ${PROD_CF_APP_NAME}
+    script: |
+      #!/bin/bash
+      npm config delete prefix
+      curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.2/install.sh | bash
+      . ~/.nvm/nvm.sh
+      nvm install 4.4
+      npm install
+      export PATH=$PATH:./node_modules/.bin
+      ./test/test-with-postgresql.sh
 - name: DEPLOY
   inputs:
   - type: job
