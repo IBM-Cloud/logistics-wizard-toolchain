@@ -37,10 +37,10 @@ The TEST stage will make sure your app is capable of sending welcome emails. You
 
 <!--Links-->
 [bluemix_devops_url]: https://new-console.ng.bluemix.net/devops
-[github_controller_url]: https://github.com/IBM-Bluemix/logistics-wizard
+[github_controller_url]: https://github.com/IBM-Bluemix/logistics-wizard-controller
 [github_erp_url]: https://github.com/IBM-Bluemix/logistics-wizard-erp
 [github_webui_url]: https://github.com/IBM-Bluemix/logistics-wizard-webui
 [coveralls_url]: https://coveralls.io/
-[email_instructions_url]: https://github.com/IBM-Bluemix/logistics-wizard#setting-up-email
+[email_instructions_url]: https://github.com/IBM-Bluemix/logistics-wizard-controller#setting-up-email
 [toolchains_overview_url]: https://new-console.ng.bluemix.net/docs/toolchains/toolchains_overview.html
 [toolchains_interconnect_video_url]: https://vimeo.com/156126035/8b04b8878a

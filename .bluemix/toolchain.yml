@@ -109,7 +109,7 @@ github:
     erp-api-repo_url: https://github.com/IBM-Bluemix/logistics-wizard-erp
     erp-api-coveralls_token:
     controller-repo_name: "logistics-wizard-controller"
-    controller-repo_url: https://github.com/IBM-Bluemix/logistics-wizard
+    controller-repo_url: https://github.com/IBM-Bluemix/logistics-wizard-controller
     controller-coveralls_token:
     webui-repo_name: "logistics-wizard-webui"
     webui-repo_url: https://github.com/IBM-Bluemix/logistics-wizard-webui
