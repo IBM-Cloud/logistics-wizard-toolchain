@@ -1,12 +1,75 @@
 ---
 stages:
-- name: DEV-BUILD
+- name: DEV-TEST
   inputs:
   - type: git
     branch: dev
     service: ${CONTROLLER_REPO}
   triggers:
   - type: commit
+  properties:
+  - name: LOGISTICS_WIZARD_ENV
+    value: TEST
+    type: text
+  - name: COVERALLS_REPO_TOKEN
+    value: ${COVERALLS_REPO_TOKEN}
+    type: secure
+  - name: SMTP_SERVER
+    value: smtp.gmail.com
+    type: text
+  - name: SMTP_SERVER_PORT
+    value: 587
+    type: text
+  - name: ERP_SERVICE
+    value: http://0.0.0.0:3000
+    type: text
+  - name: TEST_SMTP_USER_NAME
+    value: ${TEST_SMTP_USER_NAME}
+    type: secure
+  - name: TEST_SMTP_PASSWORD
+    value: ${TEST_SMTP_PASSWORD}
+    type: secure
+  jobs:
+  - name: Unit Test
+    type: tester
+    script: |
+      #!/bin/bash
+      # Get ERP module
+      git submodule init
+      git submodule update
+      cd modules/erp
+      # Download Node v4.4
+      npm config delete prefix
+      curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.2/install.sh | bash
+      . ~/.nvm/nvm.sh
+      nvm install 4.4
+      # Install ERP dependencies and run app in background
+      npm install
+      nohup bash -c "npm start" &
+      # Export email env vars
+      cd ../..
+      export SMTP_USER_NAME=${TEST_SMTP_USER_NAME}
+      export SMTP_PASSWORD=${TEST_SMTP_PASSWORD}
+      # Download Python dependencies
+      sudo pip install virtualenv
+      virtualenv venv
+      source venv/bin/activate
+      export PYTHONPATH=$PWD
+      pip install -r requirements.dev.txt
+      # Run unit and coverage tests
+      coverage run server/tests/run_tests.py
+      if [ -z ${COVERALLS_REPO_TOKEN} ]; then
+        echo No Coveralls token specified, skipping coveralls.io upload
+      else
+        COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN coveralls
+      fi
+- name: DEV-BUILD
+  inputs:
+  - type: git
+    branch: dev
+    service: ${CONTROLLER_REPO}
+  triggers:
+  - type: stage
   jobs:
   - name: Build
     type: builder
