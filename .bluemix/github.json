@@ -28,6 +28,9 @@
     },
     "webui-repo_url": {
       "type": "string"
+    },
+    "webui-coveralls_token": {
+      "type": "string"
     }
   },
   "required": ["erp-api-repo_name", "erp-api-repo_url", "controller-repo_name", "controller-repo_url", "webui-repo_name", "webui-repo_url"],
@@ -102,6 +105,12 @@
       "readonly": false,
       "title": "Controller Coveralls Token",
       "key": "controller-coveralls_token"
+    },
+    {
+      "type": "text",
+      "readonly": false,
+      "title": "WEBUI Coveralls Token",
+      "key": "webui-coveralls_token"
     }
   ]
 }

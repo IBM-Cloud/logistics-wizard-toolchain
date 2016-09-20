@@ -88,6 +88,7 @@ webui-build:
       content: $file(webui.pipeline.yml)
       env:
         WEBUI_REPO: "webui-repo"
+        COVERALLS_REPO_TOKEN: "{{github.parameters.webui-coveralls_token}}"
         DEV_CONTROLLER_SERVICE: "https://dev-{{deploy.parameters.controller-app-name}}.mybluemix.net"
         DEV_CF_APP_NAME: "dev-{{deploy.parameters.webui-app-name}}"
         PROD_CONTROLLER_SERVICE: "https://{{deploy.parameters.controller-app-name}}.mybluemix.net"
@@ -113,6 +114,7 @@ github:
     controller-coveralls_token:
     webui-repo_name: "logistics-wizard-webui"
     webui-repo_url: https://github.com/IBM-Bluemix/logistics-wizard-webui
+    webui-coveralls_token:
 
 #Deployment
 deploy:
