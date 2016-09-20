@@ -116,6 +116,10 @@ github:
     webui-repo_url: https://github.com/IBM-Bluemix/logistics-wizard-webui
     webui-coveralls_token:
 
+#Web IDE
+webide:
+  service_id: orion
+
 #Deployment
 deploy:
   schema:
