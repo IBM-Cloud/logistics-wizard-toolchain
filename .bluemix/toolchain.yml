@@ -80,17 +80,33 @@ controller-build:
     services: ["controller-repo"]
   hidden: [form, description]
 
-webui-build:
+webui-build-dev:
   service_id: pipeline
   parameters:
-    name: "logistics-wizard-webui"
+    name: "logistics-wizard-webui (dev)"
     configuration:
-      content: $file(webui.pipeline.yml)
+      content: $file(webui.pipeline.dev.yml)
       env:
         WEBUI_REPO: "webui-repo"
         COVERALLS_REPO_TOKEN: "{{github.parameters.webui-coveralls_token}}"
         DEV_CONTROLLER_SERVICE: "https://dev-{{deploy.parameters.controller-app-name}}.mybluemix.net"
         DEV_CF_APP_NAME: "dev-{{deploy.parameters.webui-app-name}}"
+        SPACE_NAME: "{{deploy.parameters.selected-space}}"
+        ORG_NAME: "{{deploy.parameters.selected-organization}}"
+        REGION_ID: "{{deploy.parameters.selected-region}}"
+      execute: true
+    services: ["webui-repo"]
+  hidden: [form, description]
+
+webui-build-prod:
+  service_id: pipeline
+  parameters:
+    name: "logistics-wizard-webui (prod)"
+    configuration:
+      content: $file(webui.pipeline.prod.yml)
+      env:
+        WEBUI_REPO: "webui-repo"
+        COVERALLS_REPO_TOKEN: "{{github.parameters.webui-coveralls_token}}"
         PROD_CONTROLLER_SERVICE: "https://{{deploy.parameters.controller-app-name}}.mybluemix.net"
         PROD_CF_APP_NAME: "{{deploy.parameters.webui-app-name}}"
         SPACE_NAME: "{{deploy.parameters.selected-space}}"

@@ -1,0 +1,66 @@
+---
+stages:
+- name: DEV-BUILD
+  inputs:
+  - type: git
+    branch: dev
+    service: ${WEBUI_REPO}
+  triggers:
+  - type: commit
+  properties:
+  - name: DEV_CONTROLLER_SERVICE
+    value: ${DEV_CONTROLLER_SERVICE}
+    type: text
+  - name: COVERALLS_REPO_TOKEN
+    value: ${COVERALLS_REPO_TOKEN}
+    type: secure
+  jobs:
+  - name: Build
+    type: builder
+    artifact_dir: dist
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      npm config delete prefix
+      curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.2/install.sh | bash
+      . ~/.nvm/nvm.sh
+      nvm install 4.4
+      npm install
+      npm run test
+      npm run check-coverage
+      if [ -z ${COVERALLS_REPO_TOKEN} ]; then
+        echo No Coveralls token specified, skipping coveralls.io upload
+      else
+        COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN npm run coveralls
+      fi
+      # inject the location of the controller service
+      export CONTROLLER_SERVICE=${DEV_CONTROLLER_SERVICE}
+      npm run deploy:prod
+- name: DEV-DEPLOY
+  inputs:
+  - type: job
+    stage: DEV-BUILD
+    job: Build
+  properties:
+  - name: CF_APP_NAME
+    value: ${DEV_CF_APP_NAME}
+    type: text
+  - name: LOGISTICS_WIZARD_ENV
+    value: DEV
+    type: text
+  jobs:
+  - name: Deploy to dev
+    type: deployer
+    target:
+      region_id: ${REGION_ID}
+      organization: ${ORG_NAME}
+      space: ${SPACE_NAME}
+      application: ${DEV_CF_APP_NAME}
+    script: |-
+      #!/bin/bash
+      # Push the app
+      cf push "${CF_APP_NAME}" -n $CF_APP --no-start
+
+      # Set app's env vars
+      cf set-env ${CF_APP_NAME} LOGISTICS_WIZARD_ENV ${LOGISTICS_WIZARD_ENV}
+      cf start ${CF_APP}
