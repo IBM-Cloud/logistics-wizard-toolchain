@@ -36,15 +36,31 @@ webui-repo:
   hidden: [form, description]
 
 # Pipelines
-erp-api-build:
+erp-api-build-dev:
   service_id: pipeline
   parameters:
-    name: "logistics-wizard-erp"
+    name: "erp (dev)"
     configuration:
-      content: $file(erp-api.pipeline.yml)
+      content: $file(erp-api.pipeline.dev.yml)
       env:
         ERP_API_REPO: "erp-api-repo"
         DEV_CF_APP_NAME: "dev-{{deploy.parameters.erp-app-name}}"
+        COVERALLS_REPO_TOKEN: "{{github.parameters.erp-api-coveralls_token}}"
+        SPACE_NAME: "{{deploy.parameters.selected-space}}"
+        ORG_NAME: "{{deploy.parameters.selected-organization}}"
+        REGION_ID: "{{deploy.parameters.selected-region}}"
+      execute: true
+    services: ["erp-api-repo"]
+  hidden: [form, description]
+
+erp-api-build-prod:
+  service_id: pipeline
+  parameters:
+    name: "erp (prod)"
+    configuration:
+      content: $file(erp-api.pipeline.prod.yml)
+      env:
+        ERP_API_REPO: "erp-api-repo"
         PROD_CF_APP_NAME: "{{deploy.parameters.erp-app-name}}"
         COVERALLS_REPO_TOKEN: "{{github.parameters.erp-api-coveralls_token}}"
         SPACE_NAME: "{{deploy.parameters.selected-space}}"
@@ -54,12 +70,12 @@ erp-api-build:
     services: ["erp-api-repo"]
   hidden: [form, description]
 
-controller-build:
+controller-build-dev:
   service_id: pipeline
   parameters:
-    name: "logistics-wizard-controller"
+    name: "controller (dev)"
     configuration:
-      content: $file(controller.pipeline.yml)
+      content: $file(controller.pipeline.dev.yml)
       env:
         CONTROLLER_REPO: "controller-repo"
         COVERALLS_REPO_TOKEN: "{{github.parameters.controller-coveralls_token}}"
@@ -67,6 +83,24 @@ controller-build:
         DEV_CF_APP_NAME: "dev-{{deploy.parameters.controller-app-name}}"
         DEV_SMTP_USER_NAME: "{{email.parameters.dev-email}}"
         DEV_SMTP_PASSWORD: "{{email.parameters.dev-password}}"
+        TEST_SMTP_USER_NAME: "{{email.parameters.test-email}}"
+        TEST_SMTP_PASSWORD: "{{email.parameters.test-password}}"
+        SPACE_NAME: "{{deploy.parameters.selected-space}}"
+        ORG_NAME: "{{deploy.parameters.selected-organization}}"
+        REGION_ID: "{{deploy.parameters.selected-region}}"
+      execute: true
+    services: ["controller-repo"]
+  hidden: [form, description]
+
+controller-build-prod:
+  service_id: pipeline
+  parameters:
+    name: "controller (prod)"
+    configuration:
+      content: $file(controller.pipeline.prod.yml)
+      env:
+        CONTROLLER_REPO: "controller-repo"
+        COVERALLS_REPO_TOKEN: "{{github.parameters.controller-coveralls_token}}"
         TEST_SMTP_USER_NAME: "{{email.parameters.test-email}}"
         TEST_SMTP_PASSWORD: "{{email.parameters.test-password}}"
         PROD_ERP_SERVICE: "https://{{deploy.parameters.erp-app-name}}.mybluemix.net"
