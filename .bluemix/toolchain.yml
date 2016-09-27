@@ -83,7 +83,7 @@ controller-build:
 webui-build-dev:
   service_id: pipeline
   parameters:
-    name: "logistics-wizard-webui (dev)"
+    name: "webui (dev)"
     configuration:
       content: $file(webui.pipeline.dev.yml)
       env:
@@ -101,7 +101,7 @@ webui-build-dev:
 webui-build-prod:
   service_id: pipeline
   parameters:
-    name: "logistics-wizard-webui (prod)"
+    name: "webui (prod)"
     configuration:
       content: $file(webui.pipeline.prod.yml)
       env:
