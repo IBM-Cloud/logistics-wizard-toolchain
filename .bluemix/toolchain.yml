@@ -36,38 +36,22 @@ webui-repo:
   hidden: [form, description]
 
 # Pipelines
-erp-api-build-dev:
+webui-build-dev:
   service_id: pipeline
   parameters:
-    name: "erp (dev)"
+    name: "webui (dev)"
     configuration:
-      content: $file(erp-api.pipeline.dev.yml)
+      content: $file(webui.pipeline.dev.yml)
       env:
-        ERP_API_REPO: "erp-api-repo"
-        DEV_CF_APP_NAME: "dev-{{deploy.parameters.erp-app-name}}"
-        COVERALLS_REPO_TOKEN: "{{github.parameters.erp-api-coveralls_token}}"
+        WEBUI_REPO: "webui-repo"
+        COVERALLS_REPO_TOKEN: "{{github.parameters.webui-coveralls_token}}"
+        DEV_CONTROLLER_SERVICE: "https://dev-{{deploy.parameters.controller-app-name}}.mybluemix.net"
+        DEV_CF_APP_NAME: "dev-{{deploy.parameters.webui-app-name}}"
         SPACE_NAME: "{{deploy.parameters.selected-space}}"
         ORG_NAME: "{{deploy.parameters.selected-organization}}"
         REGION_ID: "{{deploy.parameters.selected-region}}"
       execute: true
-    services: ["erp-api-repo"]
-  hidden: [form, description]
-
-erp-api-build-prod:
-  service_id: pipeline
-  parameters:
-    name: "erp (prod)"
-    configuration:
-      content: $file(erp-api.pipeline.prod.yml)
-      env:
-        ERP_API_REPO: "erp-api-repo"
-        PROD_CF_APP_NAME: "{{deploy.parameters.erp-app-name}}"
-        COVERALLS_REPO_TOKEN: "{{github.parameters.erp-api-coveralls_token}}"
-        SPACE_NAME: "{{deploy.parameters.selected-space}}"
-        ORG_NAME: "{{deploy.parameters.selected-organization}}"
-        REGION_ID: "{{deploy.parameters.selected-region}}"
-      execute: true
-    services: ["erp-api-repo"]
+    services: ["webui-repo"]
   hidden: [form, description]
 
 controller-build-dev:
@@ -92,6 +76,41 @@ controller-build-dev:
     services: ["controller-repo"]
   hidden: [form, description]
 
+erp-api-build-dev:
+  service_id: pipeline
+  parameters:
+    name: "erp (dev)"
+    configuration:
+      content: $file(erp-api.pipeline.dev.yml)
+      env:
+        ERP_API_REPO: "erp-api-repo"
+        DEV_CF_APP_NAME: "dev-{{deploy.parameters.erp-app-name}}"
+        COVERALLS_REPO_TOKEN: "{{github.parameters.erp-api-coveralls_token}}"
+        SPACE_NAME: "{{deploy.parameters.selected-space}}"
+        ORG_NAME: "{{deploy.parameters.selected-organization}}"
+        REGION_ID: "{{deploy.parameters.selected-region}}"
+      execute: true
+    services: ["erp-api-repo"]
+  hidden: [form, description]
+
+webui-build-prod:
+  service_id: pipeline
+  parameters:
+    name: "webui (prod)"
+    configuration:
+      content: $file(webui.pipeline.prod.yml)
+      env:
+        WEBUI_REPO: "webui-repo"
+        COVERALLS_REPO_TOKEN: "{{github.parameters.webui-coveralls_token}}"
+        PROD_CONTROLLER_SERVICE: "https://{{deploy.parameters.controller-app-name}}.mybluemix.net"
+        PROD_CF_APP_NAME: "{{deploy.parameters.webui-app-name}}"
+        SPACE_NAME: "{{deploy.parameters.selected-space}}"
+        ORG_NAME: "{{deploy.parameters.selected-organization}}"
+        REGION_ID: "{{deploy.parameters.selected-region}}"
+      execute: true
+    services: ["webui-repo"]
+  hidden: [form, description]
+
 controller-build-prod:
   service_id: pipeline
   parameters:
@@ -114,41 +133,23 @@ controller-build-prod:
     services: ["controller-repo"]
   hidden: [form, description]
 
-webui-build-dev:
+erp-api-build-prod:
   service_id: pipeline
   parameters:
-    name: "webui (dev)"
+    name: "erp (prod)"
     configuration:
-      content: $file(webui.pipeline.dev.yml)
+      content: $file(erp-api.pipeline.prod.yml)
       env:
-        WEBUI_REPO: "webui-repo"
-        COVERALLS_REPO_TOKEN: "{{github.parameters.webui-coveralls_token}}"
-        DEV_CONTROLLER_SERVICE: "https://dev-{{deploy.parameters.controller-app-name}}.mybluemix.net"
-        DEV_CF_APP_NAME: "dev-{{deploy.parameters.webui-app-name}}"
+        ERP_API_REPO: "erp-api-repo"
+        PROD_CF_APP_NAME: "{{deploy.parameters.erp-app-name}}"
+        COVERALLS_REPO_TOKEN: "{{github.parameters.erp-api-coveralls_token}}"
         SPACE_NAME: "{{deploy.parameters.selected-space}}"
         ORG_NAME: "{{deploy.parameters.selected-organization}}"
         REGION_ID: "{{deploy.parameters.selected-region}}"
       execute: true
-    services: ["webui-repo"]
+    services: ["erp-api-repo"]
   hidden: [form, description]
 
-webui-build-prod:
-  service_id: pipeline
-  parameters:
-    name: "webui (prod)"
-    configuration:
-      content: $file(webui.pipeline.prod.yml)
-      env:
-        WEBUI_REPO: "webui-repo"
-        COVERALLS_REPO_TOKEN: "{{github.parameters.webui-coveralls_token}}"
-        PROD_CONTROLLER_SERVICE: "https://{{deploy.parameters.controller-app-name}}.mybluemix.net"
-        PROD_CF_APP_NAME: "{{deploy.parameters.webui-app-name}}"
-        SPACE_NAME: "{{deploy.parameters.selected-space}}"
-        ORG_NAME: "{{deploy.parameters.selected-organization}}"
-        REGION_ID: "{{deploy.parameters.selected-region}}"
-      execute: true
-    services: ["webui-repo"]
-  hidden: [form, description]
 
 #Github
 github:
