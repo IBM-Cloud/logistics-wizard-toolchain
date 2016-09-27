@@ -5,6 +5,11 @@ This toolchain will allow you to deploy the entire [Logistics Wizard](https://gi
 - [ERP][github_erp_url] - An API that handles user login and interaction with the ERP system objects.  
 - [WEBUI][github_webui_url] - The Web UI that is the web front end of the entire application, built using React.
 
+## Create the toolchain
+
+**To get started, click this button:**  
+[![Deploy To Bluemix](./.bluemix/create_toolchain_button.png)](https://new-console.ng.bluemix.net/devops/setup/deploy/?repository=https%3A//github.com//IBM-Bluemix/logistics-wizard-toolchain.git)
+
 The toolchain is preconfigured for:
 
 - issue tracking
@@ -14,11 +19,6 @@ The toolchain is preconfigured for:
 - blue-green deployment
 
 ![Toolchain template steps](./.bluemix/toolchain.png)
-
-## Create the toolchain
-
-**To get started, click this button:**  
-[![Deploy To Bluemix](./.bluemix/create_toolchain_button.png)](https://new-console.ng.bluemix.net/devops/setup/deploy/?repository=https%3A//github.com//IBM-Bluemix/logistics-wizard-toolchain.git)
 
 ### Setting up code coverage tests
 
