@@ -1,6 +1,6 @@
 ---
 stages:
-- name: DEV-BUILD
+- name: BUILD
   inputs:
   - type: git
     branch: dev
@@ -36,10 +36,10 @@ stages:
       # inject the location of the controller service
       export CONTROLLER_SERVICE=${DEV_CONTROLLER_SERVICE}
       npm run deploy:prod
-- name: DEV-DEPLOY
+- name: DEPLOY
   inputs:
   - type: job
-    stage: DEV-BUILD
+    stage: BUILD
     job: Build
   properties:
   - name: CF_APP_NAME
