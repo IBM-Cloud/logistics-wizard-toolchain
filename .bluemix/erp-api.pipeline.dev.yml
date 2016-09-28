@@ -1,0 +1,102 @@
+---
+stages:
+- name: BUILD
+  inputs:
+  - type: git
+    branch: dev
+    service: ${ERP_API_REPO}
+  triggers:
+  - type: commit
+  jobs:
+  - name: Build
+    type: builder
+- name: TEST
+  inputs:
+  - type: job
+    stage: BUILD
+    job: Build
+  triggers:
+  - type: stage
+  properties:
+  - name: COVERALLS_SERVICE_NAME
+    value: bluemix-devops-services
+    type: text
+  - name: COVERALLS_REPO_TOKEN
+    type: secure
+    value: ${COVERALLS_REPO_TOKEN}
+  - name: LOGISTICS_WIZARD_ENV
+    value: DEV
+    type: text
+  jobs:
+  - name: Unit Test
+    type: builder
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      npm config delete prefix
+      curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.2/install.sh | bash
+      . ~/.nvm/nvm.sh
+      nvm install 4.4
+      npm install
+      if [ -z ${COVERALLS_REPO_TOKEN} ]; then
+        npm run localcoverage
+        echo No Coveralls token specified, skipping coveralls.io upload
+      else
+        npm run coverage
+      fi
+- name: TEST (PostgreSQL)
+  inputs:
+  - type: job
+    stage: BUILD
+    job: Build
+  triggers:
+  - type: stage
+  jobs:
+  - name: Unit Test
+    type: deployer
+    target:
+      region_id: ${REGION_ID}
+      organization: ${ORG_NAME}
+      space: ${SPACE_NAME}
+      application: ${DEV_CF_APP_NAME}
+    script: |
+      #!/bin/bash
+      npm config delete prefix
+      curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.2/install.sh | bash
+      . ~/.nvm/nvm.sh
+      nvm install 4.4
+      npm install
+      export PATH=$PATH:./node_modules/.bin
+      ./test/test-with-postgresql.sh
+- name: DEPLOY
+  inputs:
+  - type: job
+    stage: BUILD
+    job: Build
+  triggers:
+  - type: stage
+  properties:
+  - name: CF_APP_NAME
+    value: ${DEV_CF_APP_NAME}
+    type: text
+  - name: LOGISTICS_WIZARD_ENV
+    value: DEV
+    type: text
+  jobs:
+  - name: Deploy to dev
+    type: deployer
+    target:
+      region_id: ${REGION_ID}
+      organization: ${ORG_NAME}
+      space: ${SPACE_NAME}
+      application: ${DEV_CF_APP_NAME}
+    script: |-
+      #!/bin/bash
+      # Create CF services
+      cf create-service service_discovery free lw-service-discovery
+      cf create-service elephantsql turtle dev-logistics-wizard-erp-db
+      # Deploy app
+      cf push "${CF_APP_NAME}" -n $CF_APP -f dev-manifest.yml --no-start
+      # Set app's env vars
+      cf set-env ${CF_APP_NAME} LOGISTICS_WIZARD_ENV ${LOGISTICS_WIZARD_ENV}
+      cf start ${CF_APP}
