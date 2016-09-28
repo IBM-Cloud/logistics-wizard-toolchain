@@ -14,29 +14,14 @@ stages:
   - name: COVERALLS_REPO_TOKEN
     value: ${COVERALLS_REPO_TOKEN}
     type: secure
-  - name: SMTP_SERVER
-    value: smtp.gmail.com
-    type: text
-  - name: SMTP_SERVER_PORT
-    value: 587
-    type: text
   - name: ERP_SERVICE
     value: http://0.0.0.0:3000
     type: text
-  - name: TEST_SMTP_USER_NAME
-    value: ${TEST_SMTP_USER_NAME}
-    type: secure
-  - name: TEST_SMTP_PASSWORD
-    value: ${TEST_SMTP_PASSWORD}
-    type: secure
   jobs:
   - name: Unit Test
     type: tester
     script: |
       #!/bin/bash
-      # Export email env vars
-      export SMTP_USER_NAME=${TEST_SMTP_USER_NAME}
-      export SMTP_PASSWORD=${TEST_SMTP_PASSWORD}
       # Download Python dependencies
       sudo pip install virtualenv
       virtualenv venv
@@ -77,18 +62,6 @@ stages:
   - name: PROD_ERP_SERVICE
     value: ${PROD_ERP_SERVICE}
     type: text
-  - name: SMTP_SERVER
-    value: smtp.gmail.com
-    type: text
-  - name: SMTP_SERVER_PORT
-    value: 587
-    type: text
-  - name: PROD_SMTP_USER_NAME
-    value: ${PROD_SMTP_USER_NAME}
-    type: secure
-  - name: PROD_SMTP_PASSWORD
-    value: ${PROD_SMTP_PASSWORD}
-    type: secure
   jobs:
   - name: Blue/Green Deploy
     type: deployer
@@ -124,12 +97,6 @@ stages:
       # Set app's env vars
       cf set-env ${CF_APP_NAME} LOGISTICS_WIZARD_ENV ${LOGISTICS_WIZARD_ENV}
       cf set-env ${CF_APP_NAME} ERP_SERVICE ${PROD_ERP_SERVICE}
-      cf set-env ${CF_APP_NAME} SMTP_SERVER ${SMTP_SERVER}
-      cf set-env ${CF_APP_NAME} SMTP_SERVER_PORT ${SMTP_SERVER_PORT}
-      if [ ! -z ${PROD_SMTP_USER_NAME} ]; then
-        cf set-env ${CF_APP_NAME} SMTP_USER_NAME ${PROD_SMTP_USER_NAME}
-        cf set-env ${CF_APP_NAME} SMTP_PASSWORD ${PROD_SMTP_PASSWORD}
-      fi
       if cf service lw-service-discovery; then
         SD_STATUS=ON
       else
