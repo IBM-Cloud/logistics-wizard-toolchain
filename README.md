@@ -24,10 +24,6 @@ The toolchain is preconfigured for:
 
 In order to utilize the code coverage tests in the pipelines, you need add your repos to [coveralls][coveralls_url] and get the generated repo token. Once you get these tokens, use these values in the GitHub section during the toolchain configuration. Coverage tests will not be reported if you leave these values blank.
 
-### Setting up email environment variables
-
-The TEST stage will make sure your app is capable of sending welcome emails. You need to set the corresponding environment variables by following the [Setting up email][email_instructions_url] section in the Logistics Wizard Controller README. Once you have your Gmail username and password, use these values in the Delivery Pipeline section during the toolchain configuration. Your controller app will be unable to send emails and corresponding tests will not be run if you leave these values blank.
-
 ---
 ### Learn more
 
@@ -41,6 +37,5 @@ The TEST stage will make sure your app is capable of sending welcome emails. You
 [github_erp_url]: https://github.com/IBM-Bluemix/logistics-wizard-erp
 [github_webui_url]: https://github.com/IBM-Bluemix/logistics-wizard-webui
 [coveralls_url]: https://coveralls.io/
-[email_instructions_url]: https://github.com/IBM-Bluemix/logistics-wizard-controller#setting-up-email
 [toolchains_overview_url]: https://new-console.ng.bluemix.net/docs/toolchains/toolchains_overview.html
 [toolchains_interconnect_video_url]: https://vimeo.com/156126035/8b04b8878a

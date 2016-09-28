@@ -81,10 +81,6 @@ controller-build-dev:
         COVERALLS_REPO_TOKEN: "{{github.parameters.controller-coveralls_token}}"
         DEV_ERP_SERVICE: "https://dev-{{deploy.parameters.erp-app-name}}.mybluemix.net"
         DEV_CF_APP_NAME: "dev-{{deploy.parameters.controller-app-name}}"
-        DEV_SMTP_USER_NAME: "{{email.parameters.dev-email}}"
-        DEV_SMTP_PASSWORD: "{{email.parameters.dev-password}}"
-        TEST_SMTP_USER_NAME: "{{email.parameters.test-email}}"
-        TEST_SMTP_PASSWORD: "{{email.parameters.test-password}}"
         SPACE_NAME: "{{deploy.parameters.selected-space}}"
         ORG_NAME: "{{deploy.parameters.selected-organization}}"
         REGION_ID: "{{deploy.parameters.selected-region}}"
@@ -101,12 +97,8 @@ controller-build-prod:
       env:
         CONTROLLER_REPO: "controller-repo"
         COVERALLS_REPO_TOKEN: "{{github.parameters.controller-coveralls_token}}"
-        TEST_SMTP_USER_NAME: "{{email.parameters.test-email}}"
-        TEST_SMTP_PASSWORD: "{{email.parameters.test-password}}"
         PROD_ERP_SERVICE: "https://{{deploy.parameters.erp-app-name}}.mybluemix.net"
         PROD_CF_APP_NAME: "{{deploy.parameters.controller-app-name}}"
-        PROD_SMTP_USER_NAME: "{{email.parameters.prod-email}}"
-        PROD_SMTP_PASSWORD: "{{email.parameters.prod-password}}"
         SPACE_NAME: "{{deploy.parameters.selected-space}}"
         ORG_NAME: "{{deploy.parameters.selected-organization}}"
         REGION_ID: "{{deploy.parameters.selected-region}}"
@@ -182,15 +174,3 @@ deploy:
     erp-app-name: "{{erp-api-repo.parameters.repo_name}}"
     controller-app-name: "{{controller-repo.parameters.repo_name}}"
     webui-app-name: "{{webui-repo.parameters.repo_name}}"
-
-#Email
-email:
-  schema: email.json
-  service-category: pipeline
-  parameters:
-    dev-email:
-    dev-password:
-    test-email:
-    test-password:
-    prod-email:
-    prod-password:
