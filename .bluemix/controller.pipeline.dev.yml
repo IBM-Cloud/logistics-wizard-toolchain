@@ -60,9 +60,11 @@ stages:
   - name: LOGISTICS_WIZARD_ENV
     value: DEV
     type: text
-  - name: DEV_ERP_SERVICE
-    value: ${DEV_ERP_SERVICE}
+  - name: ERP_SERVICE_APP_NAME
+    value: ${ERP_SERVICE_APP_NAME}
     type: text
+  - name: REGION_ID
+    value: ${REGION_ID}
   jobs:
   - name: Deploy to dev
     type: deployer
@@ -77,7 +79,16 @@ stages:
       cf create-service service_discovery free lw-service-discovery
       cf push "${CF_APP_NAME}"  -n $CF_APP --no-start
       # Set app's env vars
+      domain=".mybluemix.net"
+      case "${REGION_ID}" in
+        ibm:yp:eu-gb)
+          domain=".eu-gb.mybluemix.net"
+        ;;
+        ibm:yp:au-syd)
+        domain=".au-syd.mybluemix.net"
+        ;;
+      esac
       cf set-env ${CF_APP_NAME} LOGISTICS_WIZARD_ENV ${LOGISTICS_WIZARD_ENV}
-      cf set-env ${CF_APP_NAME} ERP_SERVICE ${DEV_ERP_SERVICE}
+      cf set-env ${CF_APP_NAME} ERP_SERVICE https://$ERP_SERVICE_APP_NAME$domain
       cf set-env ${CF_APP_NAME} SD_STATUS OFF
       cf start ${CF_APP}

@@ -59,9 +59,11 @@ stages:
   - name: LOGISTICS_WIZARD_ENV
     value: PROD
     type: text
-  - name: PROD_ERP_SERVICE
-    value: ${PROD_ERP_SERVICE}
+  - name: ERP_SERVICE_APP_NAME
+    value: ${ERP_SERVICE_APP_NAME}
     type: text
+  - name: REGION_ID
+    value: ${REGION_ID}
   jobs:
   - name: Blue/Green Deploy
     type: deployer
@@ -95,8 +97,17 @@ stages:
         cf delete $OLD_CF_APP -f
       fi
       # Set app's env vars
+      domain=".mybluemix.net"
+      case "${REGION_ID}" in
+        ibm:yp:eu-gb)
+          domain=".eu-gb.mybluemix.net"
+        ;;
+        ibm:yp:au-syd)
+        domain=".au-syd.mybluemix.net"
+        ;;
+      esac
       cf set-env ${CF_APP_NAME} LOGISTICS_WIZARD_ENV ${LOGISTICS_WIZARD_ENV}
-      cf set-env ${CF_APP_NAME} ERP_SERVICE ${PROD_ERP_SERVICE}
+      cf set-env ${CF_APP_NAME} ERP_SERVICE https://$ERP_SERVICE_APP_NAME$domain
       if cf service lw-service-discovery; then
         SD_STATUS=ON
       else

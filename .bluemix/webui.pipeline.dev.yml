@@ -8,12 +8,14 @@ stages:
   triggers:
   - type: commit
   properties:
-  - name: DEV_CONTROLLER_SERVICE
-    value: ${DEV_CONTROLLER_SERVICE}
+  - name: CONTROLLER_SERVICE_APP_NAME
+    value: ${CONTROLLER_SERVICE_APP_NAME}
     type: text
   - name: COVERALLS_REPO_TOKEN
     value: ${COVERALLS_REPO_TOKEN}
     type: secure
+  - name: REGION_ID
+    value: ${REGION_ID}
   jobs:
   - name: Build
     type: builder
@@ -34,7 +36,16 @@ stages:
         COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN npm run coveralls
       fi
       # inject the location of the controller service
-      export CONTROLLER_SERVICE=${DEV_CONTROLLER_SERVICE}
+      domain=".mybluemix.net"
+      case "${REGION_ID}" in
+        ibm:yp:eu-gb)
+          domain=".eu-gb.mybluemix.net"
+        ;;
+        ibm:yp:au-syd)
+        domain=".au-syd.mybluemix.net"
+        ;;
+      esac
+      export CONTROLLER_SERVICE=https://$CONTROLLER_SERVICE_APP_NAME$domain
       npm run deploy:prod
 - name: DEPLOY
   inputs:
