@@ -76,7 +76,6 @@ stages:
     script: |-
       #!/bin/bash
       # Create CF services
-      cf create-service service_discovery free lw-service-discovery
       cf push "${CF_APP_NAME}"  -n $CF_APP --no-start
       # Set app's env vars
       domain=".mybluemix.net"
@@ -90,5 +89,4 @@ stages:
       esac
       cf set-env ${CF_APP_NAME} LOGISTICS_WIZARD_ENV ${LOGISTICS_WIZARD_ENV}
       cf set-env ${CF_APP_NAME} ERP_SERVICE https://$ERP_SERVICE_APP_NAME$domain
-      cf set-env ${CF_APP_NAME} SD_STATUS OFF
       cf start ${CF_APP}

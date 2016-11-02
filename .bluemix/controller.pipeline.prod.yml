@@ -74,8 +74,6 @@ stages:
       application: ${PROD_CF_APP_NAME}
     script: |-
       #!/bin/bash
-      # Create CF services
-      cf create-service service_discovery free lw-service-discovery
       # Deploy app
       if ! cf app $CF_APP; then
         cf push $CF_APP -n $CF_APP
@@ -108,10 +106,4 @@ stages:
       esac
       cf set-env ${CF_APP_NAME} LOGISTICS_WIZARD_ENV ${LOGISTICS_WIZARD_ENV}
       cf set-env ${CF_APP_NAME} ERP_SERVICE https://$ERP_SERVICE_APP_NAME$domain
-      if cf service lw-service-discovery; then
-        SD_STATUS=ON
-      else
-        SD_STATUS=OFF
-      fi
-      cf set-env ${CF_APP_NAME} SD_STATUS ${SD_STATUS}
       cf restage ${CF_APP_NAME}
