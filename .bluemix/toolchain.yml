@@ -139,17 +139,6 @@ webui-build-prod:
     services: ["webui-repo"]
   hidden: [form, description]
 
-#Coveralls
-coveralls:
-  schema:
-    $ref: coveralls.json
-  service-category: pipeline
-  parameters:
-    type: "coveralls"
-    erp-api-coveralls_token:
-    controller-coveralls_token:
-    webui-coveralls_token:
-
 #Web IDE
 webide:
   service_id: orion
@@ -166,3 +155,13 @@ deploy:
     erp-app-name: "{{erp-api-repo.parameters.repo_name}}"
     controller-app-name: "{{controller-repo.parameters.repo_name}}"
     webui-app-name: "{{webui-repo.parameters.repo_name}}"
+
+#Coveralls
+coveralls:
+  schema:
+    $ref: coveralls.json
+  service-category: pipeline
+  parameters:
+    erp-api-coveralls_token:
+    controller-coveralls_token:
+    webui-coveralls_token:
