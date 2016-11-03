@@ -50,9 +50,6 @@ stages:
   triggers:
   - type: stage
   properties:
-  - name: CF_APP_NAME
-    value: ${CF_APP_NAME}
-    type: text
   - name: LOGISTICS_WIZARD_ENV
     value: PROD
     type: text
@@ -71,9 +68,22 @@ stages:
       application: ${CF_APP_NAME}
     script: |-
       #!/bin/bash
+      # Set app's env vars
+      domain=".mybluemix.net"
+      case "${REGION_ID}" in
+        ibm:yp:eu-gb)
+          domain=".eu-gb.mybluemix.net"
+        ;;
+        ibm:yp:au-syd)
+        domain=".au-syd.mybluemix.net"
+        ;;
+      esac
       # Deploy app
       if ! cf app $CF_APP; then
-        cf push $CF_APP -n $CF_APP
+        cf push $CF_APP -n $CF_APP --no-start
+        cf set-env $CF_APP LOGISTICS_WIZARD_ENV ${LOGISTICS_WIZARD_ENV}
+        cf set-env $CF_APP ERP_SERVICE https://$ERP_SERVICE_APP_NAME$domain
+        cf start $CF_APP
       else
         OLD_CF_APP=${CF_APP}-OLD-$(date +"%s")
         rollback() {
@@ -88,19 +98,9 @@ stages:
         set -e
         trap rollback ERR
         cf rename $CF_APP $OLD_CF_APP
-        cf push $CF_APP -n $CF_APP
+        cf push $CF_APP -n $CF_APP --no-start
+        cf set-env $CF_APP LOGISTICS_WIZARD_ENV ${LOGISTICS_WIZARD_ENV}
+        cf set-env $CF_APP ERP_SERVICE https://$ERP_SERVICE_APP_NAME$domain
+        cf start $CF_APP
         cf delete $OLD_CF_APP -f
       fi
-      # Set app's env vars
-      domain=".mybluemix.net"
-      case "${REGION_ID}" in
-        ibm:yp:eu-gb)
-          domain=".eu-gb.mybluemix.net"
-        ;;
-        ibm:yp:au-syd)
-        domain=".au-syd.mybluemix.net"
-        ;;
-      esac
-      cf set-env ${CF_APP_NAME} LOGISTICS_WIZARD_ENV ${LOGISTICS_WIZARD_ENV}
-      cf set-env ${CF_APP_NAME} ERP_SERVICE https://$ERP_SERVICE_APP_NAME$domain
-      cf restage ${CF_APP_NAME}

@@ -94,7 +94,9 @@ stages:
       # Create CF services
       cf create-service elephantsql turtle logistics-wizard-erp-db
       if ! cf app $CF_APP; then
-        cf push $CF_APP -n $CF_APP
+        cf push $CF_APP -n $CF_APP --no-start
+        cf set-env $CF_APP LOGISTICS_WIZARD_ENV ${LOGISTICS_WIZARD_ENV}
+        cf start $CF_APP
       else
         OLD_CF_APP=${CF_APP}-OLD-$(date +"%s")
         rollback() {
@@ -109,9 +111,8 @@ stages:
         set -e
         trap rollback ERR
         cf rename $CF_APP $OLD_CF_APP
-        cf push $CF_APP -n $CF_APP
+        cf push $CF_APP -n $CF_APP --no-start
+        cf set-env $CF_APP LOGISTICS_WIZARD_ENV ${LOGISTICS_WIZARD_ENV}
+        cf start $CF_APP
         cf delete $OLD_CF_APP -f
       fi
-      # Set app's env vars
-      cf set-env $CF_APP LOGISTICS_WIZARD_ENV ${LOGISTICS_WIZARD_ENV}
-      cf restage $CF_APP
