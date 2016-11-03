@@ -41,7 +41,7 @@ erp-api-build-dev:
       content: $file(erp-api.pipeline.dev.yml)
       env:
         ERP_API_REPO: "erp-api-repo"
-        DEV_CF_APP_NAME: "dev-{{deploy.parameters.erp-app-name}}"
+        CF_APP_NAME: "dev-{{deploy.parameters.erp-app-name}}"
         COVERALLS_REPO_TOKEN: "{{coveralls.parameters.erp-api-coveralls_token}}"
         SPACE_NAME: "{{deploy.parameters.selected-space}}"
         ORG_NAME: "{{deploy.parameters.selected-organization}}"
@@ -58,7 +58,7 @@ erp-api-build-prod:
       content: $file(erp-api.pipeline.prod.yml)
       env:
         ERP_API_REPO: "erp-api-repo"
-        PROD_CF_APP_NAME: "{{deploy.parameters.erp-app-name}}"
+        CF_APP_NAME: "{{deploy.parameters.erp-app-name}}"
         COVERALLS_REPO_TOKEN: "{{coveralls.parameters.erp-api-coveralls_token}}"
         SPACE_NAME: "{{deploy.parameters.selected-space}}"
         ORG_NAME: "{{deploy.parameters.selected-organization}}"
@@ -77,7 +77,7 @@ controller-build-dev:
         CONTROLLER_REPO: "controller-repo"
         COVERALLS_REPO_TOKEN: "{{coveralls.parameters.controller-coveralls_token}}"
         ERP_SERVICE_APP_NAME: "dev-{{deploy.parameters.erp-app-name}}"
-        DEV_CF_APP_NAME: "dev-{{deploy.parameters.controller-app-name}}"
+        CF_APP_NAME: "dev-{{deploy.parameters.controller-app-name}}"
         SPACE_NAME: "{{deploy.parameters.selected-space}}"
         ORG_NAME: "{{deploy.parameters.selected-organization}}"
         REGION_ID: "{{deploy.parameters.selected-region}}"
@@ -95,7 +95,7 @@ controller-build-prod:
         CONTROLLER_REPO: "controller-repo"
         COVERALLS_REPO_TOKEN: "{{coveralls.parameters.controller-coveralls_token}}"
         ERP_SERVICE_APP_NAME: "{{deploy.parameters.erp-app-name}}"
-        PROD_CF_APP_NAME: "{{deploy.parameters.controller-app-name}}"
+        CF_APP_NAME: "{{deploy.parameters.controller-app-name}}"
         SPACE_NAME: "{{deploy.parameters.selected-space}}"
         ORG_NAME: "{{deploy.parameters.selected-organization}}"
         REGION_ID: "{{deploy.parameters.selected-region}}"
@@ -113,7 +113,7 @@ webui-build-dev:
         WEBUI_REPO: "webui-repo"
         COVERALLS_REPO_TOKEN: "{{coveralls.parameters.webui-coveralls_token}}"
         CONTROLLER_SERVICE_APP_NAME: "dev-{{deploy.parameters.controller-app-name}}"
-        DEV_CF_APP_NAME: "dev-{{deploy.parameters.webui-app-name}}"
+        CF_APP_NAME: "dev-{{deploy.parameters.webui-app-name}}"
         SPACE_NAME: "{{deploy.parameters.selected-space}}"
         ORG_NAME: "{{deploy.parameters.selected-organization}}"
         REGION_ID: "{{deploy.parameters.selected-region}}"
@@ -131,7 +131,7 @@ webui-build-prod:
         WEBUI_REPO: "webui-repo"
         COVERALLS_REPO_TOKEN: "{{coveralls.parameters.webui-coveralls_token}}"
         CONTROLLER_SERVICE_APP_NAME: "{{deploy.parameters.controller-app-name}}"
-        PROD_CF_APP_NAME: "{{deploy.parameters.webui-app-name}}"
+        CF_APP_NAME: "{{deploy.parameters.webui-app-name}}"
         SPACE_NAME: "{{deploy.parameters.selected-space}}"
         ORG_NAME: "{{deploy.parameters.selected-organization}}"
         REGION_ID: "{{deploy.parameters.selected-region}}"
