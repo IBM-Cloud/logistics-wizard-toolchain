@@ -1,39 +1,36 @@
 ---
 name: "Cloud-native Toolchain for the Logistics Wizard"
 description: "With this cloud-native toolchain, you use the logistics wizard template to create a supply chain management web app and back end that consists of multiple microservices: a Controller API, an ERP API, and a WEB-UI. The toolchain is preconfigured for continuous delivery, source control, blue-green deployment, unit testing, and issue tracking.\n\nTo get started, click **Create**."
-version: 0.3
+version: 1.0
 image: data:image/png;base64,$file(toolchain.png,base64)
 required:
  - deploy
- - github
+ - coveralls
 
 # Github repos
 erp-api-repo:
   service_id: githubpublic
   parameters:
-    repo_name: "{{github.parameters.erp-api-repo_name}}"
-    repo_url: "{{github.parameters.erp-api-repo_url}}"
+    repo_name: "logistics-wizard-erp"
+    repo_url: "https://github.com/IBM-Bluemix/logistics-wizard-erp"
     type: clone
     has_issues: true
-  hidden: [form, description]
 
 controller-repo:
   service_id: githubpublic
   parameters:
-    repo_name: "{{github.parameters.controller-repo_name}}"
-    repo_url: "{{github.parameters.controller-repo_url}}"
+    repo_name: "logistics-wizard-controller"
+    repo_url: "https://github.com/IBM-Bluemix/logistics-wizard-controller"
     type: clone
     has_issues: true
-  hidden: [form, description]
 
 webui-repo:
   service_id: githubpublic
   parameters:
-    repo_name: "{{github.parameters.webui-repo_name}}"
-    repo_url: "{{github.parameters.webui-repo_url}}"
+    repo_name: "logistics-wizard-webui"
+    repo_url: "https://github.com/IBM-Bluemix/logistics-wizard-webui"
     type: clone
     has_issues: true
-  hidden: [form, description]
 
 # Pipelines
 erp-api-build-dev:
@@ -44,8 +41,8 @@ erp-api-build-dev:
       content: $file(erp-api.pipeline.dev.yml)
       env:
         ERP_API_REPO: "erp-api-repo"
-        DEV_CF_APP_NAME: "dev-{{deploy.parameters.erp-app-name}}"
-        COVERALLS_REPO_TOKEN: "{{github.parameters.erp-api-coveralls_token}}"
+        CF_APP_NAME: "dev-{{deploy.parameters.erp-app-name}}"
+        COVERALLS_REPO_TOKEN: "{{coveralls.parameters.erp-api-coveralls_token}}"
         SPACE_NAME: "{{deploy.parameters.selected-space}}"
         ORG_NAME: "{{deploy.parameters.selected-organization}}"
         REGION_ID: "{{deploy.parameters.selected-region}}"
@@ -61,8 +58,8 @@ erp-api-build-prod:
       content: $file(erp-api.pipeline.prod.yml)
       env:
         ERP_API_REPO: "erp-api-repo"
-        PROD_CF_APP_NAME: "{{deploy.parameters.erp-app-name}}"
-        COVERALLS_REPO_TOKEN: "{{github.parameters.erp-api-coveralls_token}}"
+        CF_APP_NAME: "{{deploy.parameters.erp-app-name}}"
+        COVERALLS_REPO_TOKEN: "{{coveralls.parameters.erp-api-coveralls_token}}"
         SPACE_NAME: "{{deploy.parameters.selected-space}}"
         ORG_NAME: "{{deploy.parameters.selected-organization}}"
         REGION_ID: "{{deploy.parameters.selected-region}}"
@@ -78,9 +75,9 @@ controller-build-dev:
       content: $file(controller.pipeline.dev.yml)
       env:
         CONTROLLER_REPO: "controller-repo"
-        COVERALLS_REPO_TOKEN: "{{github.parameters.controller-coveralls_token}}"
+        COVERALLS_REPO_TOKEN: "{{coveralls.parameters.controller-coveralls_token}}"
         ERP_SERVICE_APP_NAME: "dev-{{deploy.parameters.erp-app-name}}"
-        DEV_CF_APP_NAME: "dev-{{deploy.parameters.controller-app-name}}"
+        CF_APP_NAME: "dev-{{deploy.parameters.controller-app-name}}"
         SPACE_NAME: "{{deploy.parameters.selected-space}}"
         ORG_NAME: "{{deploy.parameters.selected-organization}}"
         REGION_ID: "{{deploy.parameters.selected-region}}"
@@ -96,9 +93,9 @@ controller-build-prod:
       content: $file(controller.pipeline.prod.yml)
       env:
         CONTROLLER_REPO: "controller-repo"
-        COVERALLS_REPO_TOKEN: "{{github.parameters.controller-coveralls_token}}"
+        COVERALLS_REPO_TOKEN: "{{coveralls.parameters.controller-coveralls_token}}"
         ERP_SERVICE_APP_NAME: "{{deploy.parameters.erp-app-name}}"
-        PROD_CF_APP_NAME: "{{deploy.parameters.controller-app-name}}"
+        CF_APP_NAME: "{{deploy.parameters.controller-app-name}}"
         SPACE_NAME: "{{deploy.parameters.selected-space}}"
         ORG_NAME: "{{deploy.parameters.selected-organization}}"
         REGION_ID: "{{deploy.parameters.selected-region}}"
@@ -114,9 +111,9 @@ webui-build-dev:
       content: $file(webui.pipeline.dev.yml)
       env:
         WEBUI_REPO: "webui-repo"
-        COVERALLS_REPO_TOKEN: "{{github.parameters.webui-coveralls_token}}"
+        COVERALLS_REPO_TOKEN: "{{coveralls.parameters.webui-coveralls_token}}"
         CONTROLLER_SERVICE_APP_NAME: "dev-{{deploy.parameters.controller-app-name}}"
-        DEV_CF_APP_NAME: "dev-{{deploy.parameters.webui-app-name}}"
+        CF_APP_NAME: "dev-{{deploy.parameters.webui-app-name}}"
         SPACE_NAME: "{{deploy.parameters.selected-space}}"
         ORG_NAME: "{{deploy.parameters.selected-organization}}"
         REGION_ID: "{{deploy.parameters.selected-region}}"
@@ -132,31 +129,15 @@ webui-build-prod:
       content: $file(webui.pipeline.prod.yml)
       env:
         WEBUI_REPO: "webui-repo"
-        COVERALLS_REPO_TOKEN: "{{github.parameters.webui-coveralls_token}}"
+        COVERALLS_REPO_TOKEN: "{{coveralls.parameters.webui-coveralls_token}}"
         CONTROLLER_SERVICE_APP_NAME: "{{deploy.parameters.controller-app-name}}"
-        PROD_CF_APP_NAME: "{{deploy.parameters.webui-app-name}}"
+        CF_APP_NAME: "{{deploy.parameters.webui-app-name}}"
         SPACE_NAME: "{{deploy.parameters.selected-space}}"
         ORG_NAME: "{{deploy.parameters.selected-organization}}"
         REGION_ID: "{{deploy.parameters.selected-region}}"
       execute: true
     services: ["webui-repo"]
   hidden: [form, description]
-
-#Github
-github:
-  schema:
-    $ref: github.json
-  service-category: githubpublic
-  parameters:
-    erp-api-repo_name: "logistics-wizard-erp"
-    erp-api-repo_url: https://github.com/IBM-Bluemix/logistics-wizard-erp
-    erp-api-coveralls_token:
-    controller-repo_name: "logistics-wizard-controller"
-    controller-repo_url: https://github.com/IBM-Bluemix/logistics-wizard-controller
-    controller-coveralls_token:
-    webui-repo_name: "logistics-wizard-webui"
-    webui-repo_url: https://github.com/IBM-Bluemix/logistics-wizard-webui
-    webui-coveralls_token:
 
 #Web IDE
 webide:
@@ -174,3 +155,13 @@ deploy:
     erp-app-name: "{{erp-api-repo.parameters.repo_name}}"
     controller-app-name: "{{controller-repo.parameters.repo_name}}"
     webui-app-name: "{{webui-repo.parameters.repo_name}}"
+
+#Coveralls
+coveralls:
+  schema:
+    $ref: coveralls.json
+  service-category: pipeline
+  parameters:
+    erp-api-coveralls_token:
+    controller-coveralls_token:
+    webui-coveralls_token:

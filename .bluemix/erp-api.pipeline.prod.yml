@@ -57,7 +57,7 @@ stages:
       region_id: ${REGION_ID}
       organization: ${ORG_NAME}
       space: ${SPACE_NAME}
-      application: ${PROD_CF_APP_NAME}
+      application: ${CF_APP_NAME}
     script: |
       #!/bin/bash
       npm config delete prefix
@@ -76,7 +76,7 @@ stages:
   - type: stage
   properties:
   - name: CF_APP_NAME
-    application: ${PROD_CF_APP_NAME}
+    application: ${CF_APP_NAME}
     type: text
   - name: LOGISTICS_WIZARD_ENV
     value: PROD
@@ -88,7 +88,7 @@ stages:
       region_id: ${REGION_ID}
       organization: ${ORG_NAME}
       space: ${SPACE_NAME}
-      application: ${PROD_CF_APP_NAME}
+      application: ${CF_APP_NAME}
     script: |-
       #!/bin/bash
       # Create CF services
