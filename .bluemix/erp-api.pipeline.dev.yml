@@ -75,9 +75,6 @@ stages:
   triggers:
   - type: stage
   properties:
-  - name: CF_APP_NAME
-    application: ${CF_APP_NAME}
-    type: text
   - name: LOGISTICS_WIZARD_ENV
     value: DEV
     type: text
