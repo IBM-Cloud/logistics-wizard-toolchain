@@ -1,5 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
+  "displayName": "Coveralls",
+  "imageUrl": "notfound.png",
   "title": "Coveralls Title",
   "description": "Coveralls Description",
   "longDescription": "Configure the Coveralls token.",

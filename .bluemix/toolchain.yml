@@ -144,7 +144,14 @@ coveralls:
   schema:
     $ref: coveralls.json
   service-category: customtool
+  service:
+    metadata:
+      displayName: "Coveralls"
+      imageUrl: "notfound.png"
+      description: "description"
+      longDescription: "long description"
   parameters:
+    type: "coveralls"
     erp-api-coveralls_token:
     controller-coveralls_token:
     webui-coveralls_token:
