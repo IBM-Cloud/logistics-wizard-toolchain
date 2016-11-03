@@ -92,7 +92,6 @@ stages:
     script: |-
       #!/bin/bash
       # Create CF services
-      cf create-service service_discovery free lw-service-discovery
       cf create-service elephantsql turtle logistics-wizard-erp-db
       if ! cf app $CF_APP; then
         cf push $CF_APP -n $CF_APP

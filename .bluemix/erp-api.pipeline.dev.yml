@@ -93,7 +93,6 @@ stages:
     script: |-
       #!/bin/bash
       # Create CF services
-      cf create-service service_discovery free lw-service-discovery
       cf create-service elephantsql turtle dev-logistics-wizard-erp-db
       # Deploy app
       cf push "${CF_APP_NAME}" -n $CF_APP -f dev-manifest.yml --no-start
