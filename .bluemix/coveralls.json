@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "title": "Coveralls",
   "description": "Coveralls",
-  "longDescription": "As part of the Delivery Pipeline, unit test coverage data can be sent to Coveralls. Specify here the Coveralls tokens for each repository. You can decide to skip this step now. Later you can edit the Coveralls token by editing the Test phases of the respective Delivery Pipelines.",
+  "longDescription": "Unit test coverage data can be sent to Coveralls as part of the Test phases of the delivery pipelines. Specify here the Coveralls tokens for each GitHub repository. You can decide to skip this step now. Later you can set the Coveralls token by editing the Test phases of the respective Delivery Pipelines.",
   "type": "object",
   "properties": {
     "erp-api-coveralls_token": {
