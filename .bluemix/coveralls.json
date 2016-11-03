@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Coveralls Title",
+  "description": "Coveralls Description",
+  "longDescription": "Configure the Coveralls token.",
+  "type": "object",
+  "properties": {
+    "erp-api-coveralls_token": {
+      "type": "string"
+    },
+    "controller-coveralls_token": {
+      "type": "string"
+    },
+    "webui-coveralls_token": {
+      "type": "string"
+    }
+  },
+  "required": [ ],
+  "form": [
+    {
+      "type": "text",
+      "readonly": false,
+      "title": "ERP Coveralls Token",
+      "key": "erp-api-coveralls_token"
+    },
+    {
+      "type": "text",
+      "readonly": false,
+      "title": "Controller Coveralls Token",
+      "key": "controller-coveralls_token"
+    },
+    {
+      "type": "text",
+      "readonly": false,
+      "title": "Webui Coveralls Token",
+      "key": "webui-coveralls_token"
+    }
+  ]
+}
