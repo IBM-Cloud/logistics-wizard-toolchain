@@ -35,7 +35,7 @@ stages:
 - name: BUILD
   inputs:
   - type: git
-    branch: master
+    branch: dev
     service: ${CONTROLLER_REPO}
   triggers:
   - type: stage
