@@ -150,6 +150,7 @@ coveralls:
       imageUrl: "notfound.png"
       description: "description"
       longDescription: "long description"
+    tags: [ "custom", "coveralls" ]
   parameters:
     type: "coveralls"
     erp-api-coveralls_token:
