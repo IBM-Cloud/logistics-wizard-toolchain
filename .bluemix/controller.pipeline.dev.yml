@@ -14,9 +14,11 @@ stages:
   - name: COVERALLS_REPO_TOKEN
     value: ${COVERALLS_REPO_TOKEN}
     type: secure
-  - name: ERP_SERVICE
-    value: ${DEV_ERP_SERVICE}
+  - name: ERP_SERVICE_APP_NAME
+    value: ${ERP_SERVICE_APP_NAME}
     type: text
+  - name: REGION_ID
+    value: ${REGION_ID}
   jobs:
   - name: Unit Test
     type: tester
@@ -28,6 +30,17 @@ stages:
       source venv/bin/activate
       export PYTHONPATH=$PWD
       pip install -r requirements.dev.txt
+      # Set app's env vars
+      domain=".mybluemix.net"
+      case "${REGION_ID}" in
+        ibm:yp:eu-gb)
+          domain=".eu-gb.mybluemix.net"
+        ;;
+        ibm:yp:au-syd)
+        domain=".au-syd.mybluemix.net"
+        ;;
+      esac
+      export ERP_SERVICE=https://$ERP_SERVICE_APP_NAME$domain
       # Run unit and coverage tests
       coverage run server/tests/run_unit_tests.py
       coverage run --append server/tests/run_integration_tests.py
