@@ -11,6 +11,9 @@ stages:
   - name: CONTROLLER_SERVICE_APP_NAME
     value: ${CONTROLLER_SERVICE_APP_NAME}
     type: text
+  - name: LOGISTICS_WIZARD_ENV
+    value: DEV
+    type: text
   - name: COVERALLS_REPO_TOKEN
     value: ${COVERALLS_REPO_TOKEN}
     type: secure
@@ -52,15 +55,10 @@ stages:
   - type: job
     stage: BUILD
     job: Build
-  properties:
-  - name: CF_APP_NAME
-    value: ${CF_APP_NAME}
-    type: text
-  - name: LOGISTICS_WIZARD_ENV
-    value: DEV
-    type: text
+  triggers:
+  - type: stage
   jobs:
-  - name: Deploy to dev
+  - name: Blue/Green Deploy
     type: deployer
     target:
       region_id: ${REGION_ID}
@@ -70,8 +68,22 @@ stages:
     script: |-
       #!/bin/bash
       # Push the app
-      cf push "${CF_APP_NAME}" -n $CF_APP --no-start
-
-      # Set app's env vars
-      cf set-env ${CF_APP_NAME} LOGISTICS_WIZARD_ENV ${LOGISTICS_WIZARD_ENV}
-      cf start ${CF_APP}
+      if ! cf app $CF_APP; then
+        cf push $CF_APP -n $CF_APP
+      else
+        OLD_CF_APP=${CF_APP}-OLD-$(date +"%s")
+        rollback() {
+          set +e
+          if cf app $OLD_CF_APP; then
+            cf logs $CF_APP --recent
+            cf delete $CF_APP -f
+            cf rename $OLD_CF_APP $CF_APP
+          fi
+          exit 1
+        }
+        set -e
+        trap rollback ERR
+        cf rename $CF_APP $OLD_CF_APP
+        cf push $CF_APP -n $CF_APP
+        cf delete $OLD_CF_APP -f
+      fi

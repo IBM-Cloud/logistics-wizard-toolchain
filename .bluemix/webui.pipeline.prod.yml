@@ -11,6 +11,9 @@ stages:
   - name: CONTROLLER_SERVICE_APP_NAME
     value: ${CONTROLLER_SERVICE_APP_NAME}
     type: text
+  - name: LOGISTICS_WIZARD_ENV
+    value: PROD
+    type: text
   - name: COVERALLS_REPO_TOKEN
     value: ${COVERALLS_REPO_TOKEN}
     type: secure
@@ -54,13 +57,6 @@ stages:
     job: Build
   triggers:
   - type: stage
-  properties:
-  - name: CF_APP_NAME
-    application: ${CF_APP_NAME}
-    type: text
-  - name: LOGISTICS_WIZARD_ENV
-    value: PROD
-    type: text
   jobs:
   - name: Blue/Green Deploy
     type: deployer
@@ -71,7 +67,7 @@ stages:
       application: ${CF_APP_NAME}
     script: |-
       #!/bin/bash
-      # Push
+      # Push the app
       if ! cf app $CF_APP; then
         cf push $CF_APP -n $CF_APP
       else
@@ -91,6 +87,3 @@ stages:
         cf push $CF_APP -n $CF_APP
         cf delete $OLD_CF_APP -f
       fi
-      # Set app's env vars
-      cf set-env $CF_APP LOGISTICS_WIZARD_ENV ${LOGISTICS_WIZARD_ENV}
-      cf restage $CF_APP

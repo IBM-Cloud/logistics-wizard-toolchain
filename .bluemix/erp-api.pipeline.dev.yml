@@ -22,16 +22,15 @@ stages:
     value: bluemix-devops-services
     type: text
   - name: COVERALLS_REPO_TOKEN
-    type: secure
     value: ${COVERALLS_REPO_TOKEN}
+    type: secure
   - name: LOGISTICS_WIZARD_ENV
-    value: DEV
+    value: TEST
     type: text
   jobs:
   - name: Unit Test
-    type: builder
-    build_type: shell
-    script: |-
+    type: tester
+    script: |
       #!/bin/bash
       npm config delete prefix
       curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.2/install.sh | bash
@@ -76,14 +75,11 @@ stages:
   triggers:
   - type: stage
   properties:
-  - name: CF_APP_NAME
-    value: ${CF_APP_NAME}
-    type: text
   - name: LOGISTICS_WIZARD_ENV
     value: DEV
     type: text
   jobs:
-  - name: Deploy to dev
+  - name: Blue/Green Deploy
     type: deployer
     target:
       region_id: ${REGION_ID}
@@ -94,8 +90,26 @@ stages:
       #!/bin/bash
       # Create CF services
       cf create-service elephantsql turtle dev-logistics-wizard-erp-db
-      # Deploy app
-      cf push "${CF_APP_NAME}" -n $CF_APP -f dev-manifest.yml --no-start
-      # Set app's env vars
-      cf set-env ${CF_APP_NAME} LOGISTICS_WIZARD_ENV ${LOGISTICS_WIZARD_ENV}
-      cf start ${CF_APP}
+      if ! cf app $CF_APP; then
+        cf push $CF_APP -n $CF_APP -f dev-manifest.yml --no-start
+        cf set-env $CF_APP LOGISTICS_WIZARD_ENV ${LOGISTICS_WIZARD_ENV}
+        cf start $CF_APP
+      else
+        OLD_CF_APP=${CF_APP}-OLD-$(date +"%s")
+        rollback() {
+          set +e
+          if cf app $OLD_CF_APP; then
+            cf logs $CF_APP --recent
+            cf delete $CF_APP -f
+            cf rename $OLD_CF_APP $CF_APP
+          fi
+          exit 1
+        }
+        set -e
+        trap rollback ERR
+        cf rename $CF_APP $OLD_CF_APP
+        cf push $CF_APP -n $CF_APP -f dev-manifest.yml --no-start
+        cf set-env $CF_APP LOGISTICS_WIZARD_ENV ${LOGISTICS_WIZARD_ENV}
+        cf start $CF_APP
+        cf delete $OLD_CF_APP -f
+      fi
