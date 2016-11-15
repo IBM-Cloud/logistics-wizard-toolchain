@@ -1,0 +1,80 @@
+---
+stages:
+- name: BUILD
+  inputs:
+  - type: git
+    branch: master
+    service: ${RECOMMENDATION_REPO}
+  triggers:
+  - type: commit
+  properties:
+  - name: LOGISTICS_WIZARD_ENV
+    value: PROD
+    type: text
+  - name: COVERALLS_SERVICE_NAME
+    value: bluemix-devops-services
+    type: text
+  - name: COVERALLS_REPO_TOKEN
+    value: ${COVERALLS_REPO_TOKEN}
+    type: secure
+  jobs:
+  - name: Build
+    type: builder
+    artifact_dir: dist
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      npm config delete prefix
+      curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.2/install.sh | bash
+      . ~/.nvm/nvm.sh
+      nvm install 6.7.0
+      cd actions
+      npm install
+      npm run build
+      if [ -z ${COVERALLS_REPO_TOKEN} ]; then
+        npm run localcoverage
+        echo No Coveralls token specified, skipping coveralls.io upload
+      else
+        npm run coverage
+      fi
+- name: DEPLOY
+  inputs:
+  - type: job
+    stage: BUILD
+    job: Build
+  triggers:
+  - type: stage
+  properties:
+  - name: PACKAGE_NAME
+    value: logistics-wizard-recommendation
+    type: text
+  - name: OPENWHISK_AUTH
+    value: ${OPENWHISK_AUTH}
+    type: secure
+  jobs:
+  - name: Deploy
+    type: deployer
+    target:
+      region_id: ${REGION_ID}
+      organization: ${ORG_NAME}
+      space: ${SPACE_NAME}
+      application: "not-used"
+    script: |-
+      #!/bin/bash
+      if [ -z ${OPENWHISK_AUTH} ]; then
+        echo Skipping OpenWhisk deployment as no OpenWhisk auth key is configured
+        exit 0
+      fi
+
+      # Get the OpenWhisk CLI
+      mkdir ~/wsk
+      curl https://openwhisk.ng.bluemix.net/cli/go/download/linux/amd64/wsk > ~/wsk/wsk
+      chmod +x ~/wsk/wsk
+      export PATH=$PATH:~/wsk
+
+      # Configure the OpenWhisk CLI
+      wsk property set --apihost openwhisk.ng.bluemix.net --auth "${OPENWHISK_AUTH}" --namespace "${CF_ORG}_${CF_SPACE}"
+
+      # Deploy the OpenWhisk triggers/actions/rules
+      ./deploy.sh --uninstall
+      ./deploy.sh --install
