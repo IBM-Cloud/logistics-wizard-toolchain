@@ -5,8 +5,8 @@ version: 1.1
 image: data:image/png;base64,$file(toolchain.png,base64)
 required:
  - deploy
- - coveralls
  - openwhisk
+ - coveralls
 
 # Github repos
 erp-api-repo:
@@ -199,6 +199,14 @@ deploy:
     controller-app-name: "{{controller-repo.parameters.repo_name}}"
     webui-app-name: "{{webui-repo.parameters.repo_name}}"
 
+#OpenWhisk
+openwhisk:
+  schema:
+    $ref: openwhisk.json
+  service-category: pipeline
+  parameters:
+    openwhisk_auth:
+
 #Coveralls
 coveralls:
   schema:
@@ -209,11 +217,3 @@ coveralls:
     controller-coveralls_token:
     webui-coveralls_token:
     recommendation-coveralls_token:
-
-#OpenWhisk
-openwhisk:
-  schema:
-    $ref: openwhisk.json
-  service-category: pipeline
-  parameters:
-    openwhisk_auth:
