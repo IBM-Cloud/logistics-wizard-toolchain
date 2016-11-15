@@ -11,6 +11,9 @@ stages:
   - name: LOGISTICS_WIZARD_ENV
     value: TEST
     type: text
+  - name: COVERALLS_SERVICE_NAME
+    value: bluemix-devops-services
+    type: text
   - name: COVERALLS_REPO_TOKEN
     value: ${COVERALLS_REPO_TOKEN}
     type: secure
