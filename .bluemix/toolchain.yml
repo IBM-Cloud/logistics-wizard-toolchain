@@ -148,22 +148,23 @@ webui-build-prod:
     services: ["webui-repo"]
   hidden: [form, description]
 
-# recommendation-build-dev:
-#   service_id: pipeline
-#   parameters:
-#     name: "recommendation (dev)"
-#     configuration:
-#       content: $file(recommendation.pipeline.dev.yml)
-#       env:
-#         RECOMMENDATION_REPO: "recommendation-repo"
-#         COVERALLS_REPO_TOKEN: "{{coveralls.parameters.recommendation-coveralls_token}}"
-#         OPENWHISK_AUTH: "{{openwhisk.parameters.openwhisk_auth}}"
-#         SPACE_NAME: "{{deploy.parameters.selected-space}}"
-#         ORG_NAME: "{{deploy.parameters.selected-organization}}"
-#         REGION_ID: "{{deploy.parameters.selected-region}}"
-#       execute: true
-#     services: ["recommendation-repo"]
-#   hidden: [form, description]
+recommendation-build-dev:
+  service_id: pipeline
+  parameters:
+    name: "recommendation (dev)"
+    configuration:
+      content: $file(recommendation.pipeline.dev.yml)
+      env:
+        CONTROLLER_SERVICE_APP_NAME: "dev-{{deploy.parameters.controller-app-name}}"
+        RECOMMENDATION_REPO: "recommendation-repo"
+        COVERALLS_REPO_TOKEN: "{{coveralls.parameters.recommendation-coveralls_token}}"
+        OPENWHISK_AUTH: "{{openwhisk.parameters.openwhisk_auth}}"
+        SPACE_NAME: "{{deploy.parameters.selected-space}}"
+        ORG_NAME: "{{deploy.parameters.selected-organization}}"
+        REGION_ID: "{{deploy.parameters.selected-region}}"
+      execute: true
+    services: ["recommendation-repo"]
+  hidden: [form, description]
 
 recommendation-build-prod:
   service_id: pipeline
@@ -172,6 +173,7 @@ recommendation-build-prod:
     configuration:
       content: $file(recommendation.pipeline.prod.yml)
       env:
+        CONTROLLER_SERVICE_APP_NAME: "{{deploy.parameters.controller-app-name}}"
         RECOMMENDATION_REPO: "recommendation-repo"
         COVERALLS_REPO_TOKEN: "{{coveralls.parameters.recommendation-coveralls_token}}"
         OPENWHISK_AUTH: "{{openwhisk.parameters.openwhisk_auth}}"
