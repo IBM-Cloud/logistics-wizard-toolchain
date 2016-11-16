@@ -20,7 +20,6 @@ stages:
   jobs:
   - name: Build
     type: builder
-    artifact_dir: dist
     build_type: shell
     script: |-
       #!/bin/bash
