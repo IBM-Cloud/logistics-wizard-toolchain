@@ -90,6 +90,7 @@ controller-build-dev:
         SPACE_NAME: "{{deploy.parameters.selected-space}}"
         ORG_NAME: "{{deploy.parameters.selected-organization}}"
         REGION_ID: "{{deploy.parameters.selected-region}}"
+        OPENWHISK_AUTH: "{{openwhisk.parameters.openwhisk_auth}}"
       execute: true
     services: ["controller-repo"]
   hidden: [form, description]
@@ -108,6 +109,7 @@ controller-build-prod:
         SPACE_NAME: "{{deploy.parameters.selected-space}}"
         ORG_NAME: "{{deploy.parameters.selected-organization}}"
         REGION_ID: "{{deploy.parameters.selected-region}}"
+        OPENWHISK_AUTH: "{{openwhisk.parameters.openwhisk_auth}}"
       execute: true
     services: ["controller-repo"]
   hidden: [form, description]
