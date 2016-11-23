@@ -38,6 +38,9 @@ stages:
   - name: PACKAGE_NAME
     value: dev-logistics-wizard-recommendation
     type: text
+  - name: CLOUDANT_DATABASE
+    value: dev-recommendations
+    type: text
   - name: OPENWHISK_AUTH
     value: ${OPENWHISK_AUTH}
     type: secure
