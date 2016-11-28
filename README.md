@@ -15,6 +15,8 @@ This toolchain will allow you to deploy the entire [Logistics Wizard](https://gi
 
   [![Deploy To Bluemix](./.bluemix/create_toolchain_button.png)](https://new-console.ng.bluemix.net/devops/setup/deploy/?repository=https%3A//github.com//IBM-Bluemix/logistics-wizard-toolchain.git)
 
+  > :warning: Make sure to pick unique application names in the Delivery Pipeline step.
+
 The toolchain is preconfigured for:
 
 - issue tracking
