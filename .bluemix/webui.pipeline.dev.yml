@@ -67,9 +67,6 @@ stages:
       application: ${CF_APP_NAME}
     script: |-
       #!/bin/bash
-      # Create CF services
-      cf create-service Availability Monitoring Lite dev-logistics-wizard-webui-availability-monitoring
-            
       # Push the app
       if ! cf app $CF_APP; then
         cf push $CF_APP -n $CF_APP
