@@ -11,6 +11,9 @@ stages:
   - name: LOGISTICS_WIZARD_ENV
     value: TEST
     type: text
+  - name: COVERALLS_SERVICE_NAME
+    value: bluemix-devops-services
+    type: text
   - name: COVERALLS_REPO_TOKEN
     value: ${COVERALLS_REPO_TOKEN}
     type: secure
@@ -58,6 +61,12 @@ stages:
     type: text
   - name: REGION_ID
     value: ${REGION_ID}
+  - name: RECOMMENDATION_PACKAGE_NAME
+    value: dev-logistics-wizard-recommendation
+    type: text
+  - name: OPENWHISK_AUTH
+    value: ${OPENWHISK_AUTH}
+    type: secure
   jobs:
   - name: Blue/Green Deploy
     type: deployer
@@ -83,6 +92,9 @@ stages:
         cf push $CF_APP -n $CF_APP --no-start
         cf set-env $CF_APP LOGISTICS_WIZARD_ENV ${LOGISTICS_WIZARD_ENV}
         cf set-env $CF_APP ERP_SERVICE https://$ERP_SERVICE_APP_NAME$domain
+        cf set-env $CF_APP OPENWHISK_AUTH "${OPENWHISK_AUTH}"
+        cf set-env $CF_APP OPENWHISK_NAMESPACE "${CF_ORG}_${CF_SPACE}"
+        cf set-env $CF_APP OPENWHISK_PACKAGE ${RECOMMENDATION_PACKAGE_NAME}
         cf start $CF_APP
       else
         OLD_CF_APP=${CF_APP}-OLD-$(date +"%s")
@@ -101,6 +113,9 @@ stages:
         cf push $CF_APP -n $CF_APP --no-start
         cf set-env $CF_APP LOGISTICS_WIZARD_ENV ${LOGISTICS_WIZARD_ENV}
         cf set-env $CF_APP ERP_SERVICE https://$ERP_SERVICE_APP_NAME$domain
+        cf set-env $CF_APP OPENWHISK_AUTH "${OPENWHISK_AUTH}"
+        cf set-env $CF_APP OPENWHISK_NAMESPACE "${CF_ORG}_${CF_SPACE}"
+        cf set-env $CF_APP OPENWHISK_PACKAGE ${RECOMMENDATION_PACKAGE_NAME}
         cf start $CF_APP
         cf delete $OLD_CF_APP -f
       fi

@@ -1,10 +1,11 @@
 ---
 name: "Cloud-native Toolchain for the Logistics Wizard"
 description: "With this cloud-native toolchain, you use the logistics wizard template to create a supply chain management web app and back end that consists of multiple microservices: a Controller API, an ERP API, and a WEB-UI. The toolchain is preconfigured for continuous delivery, source control, blue-green deployment, unit testing, and issue tracking.\n\nTo get started, click **Create**."
-version: 1.0
+version: 1.1
 image: data:image/png;base64,$file(toolchain.png,base64)
 required:
  - deploy
+ - openwhisk
  - coveralls
 
 # Github repos
@@ -29,6 +30,14 @@ webui-repo:
   parameters:
     repo_name: "logistics-wizard-webui"
     repo_url: "https://github.com/IBM-Bluemix/logistics-wizard-webui"
+    type: clone
+    has_issues: true
+
+recommendation-repo:
+  service_id: githubpublic
+  parameters:
+    repo_name: "logistics-wizard-recommendation"
+    repo_url: "https://github.com/IBM-Bluemix/logistics-wizard-recommendation"
     type: clone
     has_issues: true
 
@@ -81,6 +90,7 @@ controller-build-dev:
         SPACE_NAME: "{{deploy.parameters.selected-space}}"
         ORG_NAME: "{{deploy.parameters.selected-organization}}"
         REGION_ID: "{{deploy.parameters.selected-region}}"
+        OPENWHISK_AUTH: "{{openwhisk.parameters.openwhisk_auth}}"
       execute: true
     services: ["controller-repo"]
   hidden: [form, description]
@@ -99,6 +109,7 @@ controller-build-prod:
         SPACE_NAME: "{{deploy.parameters.selected-space}}"
         ORG_NAME: "{{deploy.parameters.selected-organization}}"
         REGION_ID: "{{deploy.parameters.selected-region}}"
+        OPENWHISK_AUTH: "{{openwhisk.parameters.openwhisk_auth}}"
       execute: true
     services: ["controller-repo"]
   hidden: [form, description]
@@ -139,6 +150,42 @@ webui-build-prod:
     services: ["webui-repo"]
   hidden: [form, description]
 
+recommendation-build-dev:
+  service_id: pipeline
+  parameters:
+    name: "recommendation (dev)"
+    configuration:
+      content: $file(recommendation.pipeline.dev.yml)
+      env:
+        CONTROLLER_SERVICE_APP_NAME: "dev-{{deploy.parameters.controller-app-name}}"
+        RECOMMENDATION_REPO: "recommendation-repo"
+        COVERALLS_REPO_TOKEN: "{{coveralls.parameters.recommendation-coveralls_token}}"
+        OPENWHISK_AUTH: "{{openwhisk.parameters.openwhisk_auth}}"
+        SPACE_NAME: "{{deploy.parameters.selected-space}}"
+        ORG_NAME: "{{deploy.parameters.selected-organization}}"
+        REGION_ID: "{{deploy.parameters.selected-region}}"
+      execute: true
+    services: ["recommendation-repo"]
+  hidden: [form, description]
+
+recommendation-build-prod:
+  service_id: pipeline
+  parameters:
+    name: "recommendation (prod)"
+    configuration:
+      content: $file(recommendation.pipeline.prod.yml)
+      env:
+        CONTROLLER_SERVICE_APP_NAME: "{{deploy.parameters.controller-app-name}}"
+        RECOMMENDATION_REPO: "recommendation-repo"
+        COVERALLS_REPO_TOKEN: "{{coveralls.parameters.recommendation-coveralls_token}}"
+        OPENWHISK_AUTH: "{{openwhisk.parameters.openwhisk_auth}}"
+        SPACE_NAME: "{{deploy.parameters.selected-space}}"
+        ORG_NAME: "{{deploy.parameters.selected-organization}}"
+        REGION_ID: "{{deploy.parameters.selected-region}}"
+      execute: true
+    services: ["recommendation-repo"]
+  hidden: [form, description]
+
 #Web IDE
 webide:
   service_id: orion
@@ -156,6 +203,14 @@ deploy:
     controller-app-name: "{{controller-repo.parameters.repo_name}}"
     webui-app-name: "{{webui-repo.parameters.repo_name}}"
 
+#OpenWhisk
+openwhisk:
+  schema:
+    $ref: openwhisk.json
+  service-category: pipeline
+  parameters:
+    openwhisk_auth:
+
 #Coveralls
 coveralls:
   schema:
@@ -165,3 +220,4 @@ coveralls:
     erp-api-coveralls_token:
     controller-coveralls_token:
     webui-coveralls_token:
+    recommendation-coveralls_token:

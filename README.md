@@ -4,6 +4,7 @@ This toolchain will allow you to deploy the entire [Logistics Wizard](https://gi
 - [Controller][github_controller_url] - The API that sits on the edge of the architecture and interfaces with all other services.  
 - [ERP][github_erp_url] - An API that handles user login and interaction with the ERP system objects.  
 - [WEBUI][github_webui_url] - The Web UI that is the web front end of the entire application, built using React.
+- [Weather Recommandation][github_recommendation_url] - Makes shipment recommendations based on weather conditions
 
 ## Create the toolchain
 
@@ -43,6 +44,7 @@ In order to utilize the code coverage tests in the pipelines, you need add your 
 [github_controller_url]: https://github.com/IBM-Bluemix/logistics-wizard-controller
 [github_erp_url]: https://github.com/IBM-Bluemix/logistics-wizard-erp
 [github_webui_url]: https://github.com/IBM-Bluemix/logistics-wizard-webui
+[github_recommendation_url]: https://github.com/IBM-Bluemix/logistics-wizard-recommendation
 [coveralls_url]: https://coveralls.io/
 [toolchains_overview_url]: https://new-console.ng.bluemix.net/docs/toolchains/toolchains_overview.html
 [toolchains_interconnect_video_url]: https://vimeo.com/156126035/8b04b8878a
