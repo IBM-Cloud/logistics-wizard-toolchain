@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "title": "Logistics Wizard Delivery Pipeline Setup",
   "description": "Deployment of the Logistics Wizard demo",
-  "longDescription": "The Delivery Pipeline for Devops Services allows you to automate your continuous deployment setup.",
+  "longDescription": "The Delivery Pipeline for DevOps Services allows you to automate your continuous deployment setup.<br/><br/>To avoid conflicts, make sure to use unique application names. We recommend to use a common prefix like your name or initials.",
   "type": "object",
   "properties": {
     "selected-region": {
