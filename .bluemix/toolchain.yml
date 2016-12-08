@@ -198,9 +198,9 @@ deploy:
     selected-region: "{{region}}"
     selected-organization: "{{organization}}"
     selected-space: "{{space}}"
-    erp-app-name: "{{erp-api-repo.parameters.repo_name}}"
-    controller-app-name: "{{controller-repo.parameters.repo_name}}"
-    webui-app-name: "{{webui-repo.parameters.repo_name}}"
+    erp-app-name: "{{name}}-erp"
+    controller-app-name: "{{name}}-controller"
+    webui-app-name: "{{name}}-webui"
 
 #OpenWhisk
 openwhisk:
