@@ -26,8 +26,6 @@ The toolchain is preconfigured for:
 - unit and code coverage testing
 - blue-green deployment
 
-![Toolchain template steps](./.bluemix/toolchain.png)
-
 ### Setting up code coverage tests
 
 In order to utilize the code coverage tests in the pipelines, you need add your repos to [coveralls][coveralls_url] and get the generated repo token. Once you get these tokens, use these values in the GitHub section during the toolchain configuration. Coverage tests will not be reported if you leave these values blank.

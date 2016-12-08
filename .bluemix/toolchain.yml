@@ -2,7 +2,6 @@
 name: "Cloud-native Toolchain for the Logistics Wizard"
 description: "With this cloud-native toolchain, you use the logistics wizard template to create a supply chain management web app and back end that consists of multiple microservices: a Controller API, an ERP API, and a WEB-UI. The toolchain is preconfigured for continuous delivery, source control, blue-green deployment, unit testing, and issue tracking.\n\nTo get started, click **Create**."
 version: 1.1
-image: data:image/png;base64,$file(toolchain.png,base64)
 required:
  - deploy
  - openwhisk
