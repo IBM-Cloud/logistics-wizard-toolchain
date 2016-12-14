@@ -3,7 +3,7 @@ stages:
 - name: BUILD
   inputs:
   - type: git
-    branch: dev
+    branch: extract-scripts
     service: ${ERP_API_REPO}
   triggers:
   - type: commit
