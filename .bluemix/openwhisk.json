@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "title": "OpenWhisk",
   "description": "OpenWhisk",
-  "longDescription": "The recommendation service relies on OpenWhisk actions. To deploy these actions, the pipeline requires your OpenWhisk authorization key.",
+  "longDescription": "The recommendation service relies on OpenWhisk actions. To deploy these actions, the pipeline requires your OpenWhisk authorization key. Make sure to enter the authorization key associated with the space where the applications will be deployed.",
   "type": "object",
   "properties": {
     "openwhisk_auth": {
