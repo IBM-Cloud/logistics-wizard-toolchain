@@ -32,17 +32,7 @@ stages:
     type: tester
     script: |
       #!/bin/bash
-      npm config delete prefix
-      curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.2/install.sh | bash
-      . ~/.nvm/nvm.sh
-      nvm install 4.4
-      npm install
-      if [ -z ${COVERALLS_REPO_TOKEN} ]; then
-        npm run localcoverage
-        echo No Coveralls token specified, skipping coveralls.io upload
-      else
-        npm run coverage
-      fi
+      ./.bluemix/pipeline-TEST.sh
 - name: TEST (PostgreSQL)
   inputs:
   - type: job
@@ -60,13 +50,7 @@ stages:
       application: ${CF_APP_NAME}
     script: |
       #!/bin/bash
-      npm config delete prefix
-      curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.2/install.sh | bash
-      . ~/.nvm/nvm.sh
-      nvm install 4.4
-      npm install
-      export PATH=$PATH:./node_modules/.bin
-      ./test/test-with-postgresql.sh
+      ./.bluemix/pipeline-TEST-REAL-DB.sh
 - name: DEPLOY
   inputs:
   - type: job
@@ -88,28 +72,4 @@ stages:
       application: ${CF_APP_NAME}
     script: |-
       #!/bin/bash
-      # Create CF services
-      cf create-service elephantsql turtle logistics-wizard-erp-db
-      if ! cf app $CF_APP; then
-        cf push $CF_APP -n $CF_APP --no-start
-        cf set-env $CF_APP LOGISTICS_WIZARD_ENV ${LOGISTICS_WIZARD_ENV}
-        cf start $CF_APP
-      else
-        OLD_CF_APP=${CF_APP}-OLD-$(date +"%s")
-        rollback() {
-          set +e
-          if cf app $OLD_CF_APP; then
-            cf logs $CF_APP --recent
-            cf delete $CF_APP -f
-            cf rename $OLD_CF_APP $CF_APP
-          fi
-          exit 1
-        }
-        set -e
-        trap rollback ERR
-        cf rename $CF_APP $OLD_CF_APP
-        cf push $CF_APP -n $CF_APP --no-start
-        cf set-env $CF_APP LOGISTICS_WIZARD_ENV ${LOGISTICS_WIZARD_ENV}
-        cf start $CF_APP
-        cf delete $OLD_CF_APP -f
-      fi
+      ./.bluemix/pipeline-DEPLOY.sh
