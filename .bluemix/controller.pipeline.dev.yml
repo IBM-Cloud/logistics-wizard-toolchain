@@ -3,7 +3,7 @@ stages:
 - name: TEST
   inputs:
   - type: git
-    branch: extract-scripts
+    branch: dev
     service: ${CONTROLLER_REPO}
   triggers:
   - type: commit
@@ -26,7 +26,7 @@ stages:
 - name: BUILD
   inputs:
   - type: git
-    branch: extract-scripts
+    branch: dev
     service: ${CONTROLLER_REPO}
   triggers:
   - type: stage
