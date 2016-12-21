@@ -3,13 +3,15 @@ stages:
 - name: BUILD
   inputs:
   - type: git
-    branch: dev
-    service: ${RECOMMENDATION_REPO}
+    branch: ${REPO_BRANCH}
+    service: ${REPO}
   triggers:
   - type: commit
   properties:
-  - name: LOGISTICS_WIZARD_ENV
-    value: DEV
+  - name: REPO_BRANCH
+    value: ${REPO_BRANCH}
+  - name: CONTROLLER_SERVICE_APP_NAME
+    value: ${CONTROLLER_SERVICE_APP_NAME}
     type: text
   - name: COVERALLS_SERVICE_NAME
     value: bluemix-devops-services
@@ -17,9 +19,12 @@ stages:
   - name: COVERALLS_REPO_TOKEN
     value: ${COVERALLS_REPO_TOKEN}
     type: secure
+  - name: REGION_ID
+    value: ${REGION_ID}
   jobs:
   - name: Build
     type: builder
+    artifact_dir: dist
     build_type: shell
     script: |-
       #!/bin/bash
@@ -32,31 +37,16 @@ stages:
   triggers:
   - type: stage
   properties:
-  - name: LOGISTICS_WIZARD_ENV
-    value: DEV
-    type: text
-  - name: PACKAGE_NAME
-    value: dev-logistics-wizard-recommendation
-    type: text
-  - name: CLOUDANT_DATABASE
-    value: dev-recommendations
-    type: text
-  - name: OPENWHISK_AUTH
-    value: ${OPENWHISK_AUTH}
-    type: secure
-  - name: CONTROLLER_SERVICE_APP_NAME
-    value: ${CONTROLLER_SERVICE_APP_NAME}
-    type: text
-  - name: REGION_ID
-    value: ${REGION_ID}
+  - name: REPO_BRANCH
+    value: ${REPO_BRANCH}
   jobs:
-  - name: Deploy
+  - name: Blue/Green Deploy
     type: deployer
     target:
       region_id: ${REGION_ID}
       organization: ${ORG_NAME}
       space: ${SPACE_NAME}
-      application: "not-used"
+      application: ${CF_APP_NAME}
     script: |-
       #!/bin/bash
       ./.bluemix/pipeline-DEPLOY.sh

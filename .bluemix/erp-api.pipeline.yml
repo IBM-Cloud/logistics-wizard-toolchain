@@ -1,16 +1,25 @@
 ---
 stages:
-- name: TEST
+- name: BUILD
   inputs:
   - type: git
-    branch: dev
-    service: ${CONTROLLER_REPO}
+    branch: ${REPO_BRANCH}
+    service: ${REPO}
   triggers:
   - type: commit
+  jobs:
+  - name: Build
+    type: builder
+- name: TEST
+  inputs:
+  - type: job
+    stage: BUILD
+    job: Build
+  triggers:
+  - type: stage
   properties:
-  - name: LOGISTICS_WIZARD_ENV
-    value: TEST
-    type: text
+  - name: REPO_BRANCH
+    value: ${REPO_BRANCH}
   - name: COVERALLS_SERVICE_NAME
     value: bluemix-devops-services
     type: text
@@ -23,16 +32,27 @@ stages:
     script: |
       #!/bin/bash
       ./.bluemix/pipeline-TEST.sh
-- name: BUILD
+- name: TEST (PostgreSQL)
   inputs:
-  - type: git
-    branch: dev
-    service: ${CONTROLLER_REPO}
+  - type: job
+    stage: BUILD
+    job: Build
   triggers:
   - type: stage
+  properties:
+  - name: REPO_BRANCH
+    value: ${REPO_BRANCH}
   jobs:
-  - name: Build
-    type: builder
+  - name: Unit Test
+    type: deployer
+    target:
+      region_id: ${REGION_ID}
+      organization: ${ORG_NAME}
+      space: ${SPACE_NAME}
+      application: ${CF_APP_NAME}
+    script: |
+      #!/bin/bash
+      ./.bluemix/pipeline-TEST-REAL-DB.sh
 - name: DEPLOY
   inputs:
   - type: job
@@ -41,20 +61,8 @@ stages:
   triggers:
   - type: stage
   properties:
-  - name: LOGISTICS_WIZARD_ENV
-    value: DEV
-    type: text
-  - name: ERP_SERVICE_APP_NAME
-    value: ${ERP_SERVICE_APP_NAME}
-    type: text
-  - name: REGION_ID
-    value: ${REGION_ID}
-  - name: RECOMMENDATION_PACKAGE_NAME
-    value: dev-logistics-wizard-recommendation
-    type: text
-  - name: OPENWHISK_AUTH
-    value: ${OPENWHISK_AUTH}
-    type: secure
+  - name: REPO_BRANCH
+    value: ${REPO_BRANCH}
   jobs:
   - name: Blue/Green Deploy
     type: deployer

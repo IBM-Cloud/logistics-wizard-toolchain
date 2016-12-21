@@ -3,14 +3,13 @@ stages:
 - name: BUILD
   inputs:
   - type: git
-    branch: master
-    service: ${RECOMMENDATION_REPO}
+    branch: ${REPO_BRANCH}
+    service: ${REPO}
   triggers:
   - type: commit
   properties:
-  - name: LOGISTICS_WIZARD_ENV
-    value: PROD
-    type: text
+  - name: REPO_BRANCH
+    value: ${REPO_BRANCH}
   - name: COVERALLS_SERVICE_NAME
     value: bluemix-devops-services
     type: text
@@ -32,14 +31,13 @@ stages:
   triggers:
   - type: stage
   properties:
-  - name: LOGISTICS_WIZARD_ENV
-    value: PROD
-    type: text
+  - name: REPO_BRANCH
+    value: ${REPO_BRANCH}
   - name: PACKAGE_NAME
-    value: logistics-wizard-recommendation
+    value: ${PACKAGE_NAME}
     type: text
   - name: CLOUDANT_DATABASE
-    value: recommendations
+    value: ${CLOUDANT_DATABASE}
     type: text
   - name: OPENWHISK_AUTH
     value: ${OPENWHISK_AUTH}
