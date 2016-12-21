@@ -46,9 +46,10 @@ erp-api-build-dev:
   parameters:
     name: "erp (dev)"
     configuration:
-      content: $file(erp-api.pipeline.dev.yml)
+      content: $file(erp-api.pipeline.yml)
       env:
-        ERP_API_REPO: "erp-api-repo"
+        REPO: "erp-api-repo"
+        REPO_BRANCH: "dev"
         CF_APP_NAME: "dev-{{deploy.parameters.erp-app-name}}"
         COVERALLS_REPO_TOKEN: "{{coveralls.parameters.erp-api-coveralls_token}}"
         SPACE_NAME: "{{deploy.parameters.selected-space}}"
@@ -63,9 +64,10 @@ erp-api-build-prod:
   parameters:
     name: "erp (prod)"
     configuration:
-      content: $file(erp-api.pipeline.prod.yml)
+      content: $file(erp-api.pipeline.yml)
       env:
-        ERP_API_REPO: "erp-api-repo"
+        REPO: "erp-api-repo"
+        REPO_BRANCH: "master"
         CF_APP_NAME: "{{deploy.parameters.erp-app-name}}"
         COVERALLS_REPO_TOKEN: "{{coveralls.parameters.erp-api-coveralls_token}}"
         SPACE_NAME: "{{deploy.parameters.selected-space}}"
@@ -80,9 +82,10 @@ controller-build-dev:
   parameters:
     name: "controller (dev)"
     configuration:
-      content: $file(controller.pipeline.dev.yml)
+      content: $file(controller.pipeline.yml)
       env:
-        CONTROLLER_REPO: "controller-repo"
+        REPO: "controller-repo"
+        REPO_BRANCH: "dev"
         COVERALLS_REPO_TOKEN: "{{coveralls.parameters.controller-coveralls_token}}"
         ERP_SERVICE_APP_NAME: "dev-{{deploy.parameters.erp-app-name}}"
         CF_APP_NAME: "dev-{{deploy.parameters.controller-app-name}}"
@@ -90,6 +93,7 @@ controller-build-dev:
         ORG_NAME: "{{deploy.parameters.selected-organization}}"
         REGION_ID: "{{deploy.parameters.selected-region}}"
         OPENWHISK_AUTH: "{{openwhisk.parameters.openwhisk_auth}}"
+        RECOMMENDATION_PACKAGE_NAME: "dev-logistics-wizard-recommendation"
       execute: true
     services: ["controller-repo"]
   hidden: [form, description]
@@ -99,9 +103,10 @@ controller-build-prod:
   parameters:
     name: "controller (prod)"
     configuration:
-      content: $file(controller.pipeline.prod.yml)
+      content: $file(controller.pipeline.yml)
       env:
-        CONTROLLER_REPO: "controller-repo"
+        REPO: "controller-repo"
+        REPO_BRANCH: "master"
         COVERALLS_REPO_TOKEN: "{{coveralls.parameters.controller-coveralls_token}}"
         ERP_SERVICE_APP_NAME: "{{deploy.parameters.erp-app-name}}"
         CF_APP_NAME: "{{deploy.parameters.controller-app-name}}"
@@ -109,6 +114,7 @@ controller-build-prod:
         ORG_NAME: "{{deploy.parameters.selected-organization}}"
         REGION_ID: "{{deploy.parameters.selected-region}}"
         OPENWHISK_AUTH: "{{openwhisk.parameters.openwhisk_auth}}"
+        RECOMMENDATION_PACKAGE_NAME: "logistics-wizard-recommendation"
       execute: true
     services: ["controller-repo"]
   hidden: [form, description]
@@ -118,9 +124,10 @@ webui-build-dev:
   parameters:
     name: "webui (dev)"
     configuration:
-      content: $file(webui.pipeline.dev.yml)
+      content: $file(webui.pipeline.yml)
       env:
-        WEBUI_REPO: "webui-repo"
+        REPO: "webui-repo"
+        REPO_BRANCH: "dev"
         COVERALLS_REPO_TOKEN: "{{coveralls.parameters.webui-coveralls_token}}"
         CONTROLLER_SERVICE_APP_NAME: "dev-{{deploy.parameters.controller-app-name}}"
         CF_APP_NAME: "dev-{{deploy.parameters.webui-app-name}}"
@@ -136,9 +143,10 @@ webui-build-prod:
   parameters:
     name: "webui (prod)"
     configuration:
-      content: $file(webui.pipeline.prod.yml)
+      content: $file(webui.pipeline.yml)
       env:
-        WEBUI_REPO: "webui-repo"
+        REPO: "webui-repo"
+        REPO_BRANCH: "master"
         COVERALLS_REPO_TOKEN: "{{coveralls.parameters.webui-coveralls_token}}"
         CONTROLLER_SERVICE_APP_NAME: "{{deploy.parameters.controller-app-name}}"
         CF_APP_NAME: "{{deploy.parameters.webui-app-name}}"
@@ -154,12 +162,15 @@ recommendation-build-dev:
   parameters:
     name: "recommendation (dev)"
     configuration:
-      content: $file(recommendation.pipeline.dev.yml)
+      content: $file(recommendation.pipeline.yml)
       env:
         CONTROLLER_SERVICE_APP_NAME: "dev-{{deploy.parameters.controller-app-name}}"
-        RECOMMENDATION_REPO: "recommendation-repo"
+        REPO: "recommendation-repo"
+        REPO_BRANCH: "dev"
         COVERALLS_REPO_TOKEN: "{{coveralls.parameters.recommendation-coveralls_token}}"
         OPENWHISK_AUTH: "{{openwhisk.parameters.openwhisk_auth}}"
+        PACKAGE_NAME: "dev-logistics-wizard-recommendation"
+        CLOUDANT_DATABASE: "dev-recommendations"
         SPACE_NAME: "{{deploy.parameters.selected-space}}"
         ORG_NAME: "{{deploy.parameters.selected-organization}}"
         REGION_ID: "{{deploy.parameters.selected-region}}"
@@ -172,12 +183,15 @@ recommendation-build-prod:
   parameters:
     name: "recommendation (prod)"
     configuration:
-      content: $file(recommendation.pipeline.prod.yml)
+      content: $file(recommendation.pipeline.yml)
       env:
         CONTROLLER_SERVICE_APP_NAME: "{{deploy.parameters.controller-app-name}}"
-        RECOMMENDATION_REPO: "recommendation-repo"
+        REPO: "recommendation-repo"
+        REPO_BRANCH: "master"
         COVERALLS_REPO_TOKEN: "{{coveralls.parameters.recommendation-coveralls_token}}"
         OPENWHISK_AUTH: "{{openwhisk.parameters.openwhisk_auth}}"
+        PACKAGE_NAME: "logistics-wizard-recommendation"
+        CLOUDANT_DATABASE: "recommendations"
         SPACE_NAME: "{{deploy.parameters.selected-space}}"
         ORG_NAME: "{{deploy.parameters.selected-organization}}"
         REGION_ID: "{{deploy.parameters.selected-region}}"

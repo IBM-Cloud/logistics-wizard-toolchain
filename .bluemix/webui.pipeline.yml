@@ -3,16 +3,13 @@ stages:
 - name: BUILD
   inputs:
   - type: git
-    branch: dev
-    service: ${WEBUI_REPO}
+    branch: ${REPO_BRANCH}
+    service: ${REPO}
   triggers:
   - type: commit
   properties:
   - name: CONTROLLER_SERVICE_APP_NAME
     value: ${CONTROLLER_SERVICE_APP_NAME}
-    type: text
-  - name: LOGISTICS_WIZARD_ENV
-    value: DEV
     type: text
   - name: COVERALLS_SERVICE_NAME
     value: bluemix-devops-services
