@@ -8,6 +8,8 @@ stages:
   triggers:
   - type: commit
   properties:
+  - name: REPO_BRANCH
+    value: ${REPO_BRANCH}
   - name: COVERALLS_SERVICE_NAME
     value: bluemix-devops-services
     type: text
@@ -38,6 +40,8 @@ stages:
   triggers:
   - type: stage
   properties:
+  - name: REPO_BRANCH
+    value: ${REPO_BRANCH}
   - name: ERP_SERVICE_APP_NAME
     value: ${ERP_SERVICE_APP_NAME}
     type: text

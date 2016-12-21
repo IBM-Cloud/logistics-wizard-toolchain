@@ -8,6 +8,8 @@ stages:
   triggers:
   - type: commit
   properties:
+  - name: REPO_BRANCH
+    value: ${REPO_BRANCH}
   - name: CONTROLLER_SERVICE_APP_NAME
     value: ${CONTROLLER_SERVICE_APP_NAME}
     type: text
@@ -34,6 +36,9 @@ stages:
     job: Build
   triggers:
   - type: stage
+  properties:
+  - name: REPO_BRANCH
+    value: ${REPO_BRANCH}
   jobs:
   - name: Blue/Green Deploy
     type: deployer

@@ -18,6 +18,8 @@ stages:
   triggers:
   - type: stage
   properties:
+  - name: REPO_BRANCH
+    value: ${REPO_BRANCH}
   - name: COVERALLS_SERVICE_NAME
     value: bluemix-devops-services
     type: text
@@ -37,6 +39,9 @@ stages:
     job: Build
   triggers:
   - type: stage
+  properties:
+  - name: REPO_BRANCH
+    value: ${REPO_BRANCH}
   jobs:
   - name: Unit Test
     type: deployer
@@ -55,6 +60,9 @@ stages:
     job: Build
   triggers:
   - type: stage
+  properties:
+  - name: REPO_BRANCH
+    value: ${REPO_BRANCH}
   jobs:
   - name: Blue/Green Deploy
     type: deployer
