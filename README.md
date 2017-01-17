@@ -8,9 +8,11 @@ This toolchain will allow you to deploy the entire [Logistics Wizard](https://gi
 
 ## Create the toolchain
 
+1. If you don't already have one, [sign up for a Bluemix account](https://bluemix.net/).
+
 1. Ensure you have 2GB of free memory and space for 4 additional services in your organization.
 
-1. It is recommended to create a new space in your organization. This helps grouping the apps and services together in the console.
+1. It is recommended to [create a new space](./.assets/manage-organizations.png) in your organization. This helps grouping the apps and services together in the console.
 
 1. **To get started, click this button:**
 
