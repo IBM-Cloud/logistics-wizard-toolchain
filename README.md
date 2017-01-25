@@ -29,6 +29,10 @@ The toolchain is preconfigured for:
 
   [![Deploy To Bluemix](./.bluemix/create_toolchain_button.png)](https://new-console.ng.bluemix.net/devops/setup/deploy/?repository=https%3A//github.com//IBM-Bluemix/logistics-wizard-toolchain.git)
 
+1. The toolchain configuration page opens.
+
+  ![](toolchain.png)
+
 1. Give a name to your toolchain. This name is used as the prefix for the deployed applications. The name must be unique within your organization.
 
   > A simple trick is to use your name or initials or to leave the default generated name.
