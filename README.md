@@ -15,7 +15,7 @@ The toolchain is preconfigured for:
 - unit and code coverage testing
 - blue-green deployment
 
-## Create the toolchain
+## Deploy the toolchain in IBM Bluemix
 
 1. Ensure you have a [GitHub](https://github.com/) account.
 
