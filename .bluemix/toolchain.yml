@@ -1,11 +1,8 @@
 ---
 name: "Cloud-native Toolchain for the Logistics Wizard"
 description: "With this cloud-native toolchain, you use the logistics wizard template to create a supply chain management web app and back end that consists of multiple microservices: a Controller API, an ERP API, and a WEB-UI. The toolchain is preconfigured for continuous delivery, source control, blue-green deployment, unit testing, and issue tracking.\n\nTo get started, click **Create**."
-version: 1.1
 required:
  - deploy
- - openwhisk
- - coveralls
 
 # Github repos
 erp-api-repo:
@@ -51,7 +48,7 @@ erp-api-build-dev:
         REPO: "erp-api-repo"
         REPO_BRANCH: "dev"
         CF_APP_NAME: "dev-{{deploy.parameters.erp-app-name}}"
-        COVERALLS_REPO_TOKEN: "{{coveralls.parameters.erp-api-coveralls_token}}"
+        COVERALLS_REPO_TOKEN: "{{deploy.parameters.erp-api-coveralls_token}}"
         SPACE_NAME: "{{deploy.parameters.selected-space}}"
         ORG_NAME: "{{deploy.parameters.selected-organization}}"
         REGION_ID: "{{deploy.parameters.selected-region}}"
@@ -69,7 +66,7 @@ erp-api-build-prod:
         REPO: "erp-api-repo"
         REPO_BRANCH: "master"
         CF_APP_NAME: "{{deploy.parameters.erp-app-name}}"
-        COVERALLS_REPO_TOKEN: "{{coveralls.parameters.erp-api-coveralls_token}}"
+        COVERALLS_REPO_TOKEN: "{{deploy.parameters.erp-api-coveralls_token}}"
         SPACE_NAME: "{{deploy.parameters.selected-space}}"
         ORG_NAME: "{{deploy.parameters.selected-organization}}"
         REGION_ID: "{{deploy.parameters.selected-region}}"
@@ -86,13 +83,13 @@ controller-build-dev:
       env:
         REPO: "controller-repo"
         REPO_BRANCH: "dev"
-        COVERALLS_REPO_TOKEN: "{{coveralls.parameters.controller-coveralls_token}}"
+        COVERALLS_REPO_TOKEN: "{{deploy.parameters.controller-coveralls_token}}"
         ERP_SERVICE_APP_NAME: "dev-{{deploy.parameters.erp-app-name}}"
         CF_APP_NAME: "dev-{{deploy.parameters.controller-app-name}}"
         SPACE_NAME: "{{deploy.parameters.selected-space}}"
         ORG_NAME: "{{deploy.parameters.selected-organization}}"
         REGION_ID: "{{deploy.parameters.selected-region}}"
-        OPENWHISK_AUTH: "{{openwhisk.parameters.openwhisk_auth}}"
+        OPENWHISK_AUTH: "{{deploy.parameters.openwhisk_auth}}"
         RECOMMENDATION_PACKAGE_NAME: "dev-logistics-wizard-recommendation"
       execute: true
     services: ["controller-repo"]
@@ -107,13 +104,13 @@ controller-build-prod:
       env:
         REPO: "controller-repo"
         REPO_BRANCH: "master"
-        COVERALLS_REPO_TOKEN: "{{coveralls.parameters.controller-coveralls_token}}"
+        COVERALLS_REPO_TOKEN: "{{deploy.parameters.controller-coveralls_token}}"
         ERP_SERVICE_APP_NAME: "{{deploy.parameters.erp-app-name}}"
         CF_APP_NAME: "{{deploy.parameters.controller-app-name}}"
         SPACE_NAME: "{{deploy.parameters.selected-space}}"
         ORG_NAME: "{{deploy.parameters.selected-organization}}"
         REGION_ID: "{{deploy.parameters.selected-region}}"
-        OPENWHISK_AUTH: "{{openwhisk.parameters.openwhisk_auth}}"
+        OPENWHISK_AUTH: "{{deploy.parameters.openwhisk_auth}}"
         RECOMMENDATION_PACKAGE_NAME: "logistics-wizard-recommendation"
       execute: true
     services: ["controller-repo"]
@@ -128,7 +125,7 @@ webui-build-dev:
       env:
         REPO: "webui-repo"
         REPO_BRANCH: "dev"
-        COVERALLS_REPO_TOKEN: "{{coveralls.parameters.webui-coveralls_token}}"
+        COVERALLS_REPO_TOKEN: "{{deploy.parameters.webui-coveralls_token}}"
         CONTROLLER_SERVICE_APP_NAME: "dev-{{deploy.parameters.controller-app-name}}"
         CF_APP_NAME: "dev-{{deploy.parameters.webui-app-name}}"
         SPACE_NAME: "{{deploy.parameters.selected-space}}"
@@ -147,7 +144,7 @@ webui-build-prod:
       env:
         REPO: "webui-repo"
         REPO_BRANCH: "master"
-        COVERALLS_REPO_TOKEN: "{{coveralls.parameters.webui-coveralls_token}}"
+        COVERALLS_REPO_TOKEN: "{{deploy.parameters.webui-coveralls_token}}"
         CONTROLLER_SERVICE_APP_NAME: "{{deploy.parameters.controller-app-name}}"
         CF_APP_NAME: "{{deploy.parameters.webui-app-name}}"
         SPACE_NAME: "{{deploy.parameters.selected-space}}"
@@ -167,8 +164,8 @@ recommendation-build-dev:
         CONTROLLER_SERVICE_APP_NAME: "dev-{{deploy.parameters.controller-app-name}}"
         REPO: "recommendation-repo"
         REPO_BRANCH: "dev"
-        COVERALLS_REPO_TOKEN: "{{coveralls.parameters.recommendation-coveralls_token}}"
-        OPENWHISK_AUTH: "{{openwhisk.parameters.openwhisk_auth}}"
+        COVERALLS_REPO_TOKEN: "{{deploy.parameters.recommendation-coveralls_token}}"
+        OPENWHISK_AUTH: "{{deploy.parameters.openwhisk_auth}}"
         PACKAGE_NAME: "dev-logistics-wizard-recommendation"
         CLOUDANT_DATABASE: "dev-recommendations"
         SPACE_NAME: "{{deploy.parameters.selected-space}}"
@@ -188,8 +185,8 @@ recommendation-build-prod:
         CONTROLLER_SERVICE_APP_NAME: "{{deploy.parameters.controller-app-name}}"
         REPO: "recommendation-repo"
         REPO_BRANCH: "master"
-        COVERALLS_REPO_TOKEN: "{{coveralls.parameters.recommendation-coveralls_token}}"
-        OPENWHISK_AUTH: "{{openwhisk.parameters.openwhisk_auth}}"
+        COVERALLS_REPO_TOKEN: "{{deploy.parameters.recommendation-coveralls_token}}"
+        OPENWHISK_AUTH: "{{deploy.parameters.openwhisk_auth}}"
         PACKAGE_NAME: "logistics-wizard-recommendation"
         CLOUDANT_DATABASE: "recommendations"
         SPACE_NAME: "{{deploy.parameters.selected-space}}"
@@ -215,21 +212,7 @@ deploy:
     erp-app-name: "{{name}}-erp"
     controller-app-name: "{{name}}-controller"
     webui-app-name: "{{name}}-webui"
-
-#OpenWhisk
-openwhisk:
-  schema:
-    $ref: openwhisk.json
-  service-category: pipeline
-  parameters:
     openwhisk_auth:
-
-#Coveralls
-coveralls:
-  schema:
-    $ref: coveralls.json
-  service-category: pipeline
-  parameters:
     erp-api-coveralls_token:
     controller-coveralls_token:
     webui-coveralls_token:
