@@ -90,7 +90,7 @@ controller-build-dev:
         ORG_NAME: "{{deploy.parameters.selected-organization}}"
         REGION_ID: "{{deploy.parameters.selected-region}}"
         OPENWHISK_AUTH: "{{deploy.parameters.openwhisk_auth}}"
-        RECOMMENDATION_PACKAGE_NAME: "dev-logistics-wizard-recommendation"
+        RECOMMENDATION_PACKAGE_NAME: "dev-lwr"
       execute: true
     services: ["controller-repo"]
   hidden: [form, description]
@@ -111,7 +111,7 @@ controller-build-prod:
         ORG_NAME: "{{deploy.parameters.selected-organization}}"
         REGION_ID: "{{deploy.parameters.selected-region}}"
         OPENWHISK_AUTH: "{{deploy.parameters.openwhisk_auth}}"
-        RECOMMENDATION_PACKAGE_NAME: "logistics-wizard-recommendation"
+        RECOMMENDATION_PACKAGE_NAME: "lwr"
       execute: true
     services: ["controller-repo"]
   hidden: [form, description]
@@ -166,7 +166,7 @@ recommendation-build-dev:
         REPO_BRANCH: "dev"
         COVERALLS_REPO_TOKEN: "{{deploy.parameters.recommendation-coveralls_token}}"
         OPENWHISK_AUTH: "{{deploy.parameters.openwhisk_auth}}"
-        PACKAGE_NAME: "dev-logistics-wizard-recommendation"
+        PACKAGE_NAME: "dev-lwr"
         CLOUDANT_DATABASE: "dev-recommendations"
         SPACE_NAME: "{{deploy.parameters.selected-space}}"
         ORG_NAME: "{{deploy.parameters.selected-organization}}"
@@ -187,7 +187,7 @@ recommendation-build-prod:
         REPO_BRANCH: "master"
         COVERALLS_REPO_TOKEN: "{{deploy.parameters.recommendation-coveralls_token}}"
         OPENWHISK_AUTH: "{{deploy.parameters.openwhisk_auth}}"
-        PACKAGE_NAME: "logistics-wizard-recommendation"
+        PACKAGE_NAME: "lwr"
         CLOUDANT_DATABASE: "recommendations"
         SPACE_NAME: "{{deploy.parameters.selected-space}}"
         ORG_NAME: "{{deploy.parameters.selected-organization}}"
