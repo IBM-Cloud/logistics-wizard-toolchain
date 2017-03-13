@@ -6,7 +6,7 @@ It includes four modules:
 - [Controller][github_controller_url] - The API that sits on the edge of the architecture and interfaces with all other services.  
 - [ERP][github_erp_url] - An API that handles user login and interaction with the ERP system objects.  
 - [WEBUI][github_webui_url] - The Web UI that is the web front end of the entire application, built using React.
-- [Weather Recommandation][github_recommendation_url] - Makes shipment recommendations based on weather conditions
+- [Weather Recommendation][github_recommendation_url] - Makes shipment recommendations based on weather conditions
 
 The toolchain is preconfigured for:
 - issue tracking
