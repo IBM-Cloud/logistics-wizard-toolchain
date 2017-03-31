@@ -212,8 +212,8 @@ deploy:
     erp-app-name: "{{name}}-erp"
     controller-app-name: "{{name}}-controller"
     webui-app-name: "{{name}}-webui"
-    openwhisk_auth:
-    erp-api-coveralls_token:
-    controller-coveralls_token:
-    webui-coveralls_token:
-    recommendation-coveralls_token:
+    openwhisk_auth: ""
+    erp-api-coveralls_token: ""
+    controller-coveralls_token: ""
+    webui-coveralls_token: ""
+    recommendation-coveralls_token: ""
