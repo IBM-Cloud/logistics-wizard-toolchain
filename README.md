@@ -1,6 +1,6 @@
 # Logistics Wizard Toolchain
 
-This toolchain allows to deploy the [Logistics Wizard](https://github.com/IBM-Bluemix/logistics-wizard) sample application, which is a supply chain management web application composed of several micro-services. Refer to the [parent project](https://github.com/IBM-Bluemix/logistics-wizard) for details.
+This toolchain allows to deploy the [Logistics Wizard](https://github.com/IBM-Cloud/logistics-wizard) sample application, which is a supply chain management web application composed of several micro-services. Refer to the [parent project](https://github.com/IBM-Cloud/logistics-wizard) for details.
 
 It includes four modules:  
 - [Controller][github_controller_url] - The API that sits on the edge of the architecture and interfaces with all other services.  
@@ -27,7 +27,7 @@ The toolchain is preconfigured for:
 
 1. **To get started, click this button:**
 
-  [![Deploy To Bluemix](./.bluemix/create_toolchain_button.png)](https://new-console.ng.bluemix.net/devops/setup/deploy/?repository=https%3A//github.com/IBM-Bluemix/logistics-wizard-toolchain.git)
+  [![Deploy To Bluemix](./.bluemix/create_toolchain_button.png)](https://new-console.ng.bluemix.net/devops/setup/deploy/?repository=https%3A//github.com/IBM-Cloud/logistics-wizard-toolchain.git)
 
 1. The toolchain configuration page opens.
 
@@ -61,7 +61,7 @@ The toolchain is preconfigured for:
 
 1. Once the toolchain is created, you will end up with several delivery pipelines for all applications in the sample. Wait for the pipelines to deploy all the apps. You can open all pipelines in new browser tabs to follow the deployments or you can wait for all apps to be ready in the Bluemix dashboard.
 
-1. Your apps are deployed. Head over the [walkthrough](https://github.com/IBM-Bluemix/logistics-wizard/blob/master/WALKTHROUGH.md) for a tour of the app.
+1. Your apps are deployed. Head over the [walkthrough](https://github.com/IBM-Cloud/logistics-wizard/blob/master/WALKTHROUGH.md) for a tour of the app.
 
 ---
 ### Learn more
@@ -72,10 +72,10 @@ The toolchain is preconfigured for:
 
 <!--Links-->
 [bluemix_devops_url]: https://new-console.ng.bluemix.net/devops
-[github_controller_url]: https://github.com/IBM-Bluemix/logistics-wizard-controller
-[github_erp_url]: https://github.com/IBM-Bluemix/logistics-wizard-erp
-[github_webui_url]: https://github.com/IBM-Bluemix/logistics-wizard-webui
-[github_recommendation_url]: https://github.com/IBM-Bluemix/logistics-wizard-recommendation
+[github_controller_url]: https://github.com/IBM-Cloud/logistics-wizard-controller
+[github_erp_url]: https://github.com/IBM-Cloud/logistics-wizard-erp
+[github_webui_url]: https://github.com/IBM-Cloud/logistics-wizard-webui
+[github_recommendation_url]: https://github.com/IBM-Cloud/logistics-wizard-recommendation
 [coveralls_url]: https://coveralls.io/
 [toolchains_overview_url]: https://new-console.ng.bluemix.net/docs/toolchains/toolchains_overview.html
 [toolchains_interconnect_video_url]: https://vimeo.com/156126035/8b04b8878a
