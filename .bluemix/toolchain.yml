@@ -52,7 +52,7 @@ erp-api-build-dev:
         SPACE_NAME: "{{deploy.parameters.selected-space}}"
         ORG_NAME: "{{deploy.parameters.selected-organization}}"
         REGION_ID: "{{deploy.parameters.selected-region}}"
-      execute: true
+      execute: {{deploy.parameters.deploy-dev}}
     services: ["erp-api-repo"]
   hidden: [form, description]
 
@@ -70,7 +70,7 @@ erp-api-build-prod:
         SPACE_NAME: "{{deploy.parameters.selected-space}}"
         ORG_NAME: "{{deploy.parameters.selected-organization}}"
         REGION_ID: "{{deploy.parameters.selected-region}}"
-      execute: true
+      execute: {{deploy.parameters.deploy-prod}}
     services: ["erp-api-repo"]
   hidden: [form, description]
 
@@ -91,7 +91,7 @@ controller-build-dev:
         REGION_ID: "{{deploy.parameters.selected-region}}"
         OPENWHISK_AUTH: "{{deploy.parameters.openwhisk_auth}}"
         RECOMMENDATION_PACKAGE_NAME: "dev-lwr"
-      execute: true
+      execute: {{deploy.parameters.deploy-dev}}
     services: ["controller-repo"]
   hidden: [form, description]
 
@@ -112,7 +112,7 @@ controller-build-prod:
         REGION_ID: "{{deploy.parameters.selected-region}}"
         OPENWHISK_AUTH: "{{deploy.parameters.openwhisk_auth}}"
         RECOMMENDATION_PACKAGE_NAME: "lwr"
-      execute: true
+      execute: {{deploy.parameters.deploy-prod}}
     services: ["controller-repo"]
   hidden: [form, description]
 
@@ -131,7 +131,7 @@ webui-build-dev:
         SPACE_NAME: "{{deploy.parameters.selected-space}}"
         ORG_NAME: "{{deploy.parameters.selected-organization}}"
         REGION_ID: "{{deploy.parameters.selected-region}}"
-      execute: true
+      execute: {{deploy.parameters.deploy-dev}}
     services: ["webui-repo"]
   hidden: [form, description]
 
@@ -150,7 +150,7 @@ webui-build-prod:
         SPACE_NAME: "{{deploy.parameters.selected-space}}"
         ORG_NAME: "{{deploy.parameters.selected-organization}}"
         REGION_ID: "{{deploy.parameters.selected-region}}"
-      execute: true
+      execute: {{deploy.parameters.deploy-prod}}
     services: ["webui-repo"]
   hidden: [form, description]
 
@@ -171,7 +171,7 @@ recommendation-build-dev:
         SPACE_NAME: "{{deploy.parameters.selected-space}}"
         ORG_NAME: "{{deploy.parameters.selected-organization}}"
         REGION_ID: "{{deploy.parameters.selected-region}}"
-      execute: true
+      execute: {{deploy.parameters.deploy-dev}}
     services: ["recommendation-repo"]
   hidden: [form, description]
 
@@ -192,7 +192,7 @@ recommendation-build-prod:
         SPACE_NAME: "{{deploy.parameters.selected-space}}"
         ORG_NAME: "{{deploy.parameters.selected-organization}}"
         REGION_ID: "{{deploy.parameters.selected-region}}"
-      execute: true
+      execute: {{deploy.parameters.deploy-prod}}
     services: ["recommendation-repo"]
   hidden: [form, description]
 
