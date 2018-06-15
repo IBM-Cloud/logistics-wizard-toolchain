@@ -44,20 +44,32 @@
     "recommendation-coveralls_token": {
       "type": "string"
     },
-    "selected-pipelines": {
-      "type": "object",
-      "title": "Select pipelines to be deployed. Each pipeline will deploy environment-specific applications and services. Deploying a *dev* pipelines allows developers to test code changes prior to production.",
-      "properties": {
-         "type": {"title": "dev", "type": "boolean"},
-         "severity": {"title": "prod", "type": "boolean"}
-      }
-   }
+    "deploy-prod": {
+      "title": "Deploy production pipeline",
+      "description": "Deploys production applications and services.",
+      "type": "boolean",
+      "default": true
+     },
+     "deploy-dev": {
+      "title": "Deploy development pipeline",
+      "description": "Deploys additional development applications and services suitable for dev-to-production workflow.",
+      "type": "boolean",
+      "default": false
+    }
   },
-  "required": ["selected-region", "selected-organization", "selected-space", "erp-app-name", "controller-app-name", "webui-app-name", "selected-pipelines"],
+  "required": ["selected-region", "selected-organization", "selected-space", "erp-app-name", "controller-app-name", "webui-app-name"],
   "form": [
    {
       "type": "validator",
       "url": "/devops/setup/bm-helper/helper.html"
+   },
+   {
+    "type": "boolean",
+    "key": "deploy-prod"
+   },
+   {
+    "type": "boolean",
+    "key": "deploy-dev"
    },
    {
       "type": "text",
@@ -76,12 +88,6 @@
       "readonly": false,
       "title": "Webui App Name",
       "key": "webui-app-name"
-    },
-    {
-      "type": "object",
-      "readonly": false,
-      "title": "Pipeline Deployment Options",
-      "key": "selected-pipelines"
     },
 
     {
