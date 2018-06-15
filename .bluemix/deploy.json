@@ -43,9 +43,17 @@
     },
     "recommendation-coveralls_token": {
       "type": "string"
-    }
+    },
+    "selected-pipelines": {
+      "type": "object",
+      "title": "Select pipelines to be deployed. Each pipeline will deploy environment-specific applications and services. Deploying a *dev* pipelines allows developers to test code changes prior to production.",
+      "properties": {
+         "type": {"title": "dev", "type": "boolean"},
+         "severity": {"title": "prod", "type": "boolean"}
+      }
+   }
   },
-  "required": ["selected-region", "selected-organization", "selected-space", "erp-app-name", "controller-app-name", "webui-app-name"],
+  "required": ["selected-region", "selected-organization", "selected-space", "erp-app-name", "controller-app-name", "webui-app-name", "selected-pipelines"],
   "form": [
    {
       "type": "validator",
@@ -68,6 +76,12 @@
       "readonly": false,
       "title": "Webui App Name",
       "key": "webui-app-name"
+    },
+    {
+      "type": "object",
+      "readonly": false,
+      "title": "Pipeline Deployment Options",
+      "key": "selected-pipelines"
     },
 
     {
