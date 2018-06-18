@@ -190,6 +190,7 @@ services:
           SPACE_NAME: "{{form.pipeline.parameters.selected-space}}"
           ORG_NAME: "{{form.pipeline.parameters.selected-organization}}"
           REGION_ID: "{{form.pipeline.parameters.selected-region}}"
+          EXECUTE: "{{form.pipeline.parameters.start-prod-pipeline}}"
         execute: {{form.pipeline.parameters.start-prod-pipeline}}
       services: ["recommendation-repo"]
     hidden: [form, description]
