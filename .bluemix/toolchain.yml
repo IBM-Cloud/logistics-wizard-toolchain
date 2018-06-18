@@ -169,7 +169,7 @@ services:
           SPACE_NAME: "{{form.pipeline.parameters.selected-space}}"
           ORG_NAME: "{{form.pipeline.parameters.selected-organization}}"
           REGION_ID: "{{form.pipeline.parameters.selected-region}}"
-        execute: {{form.pipeline.parameters.start-dev-pipeline}}
+        execute: {{form.pipeline.parameters.start-dev-pipeline.values}}
       services: ["recommendation-repo"]
     hidden: [form, description]
   recommendation-build-prod:
@@ -190,8 +190,7 @@ services:
           SPACE_NAME: "{{form.pipeline.parameters.selected-space}}"
           ORG_NAME: "{{form.pipeline.parameters.selected-organization}}"
           REGION_ID: "{{form.pipeline.parameters.selected-region}}"
-          EXECUTE: "{{form.pipeline.parameters.start-prod-pipeline}}"
-        execute: {{form.pipeline.parameters.start-prod-pipeline}}
+        execute: "{{form.pipeline.parameters.start-prod-pipeline.values}}"
       services: ["recommendation-repo"]
     hidden: [form, description]
   webide:
