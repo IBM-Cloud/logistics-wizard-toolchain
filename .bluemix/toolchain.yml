@@ -40,7 +40,8 @@ services:
     parameters:
       name: "erp (dev)"
       configuration:
-        content: $file(erp-api.pipeline.yml)
+        content: 
+          $ref: erp-api.pipeline.yml
         env:
           REPO: "erp-api-repo"
           REPO_BRANCH: "dev"
@@ -57,7 +58,8 @@ services:
     parameters:
       name: "erp (prod)"
       configuration:
-        content: $file(erp-api.pipeline.yml)
+        content:  
+          $ref: erp-api.pipeline.yml
         env:
           REPO: "erp-api-repo"
           REPO_BRANCH: "master"
@@ -74,7 +76,8 @@ services:
     parameters:
       name: "controller (dev)"
       configuration:
-        content: $file(controller.pipeline.yml)
+        content:  
+          $ref: controller.pipeline.yml
         env:
           REPO: "controller-repo"
           REPO_BRANCH: "dev"
@@ -94,7 +97,8 @@ services:
     parameters:
       name: "controller (prod)"
       configuration:
-        content: $file(controller.pipeline.yml)
+        content:  
+          $ref: controller.pipeline.yml
         env:
           REPO: "controller-repo"
           REPO_BRANCH: "master"
@@ -114,7 +118,8 @@ services:
     parameters:
       name: "webui (dev)"
       configuration:
-        content: $file(webui.pipeline.yml)
+        content:  
+          $ref: webui.pipeline.yml
         env:
           REPO: "webui-repo"
           REPO_BRANCH: "dev"
@@ -132,7 +137,8 @@ services:
     parameters:
       name: "webui (prod)"
       configuration:
-        content: $file(webui.pipeline.yml)
+        content:  
+          $ref: webui.pipeline.yml
         env:
           REPO: "webui-repo"
           REPO_BRANCH: "master"
@@ -150,7 +156,8 @@ services:
     parameters:
       name: "recommendation (dev)"
       configuration:
-        content: $file(recommendation.pipeline.yml)
+        content:  
+          $ref: recommendation.pipeline.yml
         env:
           CONTROLLER_SERVICE_APP_NAME: "dev-{{form.pipeline.parameters.controller-app-name}}"
           REPO: "recommendation-repo"
@@ -170,7 +177,8 @@ services:
     parameters:
       name: "recommendation (prod)"
       configuration:
-        content: $file(recommendation.pipeline.yml)
+        content:  
+          $ref: recommendation.pipeline.yml
         env:
           CONTROLLER_SERVICE_APP_NAME: "{{form.pipeline.parameters.controller-app-name}}"
           REPO: "recommendation-repo"
@@ -193,9 +201,9 @@ form:
       selected-region: "{{region}}"
       selected-organization: "{{organization}}"
       selected-space: "{{space}}"
-      erp-app-name: "{{name}}-erp"
-      controller-app-name: "{{name}}-controller"
-      webui-app-name: "{{name}}-webui"
+      erp-app-name: "{{toolchain.name}}-erp"
+      controller-app-name: "{{toolchain.name}}-controller"
+      webui-app-name: "{{toolchain.name}}-webui"
       openwhisk_auth: ""
       erp-api-coveralls_token: ""
       controller-coveralls_token: ""
