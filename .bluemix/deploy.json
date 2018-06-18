@@ -44,15 +44,15 @@
     "recommendation-coveralls_token": {
       "type": "string"
     },
-    "deploy-prod": {
-      "title": "Deploy production pipeline",
-      "description": "Deploys production applications and services.",
+    "start-prod-pipeline": {
+      "title": "Start production pipeline",
+      "description": "Starts the production pipeline after toolchain creation.",
       "type": "boolean",
       "default": true
      },
-     "deploy-dev": {
-      "title": "Deploy development pipeline",
-      "description": "Deploys additional development applications and services suitable for dev-to-production workflow.",
+     "start-dev-pipeline": {
+      "title": "Start development pipeline",
+      "description": "Starts the development pipeline after toolchain creation.",
       "type": "boolean",
       "default": false
     }
@@ -65,11 +65,11 @@
    },
    {
     "type": "boolean",
-    "key": "deploy-prod"
+    "key": "start-prod-pipeline"
    },
    {
     "type": "boolean",
-    "key": "deploy-dev"
+    "key": "start-dev-pipeline"
    },
    {
       "type": "text",
