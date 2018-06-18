@@ -217,5 +217,5 @@ deploy:
     controller-coveralls_token: ""
     webui-coveralls_token: ""
     recommendation-coveralls_token: ""
-    start-prod-pipeline: false
+    start-prod-pipeline: true
     start-dev-pipeline: false
