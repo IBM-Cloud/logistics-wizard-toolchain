@@ -52,14 +52,6 @@
       "url": "/devops/setup/bm-helper/helper.html"
    },
    {
-    "type": "boolean",
-    "key": "start-prod-pipeline"
-   },
-   {
-    "type": "boolean",
-    "key": "start-dev-pipeline"
-   },
-   {
       "type": "text",
       "readonly": false,
       "title": "ERP App Name",
