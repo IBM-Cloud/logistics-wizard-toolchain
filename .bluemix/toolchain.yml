@@ -3,9 +3,19 @@ template:
   name: "Cloud-native Toolchain for the Logistics Wizard"
   description: "With this cloud-native toolchain, you use the logistics wizard template to create a supply chain management web app and back end that consists of multiple microservices: a Controller API, an ERP API, and a WEB-UI. The toolchain is preconfigured for continuous delivery, source control, blue-green deployment, unit testing, and issue tracking.\n\nTo get started, click **Create**."
   required:
-    - deploy
+    - erp-api-repo
+    - controller-repo
+    - webui-repo
+    - recommendation-repo
+    - erp-api-build-prod
+    - controller-build-prod
+    - webui-build-prod
+    - recommendation-build-prod
 toolchain:
   name: "logistics-wizard-toolchain-{{timestamp}}"
+  info:
+    git url: [https://github.com/IBM-Cloud/logistics-wizard-toolchain](https://github.com/IBM-Cloud/logistics-wizard-toolchain)
+    git branch: '[master](https://github.com/IBM-Cloud/logistics-wizard-toolchain/tree/master)'
 services:
   erp-api-repo:
     service_id: githubpublic
@@ -50,7 +60,7 @@ services:
           SPACE_NAME: "{{form.pipeline.parameters.selected-space}}"
           ORG_NAME: "{{form.pipeline.parameters.selected-organization}}"
           REGION_ID: "{{form.pipeline.parameters.selected-region}}"
-        execute: {{form.pipeline.parameters.start-dev-pipeline}}
+        execute: false
       services: ["erp-api-repo"]
     hidden: [form, description]
   erp-api-build-prod:
@@ -68,7 +78,7 @@ services:
           SPACE_NAME: "{{form.pipeline.parameters.selected-space}}"
           ORG_NAME: "{{form.pipeline.parameters.selected-organization}}"
           REGION_ID: "{{form.pipeline.parameters.selected-region}}"
-        execute: {{form.pipeline.parameters.start-prod-pipeline}}
+        execute: true
       services: ["erp-api-repo"]
     hidden: [form, description]
   controller-build-dev:
@@ -89,7 +99,7 @@ services:
           REGION_ID: "{{form.pipeline.parameters.selected-region}}"
           OPENWHISK_AUTH: "{{form.pipeline.parameters.openwhisk_auth}}"
           RECOMMENDATION_PACKAGE_NAME: "dev-lwr"
-        execute: {{form.pipeline.parameters.start-dev-pipeline}}
+        execute: false
       services: ["controller-repo"]
     hidden: [form, description]
   controller-build-prod:
@@ -110,7 +120,7 @@ services:
           REGION_ID: "{{form.pipeline.parameters.selected-region}}"
           OPENWHISK_AUTH: "{{form.pipeline.parameters.openwhisk_auth}}"
           RECOMMENDATION_PACKAGE_NAME: "lwr"
-        execute: {{form.pipeline.parameters.start-prod-pipeline}}
+        execute: true
       services: ["controller-repo"]
     hidden: [form, description]
   webui-build-dev:
@@ -129,7 +139,7 @@ services:
           SPACE_NAME: "{{form.pipeline.parameters.selected-space}}"
           ORG_NAME: "{{form.pipeline.parameters.selected-organization}}"
           REGION_ID: "{{form.pipeline.parameters.selected-region}}"
-        execute: {{form.pipeline.parameters.start-dev-pipeline}}
+        execute: false
       services: ["webui-repo"]
     hidden: [form, description]
   webui-build-prod:
@@ -148,7 +158,7 @@ services:
           SPACE_NAME: "{{form.pipeline.parameters.selected-space}}"
           ORG_NAME: "{{form.pipeline.parameters.selected-organization}}"
           REGION_ID: "{{form.pipeline.parameters.selected-region}}"
-        execute: {{form.pipeline.parameters.start-prod-pipeline}}
+        execute: true
       services: ["webui-repo"]
     hidden: [form, description]
   recommendation-build-dev:
@@ -169,7 +179,7 @@ services:
           SPACE_NAME: "{{form.pipeline.parameters.selected-space}}"
           ORG_NAME: "{{form.pipeline.parameters.selected-organization}}"
           REGION_ID: "{{form.pipeline.parameters.selected-region}}"
-        execute: {{form.pipeline.parameters.start-dev-pipeline.values}}
+        execute: false
       services: ["recommendation-repo"]
     hidden: [form, description]
   recommendation-build-prod:
@@ -190,7 +200,7 @@ services:
           SPACE_NAME: "{{form.pipeline.parameters.selected-space}}"
           ORG_NAME: "{{form.pipeline.parameters.selected-organization}}"
           REGION_ID: "{{form.pipeline.parameters.selected-region}}"
-        execute: "{{form.pipeline.parameters.start-prod-pipeline.values}}"
+        execute: true
       services: ["recommendation-repo"]
     hidden: [form, description]
   webide:

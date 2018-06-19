@@ -43,18 +43,6 @@
     },
     "recommendation-coveralls_token": {
       "type": "string"
-    },
-    "start-prod-pipeline": {
-      "title": "Start production pipeline",
-      "description": "Starts the production pipeline after toolchain creation.",
-      "type": "boolean",
-      "default": true
-     },
-     "start-dev-pipeline": {
-      "title": "Start development pipeline",
-      "description": "Starts the development pipeline after toolchain creation.",
-      "type": "boolean",
-      "default": false
     }
   },
   "required": ["selected-region", "selected-organization", "selected-space", "erp-app-name", "controller-app-name", "webui-app-name"],
