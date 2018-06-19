@@ -14,8 +14,8 @@ template:
 toolchain:
   name: "logistics-wizard-toolchain-{{timestamp}}"
   info:
-    git url: [https://github.com/IBM-Cloud/logistics-wizard-toolchain](https://github.com/IBM-Cloud/logistics-wizard-toolchain)
-    git branch: '[master](https://github.com/IBM-Cloud/logistics-wizard-toolchain/tree/master)'
+    git url: "[https://github.com/IBM-Cloud/logistics-wizard-toolchain](https://github.com/IBM-Cloud/logistics-wizard-toolchain)"
+    git branch: "[master](https://github.com/IBM-Cloud/logistics-wizard-toolchain/tree/master)"
 services:
   erp-api-repo:
     service_id: githubpublic
