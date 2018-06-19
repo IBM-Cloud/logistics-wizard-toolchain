@@ -53,7 +53,7 @@ services:
       name: "erp (dev)"
       configuration:
         content: 
-          $ref: erp-api.pipeline.yml
+          $text: erp-api.pipeline.yml
         env:
           REPO: "erp-api-repo"
           REPO_BRANCH: "dev"
@@ -71,7 +71,7 @@ services:
       name: "erp (prod)"
       configuration:
         content:  
-          $ref: erp-api.pipeline.yml
+          $text: erp-api.pipeline.yml
         env:
           REPO: "erp-api-repo"
           REPO_BRANCH: "master"
@@ -89,7 +89,7 @@ services:
       name: "controller (dev)"
       configuration:
         content:  
-          $ref: controller.pipeline.yml
+          $text: controller.pipeline.yml
         env:
           REPO: "controller-repo"
           REPO_BRANCH: "dev"
@@ -110,7 +110,7 @@ services:
       name: "controller (prod)"
       configuration:
         content:  
-          $ref: controller.pipeline.yml
+          $text: controller.pipeline.yml
         env:
           REPO: "controller-repo"
           REPO_BRANCH: "master"
@@ -131,7 +131,7 @@ services:
       name: "webui (dev)"
       configuration:
         content:  
-          $ref: webui.pipeline.yml
+          $text: webui.pipeline.yml
         env:
           REPO: "webui-repo"
           REPO_BRANCH: "dev"
@@ -150,7 +150,7 @@ services:
       name: "webui (prod)"
       configuration:
         content:  
-          $ref: webui.pipeline.yml
+          $text: webui.pipeline.yml
         env:
           REPO: "webui-repo"
           REPO_BRANCH: "master"
@@ -169,7 +169,7 @@ services:
       name: "recommendation (dev)"
       configuration:
         content:  
-          $ref: recommendation.pipeline.yml
+          $text: recommendation.pipeline.yml
         env:
           CONTROLLER_SERVICE_APP_NAME: "dev-{{form.pipeline.parameters.controller-app-name}}"
           REPO: "recommendation-repo"
@@ -190,7 +190,7 @@ services:
       name: "recommendation (prod)"
       configuration:
         content:  
-          $ref: recommendation.pipeline.yml
+          $text: recommendation.pipeline.yml
         env:
           CONTROLLER_SERVICE_APP_NAME: "{{form.pipeline.parameters.controller-app-name}}"
           REPO: "recommendation-repo"
