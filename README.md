@@ -1,81 +1,51 @@
 # Logistics Wizard Toolchain
 
-This toolchain allows to deploy the [Logistics Wizard](https://github.com/IBM-Cloud/logistics-wizard) sample application, which is a supply chain management web application composed of several micro-services. Refer to the [parent project](https://github.com/IBM-Cloud/logistics-wizard) for details.
+This toolchain deploys the [Logistics Wizard](https://github.com/IBM-Cloud/logistics-wizard) sample application. Logistics Wizard is a supply chain management web application composed of several micro-services. Refer to the [Logistics Wizard home page](https://github.com/IBM-Cloud/logistics-wizard) for more information.
 
-It includes four modules:  
-- [Controller][github_controller_url] - The API that sits on the edge of the architecture and interfaces with all other services.  
-- [ERP][github_erp_url] - An API that handles user login and interaction with the ERP system objects.  
-- [WEBUI][github_webui_url] - The Web UI that is the web front end of the entire application, built using React.
-- [Weather Recommendation][github_recommendation_url] - Makes shipment recommendations based on weather conditions
-
-The toolchain is preconfigured for:
+The toolchain is preconfigured to provide:
 - issue tracking
 - source control
 - continuous delivery and integration (CI/CD)
 - unit and code coverage testing
 - blue-green deployment
 
-## Deploy the toolchain in IBM Bluemix
+## Create the toolchain
 
 1. Ensure you have a [GitHub](https://github.com/) account.
+2. Ensure you have an [IBM Cloud](https://ibm.com/bluemix) account.
+3. Ensure you have 2GB of free memory and space for 4 additional services in your IBM Cloud organization.
+4. It is recommended to create a new space named `logistics-wizard` in your organization. This helps grouping the apps and services together in the console.
+5. To create the toolchain, click this button:
 
-1. Ensure you have a [Bluemix](https://ibm.com/bluemix) account.
+  [![Deploy To Bluemix](./.bluemix/create_toolchain_button.png)](https://console.bluemix.net/devops/setup/deploy/?repository=https%3A//github.com/IBM-Cloud/logistics-wizard-toolchain.git)
 
-1. Ensure you have 2GB of free memory and space for 4 additional services in your Bluemix organization.
+## Configure the toolchain
 
-1. It is recommended to create a new space named `logistics-wizard` in your Bluemix organization. This helps grouping the apps and services together in the console.
-
-1. **To get started, click this button:**
-
-  [![Deploy To Bluemix](./.bluemix/create_toolchain_button.png)](https://new-console.ng.bluemix.net/devops/setup/deploy/?repository=https%3A//github.com/IBM-Cloud/logistics-wizard-toolchain.git)
-
-1. The toolchain configuration page opens.
+After clicking the deployment button, the toolchain's configuration page is shown.
 
   ![](toolchain.png)
 
-1. Give a name to your toolchain. This name is used as the prefix for the deployed applications. The name must be unique within your organization.
+1. Provide a name **Toolchain name**. This name is used as the prefix for the deployed applications. The name must be unique within your organization.
+2. Under **Tool Integrations** select the GitHub tab.
+3. Choose to either **Clone** or **Fork** the Logistics Wizard's GitHub repositories.
+4. Optionally change the GitHub **Repository Names** that will be created in your GitHub account.
+5. Select the **Delivery Pipeline** tab.
+6. Ensure the **App Name** for each microservice is unique.
+7. Select the Cloud Foundry **Region**, **Organization** and **Space** where you want to deploy the application.
+8. Paste your **IBM Cloud Functions API Key** into the corresponding textbox. You can find your Cloud Functions API Key in the [Functions console here](https://console.bluemix.net/openwhisk/learn/api-key). When doing so, make sure you are in the same region, organization, and space where you are deploying the apps. The API Key is specific to a given space and will appear similar to `1234-4567-8901-2345:tonywinBtm00001112221`.
+9. The [coveralls](https://coveralls.io/) tokens remain empty. (These are used for IBM development.)
+10. Click the **Create** button.
 
-  > A simple trick is to use your name or initials or to leave the default generated name.
+## Use the toolchain
 
-1. Select the GitHub box.
+Once the toolchain is created, several delivery pipelines corresponding to the microservices will also be created. Each microservice will have a production and delivery pipeline. Upon creation, the production pipelines will automatically begin.
 
-1. Optionally change the name of the GitHub repositories that will be created in your GitHub account.
-
-  > You can choose to fork the main repositories so that you can import changes as they become available or to clone the repositories.
-
-1. Select the Delivery Pipeline box.
-
-1. Ensure the app names are unique.
-
-1. Select the region, organization and space where you want to deploy the application.
-
-1. Set your OpenWhisk Authorization Key. You can find your OpenWhisk key in the [Bluemix console here](https://console.ng.bluemix.net/openwhisk/cli). When doing so, make sure you are in the same region/organization/space where you are deploying the apps. The authorization key is specific to a given space. In the CLI configuration page, the authorization key is after the `--auth` parameter. As example in the following, the authorization key is `1234-4567-8901-2345:tonywinBtm00001112221`:
-
-  ```
-  wsk property set --apihost openwhisk.ng.bluemix.net --auth 1234-4567-8901-2345:tonywinBtm00001112221
-  ```
-
-1. You can leave the [coveralls][coveralls_url] tokens empty - this is really needed only for the main deployment we do in our team.
-
-1. Click Create
-
-1. Once the toolchain is created, you will end up with several delivery pipelines for all applications in the sample. Wait for the pipelines to deploy all the apps. You can open all pipelines in new browser tabs to follow the deployments or you can wait for all apps to be ready in the Bluemix dashboard.
-
-1. Your apps are deployed. Head over the [walkthrough](https://github.com/IBM-Cloud/logistics-wizard/blob/master/WALKTHROUGH.md) for a tour of the app.
+1. Select each production (prod) **Delivery Pipeline** to ensure no failures have occurred.
+2. Once all pipelines have successfully completed, visit the [walkthrough](https://github.com/IBM-Cloud/logistics-wizard/blob/master/WALKTHROUGH.md) for a tour of Logistics Wizard.
+3. You can optionally start the development (dev) pipelines by clicking the pipeline and selecting the run button on the resulting page. This will deploy additional applications and services to support on-going development.
 
 ---
 ### Learn more
 
-* [Bluemix DevOps Services][bluemix_devops_url]
-* [Bluemix Toolchains Documentation][toolchains_overview_url]
-* [InterConnect 2016 video recording][toolchains_interconnect_video_url]
-
-<!--Links-->
-[bluemix_devops_url]: https://new-console.ng.bluemix.net/devops
-[github_controller_url]: https://github.com/IBM-Cloud/logistics-wizard-controller
-[github_erp_url]: https://github.com/IBM-Cloud/logistics-wizard-erp
-[github_webui_url]: https://github.com/IBM-Cloud/logistics-wizard-webui
-[github_recommendation_url]: https://github.com/IBM-Cloud/logistics-wizard-recommendation
-[coveralls_url]: https://coveralls.io/
-[toolchains_overview_url]: https://new-console.ng.bluemix.net/docs/toolchains/toolchains_overview.html
-[toolchains_interconnect_video_url]: https://vimeo.com/156126035/8b04b8878a
+* [IBM Cloud Continuous Delivery](https://console.bluemix.net/docs/services/ContinuousDelivery/index.html#cd_getting_started)
+* [IBM Cloud Toolchains Documentation](https://console.bluemix.net/docs/services/ContinuousDelivery/toolchains_about.html#toolchains_about)
