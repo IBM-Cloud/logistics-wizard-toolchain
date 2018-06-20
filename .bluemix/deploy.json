@@ -45,7 +45,7 @@
       "type": "string"
     }
   },
-  "required": ["selected-region", "selected-organization", "selected-space", "erp-app-name", "controller-app-name", "webui-app-name"],
+  "required": ["selected-region", "selected-organization", "selected-space", "erp-app-name", "controller-app-name", "webui-app-name", "openwhisk_auth"],
   "form": [
    {
       "type": "validator",
