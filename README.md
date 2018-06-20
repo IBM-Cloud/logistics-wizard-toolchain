@@ -48,4 +48,4 @@ Once the toolchain is created, several delivery pipelines corresponding to the m
 ### Learn more
 
 * [IBM Cloud Continuous Delivery](https://console.bluemix.net/docs/services/ContinuousDelivery/index.html#cd_getting_started)
-* [IBM Cloud Toolchains Documentation](ttps://console.bluemix.net/docs/services/ContinuousDelivery/toolchains_about.html#toolchains_about)
+* [IBM Cloud Toolchains Documentation](https://console.bluemix.net/docs/services/ContinuousDelivery/toolchains_about.html#toolchains_about)
