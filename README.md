@@ -36,7 +36,7 @@ After clicking the deployment button, the toolchain's configuration page is show
 9. The [coveralls](https://coveralls.io/) tokens remain empty. (These are used for IBM development.)
 10. Click the **Create** button.
 
-## Using the toolchain
+## Use the toolchain
 
 Once the toolchain is created, several delivery pipelines corresponding to the microservices will also be created. Each microservice will have a production and delivery pipeline. Upon creation, the production pipelines will automatically begin.
 
