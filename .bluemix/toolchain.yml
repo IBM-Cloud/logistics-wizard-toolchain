@@ -217,6 +217,7 @@ form:
       erp-app-branch: "master"
       controller-app-branch: "master"
       webui-app-branch: "master"
+      recommendation-app-name: "Not applicable"
       recommendation-app-branch: "master"
     schema:
       $ref: deploy.json

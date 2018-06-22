@@ -90,8 +90,8 @@
       "type": "table",
       "columnCount": 2,
       "widths": [
-        "60%",
-        "40%"
+        "70%",
+        "30%"
       ],
       "items": [
         {
@@ -100,15 +100,20 @@
           "title": "ERP App Name",
           "key": "erp-app-name"
         },
-        "erp-app-branch"
+        {
+          "type": "text",
+          "readonly": false,
+          "title": "ERP App Branch",
+          "key": "erp-app-branch"
+        }
       ]
     },
     {
       "type": "table",
       "columnCount": 2,
       "widths": [
-        "60%",
-        "40%"
+        "70%",
+        "30%"
       ],
       "items": [
         {
@@ -117,32 +122,42 @@
           "title": "Controller App Name",
           "key": "controller-app-name"
         },
-        "controller-app-branch"
+        {
+          "type": "text",
+          "readonly": false,
+          "title": "Controller App Branch",
+          "key": "controller-app-branch"
+        }
       ]
     },
     {
       "type": "table",
       "columnCount": 2,
       "widths": [
-        "60%",
-        "40%"
+        "70%",
+        "30%"
       ],
       "items": [
         {
           "type": "text",
           "readonly": false,
-          "title": "Webui App Name",
+          "title": "WEBUI App Name",
           "key": "webui-app-name"
         },
-        "webui-app-branch"
+        {
+          "type": "text",
+          "readonly": false,
+          "title": "WEBUI App Branch",
+          "key": "webui-app-branch"
+        }
       ]
     },
     {
       "type": "table",
       "columnCount": 2,
       "widths": [
-        "60%",
-        "40%"
+        "70%",
+        "30%"
       ],
       "items": [
         {
@@ -151,7 +166,12 @@
           "title": "Recommendation App Name",
           "key": "recommendation-app-name"
         },
-        "recommendation-app-branch"
+        {
+          "type": "text",
+          "readonly": false,
+          "title": "Recommendation App Branch",
+          "key": "recommendation-app-branch"
+        }
       ]
     },
     {
