@@ -18,6 +18,8 @@
       "type": "string"
     },
     "erp-app-name": {
+      "readonly": false,
+      "title": "ERP App Name",
       "description": "Name of the ERP API",
       "type": "string"
     },
@@ -27,6 +29,8 @@
       "type": "string"
     },
     "controller-app-name": {
+      "readonly": false,
+      "title": "Controller App Name",
       "description": "Name of the controller app",
       "type": "string"
     },
@@ -36,6 +40,8 @@
       "type": "string"
     },
     "webui-app-name": {
+      "readonly": false,
+      "title": "WEBUI App Name",
       "description": "Name of the WEBUI App",
       "type": "string"
     },
@@ -49,7 +55,7 @@
       "type": "string"
     },
     "recommendation-app-branch": {
-      "title": "WEBUI Recommendation Branch",
+      "title": "Recommendation App Branch",
       "description": "GitHub branch of the Recommendation App",
       "type": "string"
     },
@@ -95,17 +101,15 @@
       ],
       "items": [
         {
-          "type": "text",
-          "readonly": false,
-          "title": "ERP App Name",
-          "key": "erp-app-name"
+          "type": "label",
+          "title": "ERP App Name"
         },
         {
-          "type": "text",
-          "readonly": false,
-          "title": "ERP App Branch",
-          "key": "erp-app-branch"
-        }
+          "type": "label",
+          "title": "ERP GitHub Branch"
+        },
+        "erp-app-name",
+        "erp-app-branch"
       ]
     },
     {
@@ -117,17 +121,15 @@
       ],
       "items": [
         {
-          "type": "text",
-          "readonly": false,
-          "title": "Controller App Name",
-          "key": "controller-app-name"
+          "type": "label",
+          "title": "Controller App Name"
         },
         {
-          "type": "text",
-          "readonly": false,
-          "title": "Controller App Branch",
-          "key": "controller-app-branch"
-        }
+          "type": "label",
+          "title": "Controller GitHub Branch"
+        },
+        "controller-app-name",
+        "controller-app-branch"
       ]
     },
     {
@@ -139,17 +141,15 @@
       ],
       "items": [
         {
-          "type": "text",
-          "readonly": false,
-          "title": "WEBUI App Name",
-          "key": "webui-app-name"
+          "type": "label",
+          "title": "WEBUI App Name"
         },
         {
-          "type": "text",
-          "readonly": false,
-          "title": "WEBUI App Branch",
-          "key": "webui-app-branch"
-        }
+          "type": "label",
+          "title": "WEBUI GitHub Branch"
+        },
+        "webui-app-name",
+        "webui-app-branch"
       ]
     },
     {
@@ -161,17 +161,15 @@
       ],
       "items": [
         {
-          "type": "text",
-          "readonly": false,
-          "title": "Recommendation App Name",
-          "key": "recommendation-app-name"
+          "type": "label",
+          "title": "WEBUI App Name"
         },
         {
-          "type": "text",
-          "readonly": false,
-          "title": "Recommendation App Branch",
-          "key": "recommendation-app-branch"
-        }
+          "type": "label",
+          "title": "WEBUI GitHub Branch"
+        },
+        "recommendation-app-name",
+        "recommendation-app-branch"
       ]
     },
     {
