@@ -18,7 +18,6 @@
       "type": "string"
     },
     "erp-app-name": {
-      "readonly": false,
       "title": "ERP App Name",
       "description": "Name of the ERP API",
       "type": "string"
@@ -29,7 +28,6 @@
       "type": "string"
     },
     "controller-app-name": {
-      "readonly": false,
       "title": "Controller App Name",
       "description": "Name of the controller app",
       "type": "string"
@@ -40,7 +38,6 @@
       "type": "string"
     },
     "webui-app-name": {
-      "readonly": false,
       "title": "WEBUI App Name",
       "description": "Name of the WEBUI App",
       "type": "string"
@@ -48,10 +45,6 @@
     "webui-app-branch": {
       "title": "WEBUI App Branch",
       "description": "GitHub branch of the WEBUI App",
-      "type": "string"
-    },
-    "recommendation-app-name": {
-      "description": "Name of the Recommendation App",
       "type": "string"
     },
     "recommendation-app-branch": {
@@ -162,11 +155,15 @@
       "items": [
         {
           "type": "label",
-          "title": "WEBUI App Name"
+          "title": "Recommendation App Name"
         },
         {
           "type": "label",
-          "title": "WEBUI GitHub Branch"
+          "title": "Recommendation GitHub Branch"
+        },
+        {
+          "type": "label",
+          "title": "*IBM Cloud Functions package names will be used*"
         },
         "recommendation-app-name",
         "recommendation-app-branch"
