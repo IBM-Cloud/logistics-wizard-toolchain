@@ -165,7 +165,6 @@
           "type": "label",
           "title": "*IBM Cloud Functions package names will be used*"
         },
-        "recommendation-app-name",
         "recommendation-app-branch"
       ]
     },
