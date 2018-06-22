@@ -13,7 +13,7 @@
       "description": "The Bluemix org",
       "type": "string"
     },
-   "selected-space": {
+    "selected-space": {
       "description": "The Bluemix space",
       "type": "string"
     },
@@ -26,7 +26,7 @@
       "description": "GitHub branch of the ERP API",
       "type": "string"
     },
-   "controller-app-name": {
+    "controller-app-name": {
       "description": "Name of the controller app",
       "type": "string"
     },
@@ -69,16 +69,30 @@
       "type": "string"
     }
   },
-  "required": ["selected-region", "selected-organization", "selected-space", "erp-app-name", "controller-app-name", "webui-app-name", "iam-api-key"],
+  "required": [
+    "selected-region",
+    "selected-organization",
+    "selected-space",
+    "erp-app-name",
+    "erp-app-branch",
+    "controller-app-name",
+    "controller-app-branch",
+    "webui-app-name",
+    "webui-app-branch",
+    "iam-api-key"
+  ],
   "form": [
-   {
+    {
       "type": "validator",
       "url": "/devops/setup/bm-helper/helper.html"
-   },
-   {
+    },
+    {
       "type": "table",
       "columnCount": 2,
-      "widths": ["60%", "40%"],
+      "widths": [
+        "60%",
+        "40%"
+      ],
       "items": [
         {
           "type": "text",
@@ -92,7 +106,10 @@
     {
       "type": "table",
       "columnCount": 2,
-      "widths": ["60%", "40%"],
+      "widths": [
+        "60%",
+        "40%"
+      ],
       "items": [
         {
           "type": "text",
@@ -106,7 +123,10 @@
     {
       "type": "table",
       "columnCount": 2,
-      "widths": ["60%", "40%"],
+      "widths": [
+        "60%",
+        "40%"
+      ],
       "items": [
         {
           "type": "text",
@@ -120,7 +140,10 @@
     {
       "type": "table",
       "columnCount": 2,
-      "widths": ["60%", "40%"],
+      "widths": [
+        "60%",
+        "40%"
+      ],
       "items": [
         {
           "type": "text",
@@ -134,7 +157,11 @@
     {
       "type": "table",
       "columnCount": 3,
-      "widths": ["33%", "33%", "33%"],
+      "widths": [
+        "33%",
+        "33%",
+        "33%"
+      ],
       "items": [
         {
           "type": "label",
@@ -163,7 +190,6 @@
         }
       ]
     },
-
     {
       "type": "label",
       "title": "The recommendation service relies on IBM Cloud Functions actions. To deploy these actions, the pipeline requires an [IBM Cloud Platform API key](https://console.bluemix.net/docs/cli/reference/bluemix_cli/bx_cli.html#ibmcloud_iam_api_key_create). Use the `ibmcloud iam api-key-create <name>` command to create a new API key."
@@ -174,7 +200,6 @@
       "title": "IBM Cloud Platform API key",
       "key": "iam-api-key"
     },
-
     {
       "type": "label",
       "title": "Unit test coverage data can be sent to Coveralls as part of the Test phases of the delivery pipelines. Specify here the Coveralls tokens for each GitHub repository. You can decide to skip this step now. Later you can set the Coveralls token by editing the Test phases of the respective Delivery Pipelines."
@@ -203,6 +228,5 @@
       "title": "Recommendation Coveralls Token",
       "key": "recommendation-coveralls_token"
     }
-
   ]
 }
