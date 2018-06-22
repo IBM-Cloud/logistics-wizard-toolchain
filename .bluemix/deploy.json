@@ -6,15 +6,15 @@
   "type": "object",
   "properties": {
     "selected-region": {
-      "description": "The Bluemix region",
+      "description": "The IBM Cloud region",
       "type": "string"
     },
     "selected-organization": {
-      "description": "The Bluemix org",
+      "description": "The IBM Cloud org",
       "type": "string"
     },
     "selected-space": {
-      "description": "The Bluemix space",
+      "description": "The IBM Cloud space",
       "type": "string"
     },
     "erp-app-name": {
@@ -33,7 +33,7 @@
       "type": "string"
     },
     "controller-app-branch": {
-      "title": "Controller App Cranch",
+      "title": "Controller App Branch",
       "description": "GitHub branch of the controller app",
       "type": "string"
     },
