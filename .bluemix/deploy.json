@@ -78,6 +78,7 @@
     "controller-app-branch",
     "webui-app-name",
     "webui-app-branch",
+    "recommendation-app-branch",
     "iam-api-key"
   ],
   "form": [
