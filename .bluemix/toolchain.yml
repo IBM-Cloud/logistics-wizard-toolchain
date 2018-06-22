@@ -214,9 +214,9 @@ form:
       erp-app-name: "{{toolchain.name}}-erp"
       controller-app-name: "{{toolchain.name}}-controller"
       webui-app-name: "{{toolchain.name}}-webui"
-      erp-app-branch: "master",
-      controller-app-branch: "master",
-      webui-app-branch: "master",
-      recommendation-app-branch: "master",
+      erp-app-branch: "master"
+      controller-app-branch: "master"
+      webui-app-branch: "master"
+      recommendation-app-branch: "master"
     schema:
       $ref: deploy.json
