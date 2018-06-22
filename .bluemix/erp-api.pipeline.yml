@@ -63,6 +63,8 @@ stages:
   properties:
   - name: REPO_BRANCH
     value: ${REPO_BRANCH}
+  - name: IAM_API_KEY
+    value: ${IAM_API_KEY}
   jobs:
   - name: Blue/Green Deploy
     type: deployer

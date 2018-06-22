@@ -50,9 +50,8 @@ stages:
   - name: RECOMMENDATION_PACKAGE_NAME
     value: ${RECOMMENDATION_PACKAGE_NAME}
     type: text
-  - name: OPENWHISK_AUTH
-    value: ${OPENWHISK_AUTH}
-    type: secure
+  - name: IAM_API_KEY
+    value: ${IAM_API_KEY}
   jobs:
   - name: Blue/Green Deploy
     type: deployer
