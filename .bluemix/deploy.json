@@ -21,15 +21,39 @@
       "description": "Name of the ERP API",
       "type": "string"
     },
+    "erp-app-branch": {
+      "title": "ERP App Branch",
+      "description": "GitHub branch of the ERP API",
+      "type": "string"
+    },
    "controller-app-name": {
       "description": "Name of the controller app",
+      "type": "string"
+    },
+    "controller-app-branch": {
+      "title": "Controller App Cranch",
+      "description": "GitHub branch of the controller app",
       "type": "string"
     },
     "webui-app-name": {
       "description": "Name of the WEBUI App",
       "type": "string"
     },
-    "openwhisk_auth": {
+    "webui-app-branch": {
+      "title": "WEBUI App Branch",
+      "description": "GitHub branch of the WEBUI App",
+      "type": "string"
+    },
+    "recommendation-app-name": {
+      "description": "Name of the Recommendation App",
+      "type": "string"
+    },
+    "recommendation-app-branch": {
+      "title": "WEBUI Recommendation Branch",
+      "description": "GitHub branch of the Recommendation App",
+      "type": "string"
+    },
+    "iam-api-key": {
       "type": "string"
     },
     "erp-api-coveralls_token": {
@@ -45,31 +69,68 @@
       "type": "string"
     }
   },
-  "required": ["selected-region", "selected-organization", "selected-space", "erp-app-name", "controller-app-name", "webui-app-name", "openwhisk_auth"],
+  "required": ["selected-region", "selected-organization", "selected-space", "erp-app-name", "controller-app-name", "webui-app-name", "iam-api-key"],
   "form": [
    {
       "type": "validator",
       "url": "/devops/setup/bm-helper/helper.html"
    },
    {
-      "type": "text",
-      "readonly": false,
-      "title": "ERP App Name",
-      "key": "erp-app-name"
+      "type": "table",
+      "columnCount": 2,
+      "widths": ["60%", "40%"],
+      "items": [
+        {
+          "type": "text",
+          "readonly": false,
+          "title": "ERP App Name",
+          "key": "erp-app-name"
+        },
+        "erp-app-branch"
+      ]
     },
     {
-      "type": "text",
-      "readonly": false,
-      "title": "Controller App Name",
-      "key": "controller-app-name"
+      "type": "table",
+      "columnCount": 2,
+      "widths": ["60%", "40%"],
+      "items": [
+        {
+          "type": "text",
+          "readonly": false,
+          "title": "Controller App Name",
+          "key": "controller-app-name"
+        },
+        "controller-app-branch"
+      ]
     },
     {
-      "type": "text",
-      "readonly": false,
-      "title": "Webui App Name",
-      "key": "webui-app-name"
+      "type": "table",
+      "columnCount": 2,
+      "widths": ["60%", "40%"],
+      "items": [
+        {
+          "type": "text",
+          "readonly": false,
+          "title": "Webui App Name",
+          "key": "webui-app-name"
+        },
+        "webui-app-branch"
+      ]
     },
-
+    {
+      "type": "table",
+      "columnCount": 2,
+      "widths": ["60%", "40%"],
+      "items": [
+        {
+          "type": "text",
+          "readonly": false,
+          "title": "Recommendation App Name",
+          "key": "recommendation-app-name"
+        },
+        "recommendation-app-branch"
+      ]
+    },
     {
       "type": "table",
       "columnCount": 3,
@@ -105,13 +166,13 @@
 
     {
       "type": "label",
-      "title": "The recommendation service relies on IBM Cloud Functions actions. To deploy these actions, the pipeline requires your [Cloud Functions API Key](https://console.bluemix.net/openwhisk/learn/api-key). Make sure to enter the API Key associated with the space where the applications will be deployed."
+      "title": "The recommendation service relies on IBM Cloud Functions actions. To deploy these actions, the pipeline requires an [IBM Cloud Platform API key](https://console.bluemix.net/docs/cli/reference/bluemix_cli/bx_cli.html#ibmcloud_iam_api_key_create). Use the `ibmcloud iam api-key-create <name>` command to create a new API key."
     },
     {
       "type": "text",
       "readonly": false,
-      "title": "Cloud Functions API Key",
-      "key": "openwhisk_auth"
+      "title": "IBM Cloud Platform API key",
+      "key": "iam-api-key"
     },
 
     {

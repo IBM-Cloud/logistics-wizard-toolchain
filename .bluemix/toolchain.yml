@@ -74,7 +74,7 @@ services:
           $text: erp-api.pipeline.yml
         env:
           REPO: "erp-api-repo"
-          REPO_BRANCH: "master"
+          REPO_BRANCH: "{{form.pipeline.parameters.erp-app-branch}}"
           CF_APP_NAME: "{{form.pipeline.parameters.erp-app-name}}"
           COVERALLS_REPO_TOKEN: "{{form.pipeline.parameters.erp-api-coveralls_token}}"
           SPACE_NAME: "{{form.pipeline.parameters.selected-space}}"
@@ -99,7 +99,6 @@ services:
           SPACE_NAME: "{{form.pipeline.parameters.selected-space}}"
           ORG_NAME: "{{form.pipeline.parameters.selected-organization}}"
           REGION_ID: "{{form.pipeline.parameters.selected-region}}"
-          OPENWHISK_AUTH: "{{form.pipeline.parameters.openwhisk_auth}}"
           RECOMMENDATION_PACKAGE_NAME: "dev-lwr"
         execute: false
       services: ["controller-repo"]
@@ -113,14 +112,13 @@ services:
           $text: controller.pipeline.yml
         env:
           REPO: "controller-repo"
-          REPO_BRANCH: "master"
+          REPO_BRANCH: "{{form.pipeline.parameters.controller-app-branch}}"
           COVERALLS_REPO_TOKEN: "{{form.pipeline.parameters.controller-coveralls_token}}"
           ERP_SERVICE_APP_NAME: "{{form.pipeline.parameters.erp-app-name}}"
           CF_APP_NAME: "{{form.pipeline.parameters.controller-app-name}}"
           SPACE_NAME: "{{form.pipeline.parameters.selected-space}}"
           ORG_NAME: "{{form.pipeline.parameters.selected-organization}}"
           REGION_ID: "{{form.pipeline.parameters.selected-region}}"
-          OPENWHISK_AUTH: "{{form.pipeline.parameters.openwhisk_auth}}"
           RECOMMENDATION_PACKAGE_NAME: "lwr"
         execute: true
       services: ["controller-repo"]
@@ -153,7 +151,7 @@ services:
           $text: webui.pipeline.yml
         env:
           REPO: "webui-repo"
-          REPO_BRANCH: "master"
+          REPO_BRANCH: "{{form.pipeline.parameters.webui-app-branch}}"
           COVERALLS_REPO_TOKEN: "{{form.pipeline.parameters.webui-coveralls_token}}"
           CONTROLLER_SERVICE_APP_NAME: "{{form.pipeline.parameters.controller-app-name}}"
           CF_APP_NAME: "{{form.pipeline.parameters.webui-app-name}}"
@@ -175,7 +173,7 @@ services:
           REPO: "recommendation-repo"
           REPO_BRANCH: "dev"
           COVERALLS_REPO_TOKEN: "{{form.pipeline.parameters.recommendation-coveralls_token}}"
-          OPENWHISK_AUTH: "{{form.pipeline.parameters.openwhisk_auth}}"
+          IAM_API_KEY: "{{form.pipeline.parameters.iam-api-key}}"
           PACKAGE_NAME: "dev-lwr"
           CLOUDANT_DATABASE: "dev-recommendations"
           SPACE_NAME: "{{form.pipeline.parameters.selected-space}}"
@@ -194,9 +192,9 @@ services:
         env:
           CONTROLLER_SERVICE_APP_NAME: "{{form.pipeline.parameters.controller-app-name}}"
           REPO: "recommendation-repo"
-          REPO_BRANCH: "master"
+          REPO_BRANCH: "{{form.pipeline.parameters.recommendation-app-branch}}"
           COVERALLS_REPO_TOKEN: "{{form.pipeline.parameters.recommendation-coveralls_token}}"
-          OPENWHISK_AUTH: "{{form.pipeline.parameters.openwhisk_auth}}"
+          IAM_API_KEY: "{{form.pipeline.parameters.iam-api-key}}"
           PACKAGE_NAME: "lwr"
           CLOUDANT_DATABASE: "recommendations"
           SPACE_NAME: "{{form.pipeline.parameters.selected-space}}"
@@ -216,10 +214,9 @@ form:
       erp-app-name: "{{toolchain.name}}-erp"
       controller-app-name: "{{toolchain.name}}-controller"
       webui-app-name: "{{toolchain.name}}-webui"
-      openwhisk_auth: ""
-      erp-api-coveralls_token: ""
-      controller-coveralls_token: ""
-      webui-coveralls_token: ""
-      recommendation-coveralls_token: ""
+      erp-app-branch: "master",
+      controller-app-branch: "master",
+      webui-app-branch: "master",
+      recommendation-app-branch: "master",
     schema:
       $ref: deploy.json
