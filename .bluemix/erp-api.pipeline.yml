@@ -42,6 +42,8 @@ stages:
   properties:
   - name: REPO_BRANCH
     value: ${REPO_BRANCH}
+  - name: IAM_API_KEY
+    value: ${IAM_API_KEY}
   jobs:
   - name: Unit Test
     type: deployer
