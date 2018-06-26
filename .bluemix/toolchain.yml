@@ -50,7 +50,7 @@ services:
   erp-api-build:
     service_id: pipeline
     parameters:
-      name: "erp (prod)"
+      name: "ERP"
       configuration:
         content:  
           $text: erp-api.pipeline.yml
@@ -69,7 +69,7 @@ services:
   controller-build:
     service_id: pipeline
     parameters:
-      name: "controller (prod)"
+      name: "Controller"
       configuration:
         content:  
           $text: controller.pipeline.yml
@@ -90,7 +90,7 @@ services:
   webui-build:
     service_id: pipeline
     parameters:
-      name: "webui (prod)"
+      name: "WebUI"
       configuration:
         content:  
           $text: webui.pipeline.yml
@@ -110,7 +110,7 @@ services:
   recommendation-build:
     service_id: pipeline
     parameters:
-      name: "recommendation (prod)"
+      name: "Recommendation"
       configuration:
         content:  
           $text: recommendation.pipeline.yml
