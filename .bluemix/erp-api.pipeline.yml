@@ -44,6 +44,7 @@ stages:
     value: ${REPO_BRANCH}
   - name: IAM_API_KEY
     value: ${IAM_API_KEY}
+    type: secure
   jobs:
   - name: Unit Test
     type: deployer
@@ -67,6 +68,7 @@ stages:
     value: ${REPO_BRANCH}
   - name: IAM_API_KEY
     value: ${IAM_API_KEY}
+    type: secure
   jobs:
   - name: Blue/Green Deploy
     type: deployer
