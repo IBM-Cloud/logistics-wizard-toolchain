@@ -47,6 +47,9 @@ stages:
     type: text
   - name: REGION_ID
     value: ${REGION_ID}
+  - name: IAM_API_KEY
+    value: ${IAM_API_KEY}
+    type: secure
   jobs:
   - name: Deploy
     type: deployer

@@ -6,30 +6,53 @@
   "type": "object",
   "properties": {
     "selected-region": {
-      "description": "The Bluemix region",
+      "description": "The IBM Cloud region",
       "type": "string"
     },
     "selected-organization": {
-      "description": "The Bluemix org",
+      "description": "The IBM Cloud org",
       "type": "string"
     },
-   "selected-space": {
-      "description": "The Bluemix space",
+    "selected-space": {
+      "description": "The IBM Cloud space",
       "type": "string"
     },
     "erp-app-name": {
+      "title": "ERP App Name",
       "description": "Name of the ERP API",
       "type": "string"
     },
-   "controller-app-name": {
+    "erp-app-branch": {
+      "title": "ERP App Branch",
+      "description": "GitHub branch of the ERP API",
+      "type": "string"
+    },
+    "controller-app-name": {
+      "title": "Controller App Name",
       "description": "Name of the controller app",
       "type": "string"
     },
+    "controller-app-branch": {
+      "title": "Controller App Branch",
+      "description": "GitHub branch of the controller app",
+      "type": "string"
+    },
     "webui-app-name": {
+      "title": "WEBUI App Name",
       "description": "Name of the WEBUI App",
       "type": "string"
     },
-    "openwhisk_auth": {
+    "webui-app-branch": {
+      "title": "WEBUI App Branch",
+      "description": "GitHub branch of the WEBUI App",
+      "type": "string"
+    },
+    "recommendation-app-branch": {
+      "title": "Recommendation App Branch",
+      "description": "GitHub branch of the Recommendation App",
+      "type": "string"
+    },
+    "iam-api-key": {
       "type": "string"
     },
     "erp-api-coveralls_token": {
@@ -45,35 +68,115 @@
       "type": "string"
     }
   },
-  "required": ["selected-region", "selected-organization", "selected-space", "erp-app-name", "controller-app-name", "webui-app-name", "openwhisk_auth"],
+  "required": [
+    "selected-region",
+    "selected-organization",
+    "selected-space",
+    "erp-app-name",
+    "erp-app-branch",
+    "controller-app-name",
+    "controller-app-branch",
+    "webui-app-name",
+    "webui-app-branch",
+    "recommendation-app-branch",
+    "iam-api-key"
+  ],
   "form": [
-   {
+    {
       "type": "validator",
       "url": "/devops/setup/bm-helper/helper.html"
-   },
-   {
-      "type": "text",
-      "readonly": false,
-      "title": "ERP App Name",
-      "key": "erp-app-name"
     },
     {
-      "type": "text",
-      "readonly": false,
-      "title": "Controller App Name",
-      "key": "controller-app-name"
+      "type": "table",
+      "columnCount": 2,
+      "widths": [
+        "70%",
+        "30%"
+      ],
+      "items": [
+        {
+          "type": "label",
+          "title": "ERP App Name"
+        },
+        {
+          "type": "label",
+          "title": "ERP GitHub Branch"
+        },
+        "erp-app-name",
+        "erp-app-branch"
+      ]
     },
     {
-      "type": "text",
-      "readonly": false,
-      "title": "Webui App Name",
-      "key": "webui-app-name"
+      "type": "table",
+      "columnCount": 2,
+      "widths": [
+        "70%",
+        "30%"
+      ],
+      "items": [
+        {
+          "type": "label",
+          "title": "Controller App Name"
+        },
+        {
+          "type": "label",
+          "title": "Controller GitHub Branch"
+        },
+        "controller-app-name",
+        "controller-app-branch"
+      ]
     },
-
+    {
+      "type": "table",
+      "columnCount": 2,
+      "widths": [
+        "70%",
+        "30%"
+      ],
+      "items": [
+        {
+          "type": "label",
+          "title": "WEBUI App Name"
+        },
+        {
+          "type": "label",
+          "title": "WEBUI GitHub Branch"
+        },
+        "webui-app-name",
+        "webui-app-branch"
+      ]
+    },
+    {
+      "type": "table",
+      "columnCount": 2,
+      "widths": [
+        "70%",
+        "30%"
+      ],
+      "items": [
+        {
+          "type": "label",
+          "title": "Recommendation App Name"
+        },
+        {
+          "type": "label",
+          "title": "Recommendation GitHub Branch"
+        },
+        {
+          "type": "label",
+          "title": "*IBM Cloud Functions package names will be used*"
+        },
+        "recommendation-app-branch"
+      ]
+    },
     {
       "type": "table",
       "columnCount": 3,
-      "widths": ["33%", "33%", "33%"],
+      "widths": [
+        "33%",
+        "33%",
+        "33%"
+      ],
       "items": [
         {
           "type": "label",
@@ -102,18 +205,16 @@
         }
       ]
     },
-
     {
       "type": "label",
-      "title": "The recommendation service relies on IBM Cloud Functions actions. To deploy these actions, the pipeline requires your [Cloud Functions API Key](https://console.bluemix.net/openwhisk/learn/api-key). Make sure to enter the API Key associated with the space where the applications will be deployed."
+      "title": "To deploy IBM Cloud Functions and Cloud Foundry applications, the pipelines require an [IBM Cloud Platform API key](https://console.bluemix.net/docs/cli/reference/bluemix_cli/bx_cli.html#ibmcloud_iam_api_key_create). Use the `ibmcloud iam api-key-create <name>` command to create a new API key if you do not already have a key."
     },
     {
       "type": "text",
       "readonly": false,
-      "title": "Cloud Functions API Key",
-      "key": "openwhisk_auth"
+      "title": "IBM Cloud Platform API key",
+      "key": "iam-api-key"
     },
-
     {
       "type": "label",
       "title": "Unit test coverage data can be sent to Coveralls as part of the Test phases of the delivery pipelines. Specify here the Coveralls tokens for each GitHub repository. You can decide to skip this step now. Later you can set the Coveralls token by editing the Test phases of the respective Delivery Pipelines."
@@ -142,6 +243,5 @@
       "title": "Recommendation Coveralls Token",
       "key": "recommendation-coveralls_token"
     }
-
   ]
 }

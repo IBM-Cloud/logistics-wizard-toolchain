@@ -7,10 +7,10 @@ template:
     - controller-repo
     - webui-repo
     - recommendation-repo
-    - erp-api-build-prod
-    - controller-build-prod
-    - webui-build-prod
-    - recommendation-build-prod
+    - erp-api-build
+    - controller-build
+    - webui-build
+    - recommendation-build
 toolchain:
   name: "logistics-wizard-toolchain-{{timestamp}}"
   info:
@@ -47,161 +47,84 @@ services:
       repo_url: "https://github.com/IBM-Cloud/logistics-wizard-recommendation"
       type: clone
       has_issues: true
-  erp-api-build-dev:
+  erp-api-build:
     service_id: pipeline
     parameters:
-      name: "erp (dev)"
-      configuration:
-        content: 
-          $text: erp-api.pipeline.yml
-        env:
-          REPO: "erp-api-repo"
-          REPO_BRANCH: "dev"
-          CF_APP_NAME: "dev-{{form.pipeline.parameters.erp-app-name}}"
-          COVERALLS_REPO_TOKEN: "{{form.pipeline.parameters.erp-api-coveralls_token}}"
-          SPACE_NAME: "{{form.pipeline.parameters.selected-space}}"
-          ORG_NAME: "{{form.pipeline.parameters.selected-organization}}"
-          REGION_ID: "{{form.pipeline.parameters.selected-region}}"
-        execute: false
-      services: ["erp-api-repo"]
-    hidden: [form, description]
-  erp-api-build-prod:
-    service_id: pipeline
-    parameters:
-      name: "erp (prod)"
+      name: "ERP"
       configuration:
         content:  
           $text: erp-api.pipeline.yml
         env:
           REPO: "erp-api-repo"
-          REPO_BRANCH: "master"
+          REPO_BRANCH: "{{form.pipeline.parameters.erp-app-branch}}"
           CF_APP_NAME: "{{form.pipeline.parameters.erp-app-name}}"
           COVERALLS_REPO_TOKEN: "{{form.pipeline.parameters.erp-api-coveralls_token}}"
           SPACE_NAME: "{{form.pipeline.parameters.selected-space}}"
           ORG_NAME: "{{form.pipeline.parameters.selected-organization}}"
           REGION_ID: "{{form.pipeline.parameters.selected-region}}"
+          IAM_API_KEY: "{{form.pipeline.parameters.iam-api-key}}"
         execute: true
       services: ["erp-api-repo"]
     hidden: [form, description]
-  controller-build-dev:
+  controller-build:
     service_id: pipeline
     parameters:
-      name: "controller (dev)"
+      name: "Controller"
       configuration:
         content:  
           $text: controller.pipeline.yml
         env:
           REPO: "controller-repo"
-          REPO_BRANCH: "dev"
-          COVERALLS_REPO_TOKEN: "{{form.pipeline.parameters.controller-coveralls_token}}"
-          ERP_SERVICE_APP_NAME: "dev-{{form.pipeline.parameters.erp-app-name}}"
-          CF_APP_NAME: "dev-{{form.pipeline.parameters.controller-app-name}}"
-          SPACE_NAME: "{{form.pipeline.parameters.selected-space}}"
-          ORG_NAME: "{{form.pipeline.parameters.selected-organization}}"
-          REGION_ID: "{{form.pipeline.parameters.selected-region}}"
-          OPENWHISK_AUTH: "{{form.pipeline.parameters.openwhisk_auth}}"
-          RECOMMENDATION_PACKAGE_NAME: "dev-lwr"
-        execute: false
-      services: ["controller-repo"]
-    hidden: [form, description]
-  controller-build-prod:
-    service_id: pipeline
-    parameters:
-      name: "controller (prod)"
-      configuration:
-        content:  
-          $text: controller.pipeline.yml
-        env:
-          REPO: "controller-repo"
-          REPO_BRANCH: "master"
+          REPO_BRANCH: "{{form.pipeline.parameters.controller-app-branch}}"
           COVERALLS_REPO_TOKEN: "{{form.pipeline.parameters.controller-coveralls_token}}"
           ERP_SERVICE_APP_NAME: "{{form.pipeline.parameters.erp-app-name}}"
           CF_APP_NAME: "{{form.pipeline.parameters.controller-app-name}}"
           SPACE_NAME: "{{form.pipeline.parameters.selected-space}}"
           ORG_NAME: "{{form.pipeline.parameters.selected-organization}}"
           REGION_ID: "{{form.pipeline.parameters.selected-region}}"
-          OPENWHISK_AUTH: "{{form.pipeline.parameters.openwhisk_auth}}"
-          RECOMMENDATION_PACKAGE_NAME: "lwr"
+          RECOMMENDATION_PACKAGE_NAME: "lwr-{{form.pipeline.parameters.recommendation-app-branch}}"
+          IAM_API_KEY: "{{form.pipeline.parameters.iam-api-key}}"
         execute: true
       services: ["controller-repo"]
     hidden: [form, description]
-  webui-build-dev:
+  webui-build:
     service_id: pipeline
     parameters:
-      name: "webui (dev)"
+      name: "WebUI"
       configuration:
         content:  
           $text: webui.pipeline.yml
         env:
           REPO: "webui-repo"
-          REPO_BRANCH: "dev"
-          COVERALLS_REPO_TOKEN: "{{form.pipeline.parameters.webui-coveralls_token}}"
-          CONTROLLER_SERVICE_APP_NAME: "dev-{{form.pipeline.parameters.controller-app-name}}"
-          CF_APP_NAME: "dev-{{form.pipeline.parameters.webui-app-name}}"
-          SPACE_NAME: "{{form.pipeline.parameters.selected-space}}"
-          ORG_NAME: "{{form.pipeline.parameters.selected-organization}}"
-          REGION_ID: "{{form.pipeline.parameters.selected-region}}"
-        execute: false
-      services: ["webui-repo"]
-    hidden: [form, description]
-  webui-build-prod:
-    service_id: pipeline
-    parameters:
-      name: "webui (prod)"
-      configuration:
-        content:  
-          $text: webui.pipeline.yml
-        env:
-          REPO: "webui-repo"
-          REPO_BRANCH: "master"
+          REPO_BRANCH: "{{form.pipeline.parameters.webui-app-branch}}"
           COVERALLS_REPO_TOKEN: "{{form.pipeline.parameters.webui-coveralls_token}}"
           CONTROLLER_SERVICE_APP_NAME: "{{form.pipeline.parameters.controller-app-name}}"
           CF_APP_NAME: "{{form.pipeline.parameters.webui-app-name}}"
           SPACE_NAME: "{{form.pipeline.parameters.selected-space}}"
           ORG_NAME: "{{form.pipeline.parameters.selected-organization}}"
           REGION_ID: "{{form.pipeline.parameters.selected-region}}"
+          IAM_API_KEY: "{{form.pipeline.parameters.iam-api-key}}"
         execute: true
       services: ["webui-repo"]
     hidden: [form, description]
-  recommendation-build-dev:
+  recommendation-build:
     service_id: pipeline
     parameters:
-      name: "recommendation (dev)"
-      configuration:
-        content:  
-          $text: recommendation.pipeline.yml
-        env:
-          CONTROLLER_SERVICE_APP_NAME: "dev-{{form.pipeline.parameters.controller-app-name}}"
-          REPO: "recommendation-repo"
-          REPO_BRANCH: "dev"
-          COVERALLS_REPO_TOKEN: "{{form.pipeline.parameters.recommendation-coveralls_token}}"
-          OPENWHISK_AUTH: "{{form.pipeline.parameters.openwhisk_auth}}"
-          PACKAGE_NAME: "dev-lwr"
-          CLOUDANT_DATABASE: "dev-recommendations"
-          SPACE_NAME: "{{form.pipeline.parameters.selected-space}}"
-          ORG_NAME: "{{form.pipeline.parameters.selected-organization}}"
-          REGION_ID: "{{form.pipeline.parameters.selected-region}}"
-        execute: false
-      services: ["recommendation-repo"]
-    hidden: [form, description]
-  recommendation-build-prod:
-    service_id: pipeline
-    parameters:
-      name: "recommendation (prod)"
+      name: "Recommendation"
       configuration:
         content:  
           $text: recommendation.pipeline.yml
         env:
           CONTROLLER_SERVICE_APP_NAME: "{{form.pipeline.parameters.controller-app-name}}"
           REPO: "recommendation-repo"
-          REPO_BRANCH: "master"
+          REPO_BRANCH: "{{form.pipeline.parameters.recommendation-app-branch}}"
           COVERALLS_REPO_TOKEN: "{{form.pipeline.parameters.recommendation-coveralls_token}}"
-          OPENWHISK_AUTH: "{{form.pipeline.parameters.openwhisk_auth}}"
-          PACKAGE_NAME: "lwr"
+          PACKAGE_NAME: "lwr-{{form.pipeline.parameters.recommendation-app-branch}}"
           CLOUDANT_DATABASE: "recommendations"
           SPACE_NAME: "{{form.pipeline.parameters.selected-space}}"
           ORG_NAME: "{{form.pipeline.parameters.selected-organization}}"
           REGION_ID: "{{form.pipeline.parameters.selected-region}}"
+          IAM_API_KEY: "{{form.pipeline.parameters.iam-api-key}}"
         execute: true
       services: ["recommendation-repo"]
     hidden: [form, description]
@@ -216,10 +139,9 @@ form:
       erp-app-name: "{{toolchain.name}}-erp"
       controller-app-name: "{{toolchain.name}}-controller"
       webui-app-name: "{{toolchain.name}}-webui"
-      openwhisk_auth: ""
-      erp-api-coveralls_token: ""
-      controller-coveralls_token: ""
-      webui-coveralls_token: ""
-      recommendation-coveralls_token: ""
+      erp-app-branch: "master"
+      controller-app-branch: "master"
+      webui-app-branch: "master"
+      recommendation-app-branch: "master"
     schema:
       $ref: deploy.json

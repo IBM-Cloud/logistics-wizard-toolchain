@@ -1,3 +1,5 @@
+[Logistics Wizard](https://github.com/IBM-Cloud/logistics-wizard/tree/master#logistics-wizard-overview) / [Deploy](https://github.com/IBM-Cloud/logistics-wizard/tree/master#deploy-logistics-wizard) / logistics-wizard-toolchain
+
 # Logistics Wizard Toolchain
 
 This toolchain deploys the [Logistics Wizard](https://github.com/IBM-Cloud/logistics-wizard) sample application. Logistics Wizard is a supply chain management web application composed of several micro-services. Refer to the [Logistics Wizard home page](https://github.com/IBM-Cloud/logistics-wizard) for more information.
@@ -32,7 +34,7 @@ After clicking the deployment button, the toolchain's configuration page is show
 5. Select the **Delivery Pipeline** tab.
 6. Ensure the **App Name** for each microservice is unique.
 7. Select the Cloud Foundry **Region**, **Organization** and **Space** where you want to deploy the application.
-8. Paste your **IBM Cloud Functions API Key** into the corresponding textbox. You can find your Cloud Functions API Key in the [Functions console here](https://console.bluemix.net/openwhisk/learn/api-key). When doing so, make sure you are in the same region, organization, and space where you are deploying the apps. The API Key is specific to a given space and will appear similar to `1234-4567-8901-2345:tonywinBtm00001112221`.
+8. Paste your **IBM Cloud Platform API key** into the corresponding textbox. If you do not have an existing API key, create on using the `ibmcloud iam api-key-create <name>` command. Record the API key in a safe place; it will be shown only once after the command completes. 
 9. The [coveralls](https://coveralls.io/) tokens remain empty. (These are used for IBM development.)
 10. Click the **Create** button.
 
