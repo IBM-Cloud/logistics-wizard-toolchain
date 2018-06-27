@@ -39,9 +39,6 @@ stages:
   - name: CLOUDANT_DATABASE
     value: ${CLOUDANT_DATABASE}
     type: text
-  - name: OPENWHISK_AUTH
-    value: ${OPENWHISK_AUTH}
-    type: secure
   - name: CONTROLLER_SERVICE_APP_NAME
     value: ${CONTROLLER_SERVICE_APP_NAME}
     type: text
