@@ -52,7 +52,7 @@
       "description": "GitHub branch of the Recommendation App",
       "type": "string"
     },
-    "iam-api-key": {
+    "api-key": {
       "type": "string"
     },
     "erp-api-coveralls_token": {
@@ -79,7 +79,7 @@
     "webui-app-name",
     "webui-app-branch",
     "recommendation-app-branch",
-    "iam-api-key"
+    "api-key"
   ],
   "form": [
     {
@@ -213,7 +213,7 @@
       "type": "text",
       "readonly": false,
       "title": "IBM Cloud Platform API key",
-      "key": "iam-api-key"
+      "key": "api-key"
     },
     {
       "type": "label",
