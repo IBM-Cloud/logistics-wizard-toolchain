@@ -52,7 +52,7 @@
       "description": "GitHub branch of the Recommendation App",
       "type": "string"
     },
-    "iam-api-key": {
+    "api-key": {
       "type": "string"
     },
     "erp-api-coveralls_token": {
@@ -79,7 +79,7 @@
     "webui-app-name",
     "webui-app-branch",
     "recommendation-app-branch",
-    "iam-api-key"
+    "api-key"
   ],
   "form": [
     {
@@ -170,6 +170,16 @@
       ]
     },
     {
+      "type": "label",
+      "title": "To deploy IBM Cloud Functions and Cloud Foundry applications, the pipelines require an [IBM Cloud Platform API key](https://console.bluemix.net/docs/cli/reference/bluemix_cli/bx_cli.html#ibmcloud_iam_api_key_create). Use the `ibmcloud iam api-key-create <name>` command to create a new API key if you do not already have a key."
+    },
+    {
+      "type": "text",
+      "readonly": false,
+      "title": "IBM Cloud Platform API key",
+      "key": "api-key"
+    },
+    {
       "type": "table",
       "columnCount": 3,
       "widths": [
@@ -204,16 +214,6 @@
           "readonly": false
         }
       ]
-    },
-    {
-      "type": "label",
-      "title": "To deploy IBM Cloud Functions and Cloud Foundry applications, the pipelines require an [IBM Cloud Platform API key](https://console.bluemix.net/docs/cli/reference/bluemix_cli/bx_cli.html#ibmcloud_iam_api_key_create). Use the `ibmcloud iam api-key-create <name>` command to create a new API key if you do not already have a key."
-    },
-    {
-      "type": "text",
-      "readonly": false,
-      "title": "IBM Cloud Platform API key",
-      "key": "iam-api-key"
     },
     {
       "type": "label",
