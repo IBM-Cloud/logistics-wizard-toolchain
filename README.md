@@ -14,12 +14,12 @@ The toolchain is preconfigured to provide:
 ## Create the toolchain
 
 1. Ensure you have a [GitHub](https://github.com/) account.
-2. Ensure you have an [IBM Cloud](https://ibm.com/bluemix) account.
+2. Ensure you have an [IBM Cloud](https://ibm.com/cloud) account.
 3. Ensure you have 2GB of free memory and space for 4 additional services in your IBM Cloud organization.
 4. It is recommended to create a new space named `logistics-wizard` in your organization. This helps grouping the apps and services together in the console.
 5. To create the toolchain, click this button:
 
-  [![Deploy To Bluemix](./.bluemix/create_toolchain_button.png)](https://console.bluemix.net/devops/setup/deploy/?repository=https%3A//github.com/IBM-Cloud/logistics-wizard-toolchain.git)
+  [![Deploy To IBM Cloud](./.bluemix/create_toolchain_button.png)](https://console.bluemix.net/devops/setup/deploy/?repository=https%3A//github.com/IBM-Cloud/logistics-wizard-toolchain.git)
 
 ## Configure the toolchain
 
