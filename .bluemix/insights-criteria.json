@@ -1,0 +1,26 @@
+[
+  {
+    "name":"ERP Quality Policy",
+    "description": "Policy to check Unit Test, Code Coverage, and FVT.",
+    "rules":[
+      {
+        "name": "Unit Test Rule",
+        "description": "Unit Test Rule",
+        "format":"mocha",
+        "stage":"unittest",
+        "percentPass":100,
+        "regressionCheck":true,
+        "criticalTests":[
+        ]
+      },
+      {
+        "name": "Code Coverage Rule",
+        "description": "Code Coverage Rule",
+        "format":"istanbul",
+        "stage":"code",
+        "codeCoverage":50,
+        "regressionCheck":true
+      }
+    ]
+  }
+]
