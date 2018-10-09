@@ -22,10 +22,6 @@ stages:
     script: |
       #!/bin/bash
       ./.bluemix/pipeline-TEST.sh
-  - name: Quality Gate
-    type: tester
-    extension_id: ibm.devops.services.pipeline.dra_devops_gate
-    CRITERIA: ERP Quality Policy
 - name: BUILD
   inputs:
   - type: git
