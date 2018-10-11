@@ -21,6 +21,12 @@ stages:
     type: secure
   - name: REGION_ID
     value: ${REGION_ID}
+  - name: LOGICAL_APP_NAME
+    value: ${CF_APP_NAME}
+    type: text
+  - name: BUILD_PREFIX
+    value: ${REPO_BRANCH}
+    type: text
   jobs:
   - name: Build
     type: builder

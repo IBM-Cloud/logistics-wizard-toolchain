@@ -29,6 +29,16 @@ stages:
     service: ${REPO}
   triggers:
   - type: stage
+  properties:
+  - name: LOGICAL_APP_NAME
+    value: ${CF_APP_NAME}
+    type: text
+  - name: BUILD_PREFIX
+    value: ${REPO_BRANCH}
+    type: text
+  - name: LOGICAL_ENV_NAME
+    value: ${SPACE_NAME}
+    type: text
   jobs:
   - name: Build
     type: builder
@@ -53,6 +63,15 @@ stages:
   - name: IAM_API_KEY
     value: ${IAM_API_KEY}
     type: secure
+  - name: LOGICAL_APP_NAME
+    value: ${CF_APP_NAME}
+    type: text
+  - name: BUILD_PREFIX
+    value: ${REPO_BRANCH}
+    type: text
+  - name: LOGICAL_ENV_NAME
+    value: ${SPACE_NAME}
+    type: text
   jobs:
   - name: Blue/Green Deploy
     type: deployer
@@ -61,16 +80,6 @@ stages:
       organization: ${ORG_NAME}
       space: ${SPACE_NAME}
       application: ${CF_APP_NAME}
-    properties:
-    - name: LOGICAL_APP_NAME
-      value: ${CF_APP_NAME}
-      type: text
-    - name: BUILD_PREFIX
-      value: ${REPO_BRANCH}
-      type: text
-    - name: LOGICAL_ENV_NAME
-      value: ${SPACE_NAME}
-      type: text
     script: |-
       #!/bin/bash
       ./.bluemix/pipeline-DEPLOY.sh
