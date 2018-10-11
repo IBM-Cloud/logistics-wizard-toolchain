@@ -45,9 +45,13 @@ stages:
   jobs:
   - name: Unit Test
     type: tester
+    test_type: simple
     script: |
       #!/bin/bash
       ./.bluemix/pipeline-TEST.sh
+    coverage_type: istanbul
+    coverage_directory: ./coverage/lcov-report
+    coverage_file_pattern: ./coverage/coverage.json
   - name: Quality Gate
     type: tester
     extension_id: ibm.devops.services.pipeline.dra_devops_gate

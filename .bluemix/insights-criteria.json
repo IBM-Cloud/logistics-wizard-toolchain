@@ -6,7 +6,7 @@
       {
         "name": "Unit Test Rule",
         "description": "Unit Test Rule",
-        "format":"mocha",
+        "format":"xunit",
         "stage":"unittest",
         "percentPass":100,
         "regressionCheck":true,
@@ -18,7 +18,7 @@
         "description": "Code Coverage Rule",
         "format":"istanbul",
         "stage":"code",
-        "codeCoverage":50,
+        "codeCoverage":90,
         "regressionCheck":true
       }
     ]
