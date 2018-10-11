@@ -98,9 +98,6 @@ stages:
     script: |-
       #!/bin/bash
       ./.bluemix/pipeline-DEPLOY.sh
-    properties:
-    - name: LOGICAL_ENVIRONMENT_NAME
-      value: ${SPACE_NAME}
 - name: TEST (DBaaS)
   inputs:
   - type: job
