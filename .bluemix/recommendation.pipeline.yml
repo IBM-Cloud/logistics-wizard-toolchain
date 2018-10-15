@@ -16,6 +16,12 @@ stages:
   - name: COVERALLS_REPO_TOKEN
     value: ${COVERALLS_REPO_TOKEN}
     type: secure
+  - name: LOGICAL_APP_NAME
+    value: ${PACKAGE_NAME}
+    type: text
+  - name: BUILD_PREFIX
+    value: ${REPO_BRANCH}
+    type: text
   jobs:
   - name: Build
     type: builder
@@ -47,6 +53,15 @@ stages:
   - name: IAM_API_KEY
     value: ${IAM_API_KEY}
     type: secure
+  - name: LOGICAL_APP_NAME
+    value: ${PACKAGE_NAME}
+    type: text
+  - name: BUILD_PREFIX
+    value: ${REPO_BRANCH}
+    type: text
+  - name: LOGICAL_ENV_NAME
+    value: ${SPACE_NAME}
+    type: text
   jobs:
   - name: Deploy
     type: deployer
