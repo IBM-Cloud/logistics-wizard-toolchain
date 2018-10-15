@@ -68,3 +68,23 @@ stages:
     script: |-
       #!/bin/bash
       ./.bluemix/pipeline-DEPLOY.sh
+
+      # begin devops insights
+
+      # install devops CLI
+      export PATH=/opt/IBM/node-v4.4.5/bin:$PATH
+      npm install -g grunt-idra3
+
+      # set env vars
+      export DEPLOYABLE_ID=$(bx app env $CF_APP | grep application_id | awk '{ print $2 }' | cut -c 2-37)
+      export STATUS=$(bx app show logistics-wizard-toolchain-20181011193416812-erp | tail -1 | awk '{ print $2 }')
+      if [ "$STATUS" = "running" ]; then
+        export STATUS=pass
+      else
+        export STATUS=fail
+      fi
+
+      # upload deployment record
+      idra --publishdeployrecord  --env=$LOGICAL_ENV_NAME --status=pass --deployableid=$DEPLOYABLE_ID
+
+      # end devops insights
