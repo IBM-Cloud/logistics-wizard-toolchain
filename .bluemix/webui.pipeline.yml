@@ -77,7 +77,7 @@ stages:
 
       # set env vars
       export DEPLOYABLE_ID=$(bx app env $CF_APP | grep application_id | awk '{ print $2 }' | cut -c 2-37)
-      export STATUS=$(bx app show logistics-wizard-toolchain-20181011193416812-erp | tail -1 | awk '{ print $2 }')
+      export STATUS=$(bx app show $CF_APP | tail -1 | awk '{ print $2 }')
       if [ "$STATUS" = "running" ]; then
         export STATUS=pass
       else
