@@ -69,9 +69,6 @@ stages:
   - name: BUILD_PREFIX
     value: ${REPO_BRANCH}
     type: text
-  - name: LOGICAL_ENV_NAME
-    value: ${SPACE_NAME}
-    type: text
   jobs:
   - name: Blue/Green Deploy
     type: deployer
