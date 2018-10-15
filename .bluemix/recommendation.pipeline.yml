@@ -16,6 +16,12 @@ stages:
   - name: COVERALLS_REPO_TOKEN
     value: ${COVERALLS_REPO_TOKEN}
     type: secure
+  - name: LOGICAL_APP_NAME
+    value: ${PACKAGE_NAME}
+    type: text
+  - name: BUILD_PREFIX
+    value: ${REPO_BRANCH}
+    type: text
   jobs:
   - name: Build
     type: builder
@@ -47,6 +53,18 @@ stages:
   - name: IAM_API_KEY
     value: ${IAM_API_KEY}
     type: secure
+  - name: LOGICAL_APP_NAME
+    value: ${PACKAGE_NAME}
+    type: text
+  - name: BUILD_PREFIX
+    value: ${REPO_BRANCH}
+    type: text
+  - name: LOGICAL_ENV_NAME
+    value: ${SPACE_NAME}
+    type: text
+  - name: IBM_CLOUD_API_KEY
+    value: ${IAM_API_KEY}
+    type: secure
   jobs:
   - name: Deploy
     type: deployer
@@ -58,3 +76,26 @@ stages:
     script: |-
       #!/bin/bash
       ./.bluemix/pipeline-DEPLOY.sh
+
+      # begin devops insights
+
+      # install devops CLI
+      export PATH=/opt/IBM/node-v4.4.5/bin:$PATH
+      npm install -g grunt-idra3
+
+      # set env vars
+      export DEPLOYABLE_ID=$PACKAGE_NAME
+      export NUM_ACTIONS=$(bx cloud-functions action list $PACKAGE_NAME | wc -l)
+
+      echo $NUM_ACTIONS actions were deployed in package $PACKAGE_NAME
+
+      if [ "$NUM_ACTIONS" = "5" ]; then
+        export STATUS=pass
+      else
+        export STATUS=fail
+      fi
+
+      # upload deployment record
+      idra --publishdeployrecord  --env=$LOGICAL_ENV_NAME --status=pass --deployableid=$DEPLOYABLE_ID
+
+      # end devops insights

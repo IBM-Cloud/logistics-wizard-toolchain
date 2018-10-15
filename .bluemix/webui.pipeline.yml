@@ -21,6 +21,12 @@ stages:
     type: secure
   - name: REGION_ID
     value: ${REGION_ID}
+  - name: LOGICAL_APP_NAME
+    value: ${CF_APP_NAME}
+    type: text
+  - name: BUILD_PREFIX
+    value: ${REPO_BRANCH}
+    type: text
   jobs:
   - name: Build
     type: builder
@@ -42,6 +48,18 @@ stages:
   - name: IAM_API_KEY
     value: ${IAM_API_KEY}
     type: secure
+  - name: LOGICAL_APP_NAME
+    value: ${CF_APP_NAME}
+    type: text
+  - name: BUILD_PREFIX
+    value: ${REPO_BRANCH}
+    type: text
+  - name: LOGICAL_ENV_NAME
+    value: ${SPACE_NAME}
+    type: text
+  - name: IBM_CLOUD_API_KEY
+    value: ${IAM_API_KEY}
+    type: secure
   jobs:
   - name: Blue/Green Deploy
     type: deployer
@@ -53,3 +71,23 @@ stages:
     script: |-
       #!/bin/bash
       ./.bluemix/pipeline-DEPLOY.sh
+
+      # begin devops insights
+
+      # install devops CLI
+      export PATH=/opt/IBM/node-v4.4.5/bin:$PATH
+      npm install -g grunt-idra3
+
+      # set env vars
+      export DEPLOYABLE_ID=$(bx app env $CF_APP | grep application_id | awk '{ print $2 }' | cut -c 2-37)
+      export STATUS=$(bx app show $CF_APP | tail -1 | awk '{ print $2 }')
+      if [ "$STATUS" = "running" ]; then
+        export STATUS=pass
+      else
+        export STATUS=fail
+      fi
+
+      # upload deployment record
+      idra --publishdeployrecord  --env=$LOGICAL_ENV_NAME --status=pass --deployableid=$DEPLOYABLE_ID
+
+      # end devops insights
