@@ -36,9 +36,6 @@ stages:
   - name: BUILD_PREFIX
     value: ${REPO_BRANCH}
     type: text
-  - name: LOGICAL_ENV_NAME
-    value: ${SPACE_NAME}
-    type: text
   jobs:
   - name: Build
     type: builder
@@ -69,6 +66,12 @@ stages:
   - name: BUILD_PREFIX
     value: ${REPO_BRANCH}
     type: text
+  - name: LOGICAL_ENV_NAME
+    value: ${SPACE_NAME}
+    type: text
+  - name: IBM_CLOUD_API_KEY
+    value: ${IAM_API_KEY}
+    type: secure
   jobs:
   - name: Blue/Green Deploy
     type: deployer
