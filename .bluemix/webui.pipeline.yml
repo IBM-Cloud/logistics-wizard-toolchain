@@ -88,6 +88,6 @@ stages:
       fi
 
       # upload deployment record
-      idra --publishdeployrecord  --env=$LOGICAL_ENV_NAME --status=pass --deployableid=$DEPLOYABLE_ID
+      idra --publishdeployrecord  --env=$LOGICAL_ENV_NAME --status=$STATUS --deployableid=$DEPLOYABLE_ID
 
       # end devops insights
