@@ -89,13 +89,13 @@ stages:
 
       echo $NUM_ACTIONS actions were deployed in package $PACKAGE_NAME
 
-      if [ "$NUM_ACTIONS" = "5" ]; then
+      if [ "$NUM_ACTIONS" = "6" ]; then
         export STATUS=pass
       else
         export STATUS=fail
       fi
 
       # upload deployment record
-      idra --publishdeployrecord  --env=$LOGICAL_ENV_NAME --status=pass --deployableid=$DEPLOYABLE_ID
+      idra --publishdeployrecord  --env=$LOGICAL_ENV_NAME --status=$STATUS --deployableid=$DEPLOYABLE_ID
 
       # end devops insights
