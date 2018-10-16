@@ -89,7 +89,7 @@ stages:
 
       echo $NUM_ACTIONS actions were deployed in package $PACKAGE_NAME
 
-      if [ "$NUM_ACTIONS" = "5" ]; then
+      if [ "$NUM_ACTIONS" = "6" ]; then
         export STATUS=pass
       else
         export STATUS=fail

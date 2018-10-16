@@ -81,7 +81,7 @@ stages:
       # set env vars
       export DEPLOYABLE_ID=$(bx app env $CF_APP | grep application_id | awk '{ print $2 }' | cut -c 2-37)
       export STATUS=$(bx app show $CF_APP | tail -1 | awk '{ print $2 }')
-      if [ "$STATUS" = "running" ]; then
+      if [ "$STATUS" = "running" ] || [ "$STATUS" = "started" ] ; then
         export STATUS=pass
       else
         export STATUS=fail
