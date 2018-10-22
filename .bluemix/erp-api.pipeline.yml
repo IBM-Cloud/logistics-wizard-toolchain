@@ -100,27 +100,11 @@ stages:
       application: ${CF_APP_NAME}
     script: |-
       #!/bin/bash
+      export PATH=/opt/IBM/node-v6.7.0/bin:$PATH
+
       ./.bluemix/pipeline-DEPLOY.sh
+      ./.bluemix/pipeline-DRA.sh
 
-      # begin devops insights
-
-      # install devops CLI
-      export PATH=/opt/IBM/node-v4.4.5/bin:$PATH
-      npm install -g grunt-idra3
-
-      # set env vars
-      export DEPLOYABLE_ID=$(bx app env $CF_APP | grep application_id | awk '{ print $2 }' | cut -c 2-37)
-      export STATUS=$(bx app show $CF_APP | tail -1 | awk '{ print $2 }')
-      if [ "$STATUS" = "running" ] || [ "$STATUS" = "started" ] ; then
-        export STATUS=pass
-      else
-        export STATUS=fail
-      fi
-
-      # upload deployment record
-      idra --publishdeployrecord  --env=$LOGICAL_ENV_NAME --status=$STATUS --deployableid=$DEPLOYABLE_ID
-
-      # end devops insights
 - name: TEST (DBaaS)
   inputs:
   - type: job
