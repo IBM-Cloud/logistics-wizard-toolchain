@@ -80,6 +80,7 @@ stages:
       organization: ${ORG_NAME}
       space: ${SPACE_NAME}
       application: ${CF_APP_NAME}
+      api_key: ${IAM_API_KEY}
     script: |-
       #!/bin/bash
       export PATH=/opt/IBM/node-v6.7.0/bin:$PATH
