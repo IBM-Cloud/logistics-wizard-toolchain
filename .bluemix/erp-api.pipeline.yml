@@ -83,6 +83,8 @@ stages:
   - name: IBM_CLOUD_API_KEY
     value: ${IAM_API_KEY}
     type: secure
+  - name: CLOUDANT_SERVICE_PLAN
+    value: Lite
   jobs:
   - name: Blue/Green Deploy
     type: deployer
