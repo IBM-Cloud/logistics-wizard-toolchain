@@ -19,7 +19,7 @@ The toolchain is preconfigured to provide:
 4. It is recommended to create a new space named `logistics-wizard` in your organization. This helps grouping the apps and services together in the console.
 5. To create the toolchain, click this button:
 
-  [![Deploy To IBM Cloud](./.bluemix/create_toolchain_button.png)](https://console.bluemix.net/devops/setup/deploy/?repository=https%3A//github.com/IBM-Cloud/logistics-wizard-toolchain.git)
+  [![Deploy To IBM Cloud](./.bluemix/create_toolchain_button.png)](https://cloud.ibm.com/devops/setup/deploy/?repository=https%3A//github.com/IBM-Cloud/logistics-wizard-toolchain.git)
 
 ## Configure the toolchain
 
@@ -49,5 +49,5 @@ Once the toolchain is created, several delivery pipelines corresponding to the m
 ---
 ### Learn more
 
-* [IBM Cloud Continuous Delivery](https://console.bluemix.net/docs/services/ContinuousDelivery/index.html#cd_getting_started)
-* [IBM Cloud Toolchains Documentation](https://console.bluemix.net/docs/services/ContinuousDelivery/toolchains_about.html#toolchains_about)
+* [IBM Cloud Continuous Delivery](https://cloud.ibm.com/docs/services/ContinuousDelivery/index.html#cd_getting_started)
+* [IBM Cloud Toolchains Documentation](https://cloud.ibm.com/docs/services/ContinuousDelivery/toolchains_about.html#toolchains_about)
