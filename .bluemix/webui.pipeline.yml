@@ -74,5 +74,3 @@ stages:
       export PATH=/opt/IBM/node-v6.7.0/bin:$PATH
 
       ./.bluemix/pipeline-DEPLOY.sh
-      ./.bluemix/pipeline-DRA.sh
-

@@ -54,17 +54,10 @@ stages:
     test_type: simple
     script: |
       #!/bin/bash
-      ./.bluemix/pipeline-TEST.sh
-
-      # devops insights test record upload in 'pipeline-TEST.sh' see npm script 'idra' for details
-      
+      ./.bluemix/pipeline-TEST.sh      
     coverage_type: istanbul
     coverage_directory: ./coverage/lcov-report
     coverage_file_pattern: ./coverage/coverage.json
-  - name: Quality Gate
-    type: tester
-    extension_id: ibm.devops.services.pipeline.dra_devops_gate
-    CRITERIA: ERP Quality Policy
 - name: DEPLOY
   inputs:
   - type: job
@@ -104,8 +97,6 @@ stages:
       export PATH=/opt/IBM/node-v6.7.0/bin:$PATH
 
       ./.bluemix/pipeline-DEPLOY.sh
-      ./.bluemix/pipeline-DRA.sh
-
 - name: TEST (DBaaS)
   inputs:
   - type: job

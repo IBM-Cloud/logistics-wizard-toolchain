@@ -19,11 +19,6 @@ toolchain:
     git branch: >-
       [master](https://github.com/IBM-Cloud/logistics-wizard-toolchain/tree/master)
 services:
-  insights:
-      service_id: draservicebroker
-      parameters:
-        criteria:
-          $text: "insights-criteria.json"
   erp-api-repo:
     service_id: githubpublic
     parameters:
