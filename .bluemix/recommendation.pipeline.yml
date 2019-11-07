@@ -45,6 +45,8 @@ stages:
   - name: CLOUDANT_DATABASE
     value: ${CLOUDANT_DATABASE}
     type: text
+  - name: CLOUDANT_SERVICE_PLAN
+    value: Lite
   - name: CONTROLLER_SERVICE_APP_NAME
     value: ${CONTROLLER_SERVICE_APP_NAME}
     type: text
