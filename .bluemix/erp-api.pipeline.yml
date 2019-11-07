@@ -112,6 +112,8 @@ stages:
   - name: IAM_API_KEY
     value: ${IAM_API_KEY}
     type: secure
+  - name: CLOUDANT_SERVICE_PLAN
+    value: Lite
   jobs:
   - name: Unit Test
     type: deployer
