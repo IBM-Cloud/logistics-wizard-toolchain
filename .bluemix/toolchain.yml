@@ -62,7 +62,7 @@ services:
           SPACE_NAME: "{{form.pipeline.parameters.selected-space}}"
           ORG_NAME: "{{form.pipeline.parameters.selected-organization}}"
           REGION_ID: "{{form.pipeline.parameters.selected-region}}"
-          IAM_API_KEY: "{{form.pipeline.parameters.iam-api-key}}"
+          IAM_API_KEY: "{{form.pipeline.parameters.api-key}}"
           RESOURCE_GROUP: "{{form.pipeline.parameters.resource-group}}"
         execute: true
       services: ["erp-api-repo"]
@@ -84,7 +84,7 @@ services:
           ORG_NAME: "{{form.pipeline.parameters.selected-organization}}"
           REGION_ID: "{{form.pipeline.parameters.selected-region}}"
           RECOMMENDATION_PACKAGE_NAME: "lwr-{{form.pipeline.parameters.recommendation-app-branch}}"
-          IAM_API_KEY: "{{form.pipeline.parameters.iam-api-key}}"
+          IAM_API_KEY: "{{form.pipeline.parameters.api-key}}"
           FUNCTIONS_NAMESPACE: "{{toolchain.name}}"
           RESOURCE_GROUP: "{{form.pipeline.parameters.resource-group}}"
         execute: true
@@ -106,7 +106,7 @@ services:
           SPACE_NAME: "{{form.pipeline.parameters.selected-space}}"
           ORG_NAME: "{{form.pipeline.parameters.selected-organization}}"
           REGION_ID: "{{form.pipeline.parameters.selected-region}}"
-          IAM_API_KEY: "{{form.pipeline.parameters.iam-api-key}}"
+          IAM_API_KEY: "{{form.pipeline.parameters.api-key}}"
         execute: true
       services: ["webui-repo"]
     hidden: [form, description]
@@ -127,7 +127,7 @@ services:
           SPACE_NAME: "{{form.pipeline.parameters.selected-space}}"
           ORG_NAME: "{{form.pipeline.parameters.selected-organization}}"
           REGION_ID: "{{form.pipeline.parameters.selected-region}}"
-          IAM_API_KEY: "{{form.pipeline.parameters.iam-api-key}}"
+          IAM_API_KEY: "{{form.pipeline.parameters.api-key}}"
           FUNCTIONS_NAMESPACE: "{{toolchain.name}}"
           RESOURCE_GROUP: "{{form.pipeline.parameters.resource-group}}"
         execute: true
