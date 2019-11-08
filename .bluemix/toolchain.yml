@@ -125,6 +125,8 @@ services:
           ORG_NAME: "{{form.pipeline.parameters.selected-organization}}"
           REGION_ID: "{{form.pipeline.parameters.selected-region}}"
           IAM_API_KEY: "{{form.pipeline.parameters.iam-api-key}}"
+          FUNCTIONS_NAMESPACE: "{{toolchain.name}}"
+          RESOURCE_GROUP: "{{form.pipeline.parameters.resource-group}}"
         execute: true
       services: ["recommendation-repo"]
     hidden: [form, description]
@@ -143,5 +145,6 @@ form:
       controller-app-branch: "master"
       webui-app-branch: "master"
       recommendation-app-branch: "master"
+      resource-group: "default"
     schema:
       $ref: deploy.json
