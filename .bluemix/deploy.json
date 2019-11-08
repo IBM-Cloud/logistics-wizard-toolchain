@@ -17,12 +17,17 @@
       "description": "The IBM Cloud org",
       "type": "string",
       "validator": {
-        "v-type": "cf-org"
+        "v-type": "cf-org",
+        "params": [ "api-key" ]
       }
     },
     "selected-space": {
       "description": "The IBM Cloud space",
-      "type": "string"
+      "type": "string",
+      "validator": {
+        "v-type": "cf-space",
+        "params": [ "api-key" ]
+      }
     },
     "erp-app-name": {
       "title": "ERP App Name",
