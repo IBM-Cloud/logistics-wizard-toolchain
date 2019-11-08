@@ -85,7 +85,7 @@ services:
           REGION_ID: "{{form.pipeline.parameters.selected-region}}"
           RECOMMENDATION_PACKAGE_NAME: "lwr-{{form.pipeline.parameters.recommendation-app-branch}}"
           IAM_API_KEY: "{{form.pipeline.parameters.api-key}}"
-          FUNCTIONS_NAMESPACE: "{{toolchain.name}}"
+          FUNCTIONS_NAMESPACE: "{{form.pipeline.parameters.functions-namespace}}"
           RESOURCE_GROUP: "{{form.pipeline.parameters.resource-group}}"
         execute: true
       services: ["controller-repo"]
@@ -128,7 +128,7 @@ services:
           ORG_NAME: "{{form.pipeline.parameters.selected-organization}}"
           REGION_ID: "{{form.pipeline.parameters.selected-region}}"
           IAM_API_KEY: "{{form.pipeline.parameters.api-key}}"
-          FUNCTIONS_NAMESPACE: "{{toolchain.name}}"
+          FUNCTIONS_NAMESPACE: "{{form.pipeline.parameters.functions-namespace}}"
           RESOURCE_GROUP: "{{form.pipeline.parameters.resource-group}}"
         execute: true
       services: ["recommendation-repo"]
@@ -149,5 +149,6 @@ form:
       webui-app-branch: "master"
       recommendation-app-branch: "master"
       resource-group: "default"
+      functions-namespace: "{{toolchain.name}}"
     schema:
       $ref: deploy.json

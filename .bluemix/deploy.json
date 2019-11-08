@@ -89,6 +89,9 @@
         "v-type": "resource-group",
         "params": ["api-key"]
       }
+    },
+    "functions-namespace": {
+      "type": "string"
     }
   },
   "required": [
@@ -103,7 +106,8 @@
     "webui-app-branch",
     "recommendation-app-branch",
     "api-key",
-    "resource-group"
+    "resource-group",
+    "functions-namespace"
   ],
   "form": [
     {
@@ -247,6 +251,11 @@
       "key": "resource-group",
       "type": "string",
       "title": "Resource group where Cloud Functions namespace will be created"
+    },
+    {
+      "key": "functions-namespace",
+      "type": "string",
+      "title": "Namespace where the Cloud Functions will be created"
     },
     {
       "type": "label",
