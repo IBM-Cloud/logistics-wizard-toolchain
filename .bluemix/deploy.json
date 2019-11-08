@@ -18,7 +18,7 @@
       "type": "string",
       "validator": {
         "v-type": "cf-org",
-        "params": [ "api-key" ]
+        "params": [ "api-key", "cf-region" ]
       }
     },
     "selected-space": {
@@ -26,7 +26,7 @@
       "type": "string",
       "validator": {
         "v-type": "cf-space",
-        "params": [ "api-key" ]
+        "params": [ "api-key", "cf-org", "cf-region" ]
       }
     },
     "erp-app-name": {
