@@ -85,6 +85,8 @@ stages:
     type: secure
   - name: CLOUDANT_SERVICE_PLAN
     value: Lite
+  - name: RESOURCE_GROUP
+    value: ${RESOURCE_GROUP}
   jobs:
   - name: Blue/Green Deploy
     type: deployer
@@ -114,6 +116,8 @@ stages:
     type: secure
   - name: CLOUDANT_SERVICE_PLAN
     value: Lite
+  - name: RESOURCE_GROUP
+    value: ${RESOURCE_GROUP}
   jobs:
   - name: Unit Test
     type: deployer
