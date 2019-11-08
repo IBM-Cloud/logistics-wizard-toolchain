@@ -72,6 +72,10 @@ stages:
   - name: IBM_CLOUD_API_KEY
     value: ${IAM_API_KEY}
     type: secure
+  - name: FUNCTIONS_NAMESPACE
+    value: ${FUNCTIONS_NAMESPACE}
+  - name: RESOURCE_GROUP
+    value: ${RESOURCE_GROUP}
   jobs:
   - name: Blue/Green Deploy
     type: deployer
