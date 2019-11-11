@@ -40,11 +40,12 @@ After clicking the deployment button, the toolchain's configuration page is show
 
 ## Use the toolchain
 
-Once the toolchain is created, several delivery pipelines corresponding to the microservices will also be created. Each microservice will have a production and delivery pipeline. Upon creation, the production pipelines will automatically begin.
+Once the toolchain is created, several delivery pipelines corresponding to the microservices will also be created. Upon creation, the pipelines will automatically begin.
 
-1. Select each production (prod) **Delivery Pipeline** to ensure no failures have occurred.
+1. Select each **Delivery Pipeline** to ensure no failures have occurred.
 2. Once all pipelines have successfully completed, visit the [walkthrough](https://github.com/IBM-Cloud/logistics-wizard/blob/master/WALKTHROUGH.md) for a tour of Logistics Wizard.
-3. You can optionally start the development (dev) pipelines by clicking the pipeline and selecting the run button on the resulting page. This will deploy additional applications and services to support on-going development.
+
+> :warning: If any _Deploy_ or _Test_ stages fail because you are already using the Lite plan for Cloudant databases, edit the stage properties and change the environment variable `CLOUDANT_SERVICE_PLAN` from `Lite` to `Standard`.
 
 ---
 ### Learn more
